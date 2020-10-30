@@ -5,20 +5,8 @@
         <PathEntry path="lib/commons-lang3-3.1.jar"/>
     </ClassPath>
     <Profiles>
-        <Profile uid="1d64335e-a056-40ca-9e10-7a808fc41888" id="TestArchetypeProfile">
-            <Stereotype name="stereotype1" metaclass="Class" is-hidden="false" label="Stereotype 1" uid="24bd87ec-110f-444a-be3e-155259c2fbf1">
-                <Icon path="res/icons/Stereotype1_16.png"/>
-                <Image path="res/icons/Stereotype1_48.png"/>
-            </Stereotype>
-            <Stereotype name="stereotype2" metaclass="ClassDiagram" is-hidden="false" label="Stereotype 2" uid="00ee44ca-3a97-48a9-b481-26f56bd4097e">
-                <Icon path="res/icons/Stereotype2_16.png"/>
-                <Image path="res/icons/Stereotype2_16.png"/>
-            </Stereotype>
-            <MetaclassReference uid="ac861001-0018-4460-9728-d460933a2835" metaclass="ModelElement">
-                <TagTypes>
-                    <TagType name="TagName" uid="a6f69b59-b365-4ade-91b9-4fca704a0fbf" label="Name" parameter-card="1" is-hidden="false" is-signed="false"/>
-                </TagTypes>
-            </MetaclassReference>
+        <Profile uid="ee27d796-28f9-4cb7-8b53-3721a3773892" id="LogixUMLProfile">
+            <Stereotype name="statemachineaoi" metaclass="StateMachine" is-hidden="false" label="State Machine AOI" uid="61d9a1a0-f1d1-4a9f-b087-7f3ff00985e6"/>
         </Profile>
     </Profiles>
     <Gui>
