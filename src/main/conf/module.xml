@@ -3,6 +3,11 @@
     <ClassPath>
         <PathEntry path="lib/${project.artifactId}-${project.version}.jar"/>
         <PathEntry path="lib/commons-lang3-3.1.jar"/>
+        <PathEntry path="lib/apiguardian-api-1.1.0.jar"/>
+        <PathEntry path="lib/opentest4j-1.2.0.jar"/>
+        <PathEntry path="lib/junit-platform-commons-1.7.0.jar"/>
+        <PathEntry path="lib/junit-jupiter-api-5.7.0.jar"/>
+        <PathEntry path="lib/junit-jupiter-params-5.7.0.jar"/>
     </ClassPath>
     <Profiles>
         <Profile uid="ee27d796-28f9-4cb7-8b53-3721a3773892" id="LogixUMLProfile">
