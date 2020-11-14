@@ -53,9 +53,10 @@ public class AddOnInstruction {
      * Constructor.
      *
      * @param name AOI name.
-     * @throws AddInstructionException
+     * @throws AddInstructionException If an invalid name was given.
      */
     public AddOnInstruction(final String name) throws AddOnInstructionException {
+        validateIdentifier(name, "AOI");
         Name = name;
         createDoc();
     }
@@ -142,9 +143,12 @@ public class AddOnInstruction {
      * @param dataType String defining the RSLogix data type, e.g. "DINT".
      * @param visible  True to make the parameter visible in the ladder display.
      * @param desc     Optional parameter description string.
+     * @throws AddOnInstructionException If the name is invalid.
      */
     public void addParameter(final String name, final String usage, final String dataType, final boolean visible,
-            final String... desc) {
+            final String... desc) throws AddOnInstructionException {
+        validateIdentifier(name, "parameter");
+
         final Element e = Doc.createElement("Parameter");
         Parameters.appendChild(e);
 
@@ -167,8 +171,12 @@ public class AddOnInstruction {
      * @param name     Tag name.
      * @param dataType RSLogix name for the data type, e.g. "DINT".
      * @param dim      Optional array size if creating an array tag.
+     * @throws AddOnInstructionException If the name is invalid.
      */
-    public void addLocalTag(final String name, final String dataType, final int... dim) {
+    public void addLocalTag(final String name, final String dataType, final int... dim)
+            throws AddOnInstructionException {
+        validateIdentifier(name, "local tag");
+
         final Element e = Doc.createElement("LocalTag");
         LocalTags.appendChild(e);
 
@@ -226,6 +234,31 @@ public class AddOnInstruction {
             xfr.transform(src, dst);
         } catch (TransformerException e) {
             throw new AddOnInstructionException("XML transformation error.", e);
+        }
+    }
+
+    /**
+     * Confirms a string is valid for use as a Logix identifier.
+     *
+     * @param id      The identifier to test.
+     * @param context The type of identifier begin checked, e.g. local tag,
+     *                parameter, etc.
+     * @throws AddOnInstructionException If the identifier string is invalid.
+     */
+    private void validateIdentifier(final String id, final String context) throws AddOnInstructionException {
+        // Per RSLogix documentation, which references IEC-1131, Section 2.1.2.
+        final String pattern = "" //
+                + "(?x)        # Enable in-line regex comments.\n" //
+                + "(?i)        # Case-insensitive matching.\n" //
+                + "\\A[_a-z]   # Start with an underscore or letter.\n" //
+                + "(?:         # Additional characters after the first, if any.\n" //
+                + "  [a-z0-9]  # Allow all letters and digits.\n" //
+                + "  | (?<!_)_ # Underscore is permitted if it does not follow an underscore.\n" //
+                + "){0,39}     # Additional 39 characters are allowed, for a total of 40.\n" //
+                + "(?<!_)\\z   # Must not end in an underscore.";
+
+        if (!id.matches(pattern)) {
+            throw new AddOnInstructionException(String.format("Invalid %1$s identifier: %2$s", context, id));
         }
     }
 }
