@@ -42,9 +42,9 @@
                     <HParameter name="stereotype" value="stereotype2"/>
                 </Handler>
             </Command>
-            <Command id="exportAoi" label="Export AOI" group="" modify-model="false">
+            <Command id="exportAoiCommand" label="Export AOI" group="" modify-model="false">
                 <Scope metaclass="StateMachine" stereotype="statemachineaoi"/>
-                <Handler class="org.modelio.logixuml.command.ExportAoi"/>
+                <Handler class="org.modelio.logixuml.command.ExportAoiCommand"/>
             </Command>
         </Commands>
         <Tools>
@@ -61,7 +61,7 @@
             <CommandRef refid="HelloWorldCommand"/>
             <CommandRef refid="CreateElementCommandExample"/>
             <CommandRef refid="CreateDiagramCommandExample"/>
-            <CommandRef refid="exportAoi"/>
+            <CommandRef refid="exportAoiCommand"/>
         </ContextualMenu>
         <Diagrams>
             <DiagramType base-diagram="ClassDiagram" stereotype="stereotype2">
