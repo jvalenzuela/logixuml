@@ -5,7 +5,9 @@ import java.util.Set;
 
 import org.modelio.api.modelio.model.IModelingSession;
 import org.modelio.logixuml.impl.LogixUMLModule;
-import org.modelio.metamodel.uml.behavior.stateMachineModel.FinalState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
+import org.modelio.vcore.smkernel.mapi.MObject;
+import org.modelio.vcore.smkernel.mapi.MRef;
 
 /**
  * This object completely defines the AOI output condition every time it is
@@ -14,25 +16,25 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.FinalState;
  * applied to this purpose, however, <em>condition</em> is used to avoid
  * confusion with states defined by the UML state machine.
  * <p>
- * States are stored by their assigned UUID because the collection of states for
- * each action is implemented as a set, and UUIDs are immutable objects(String)
+ * States are stored by reference objects because the collection of states for
+ * each action is implemented as a set, and MRefs are immutable objects
  * well-suited for set membership.
  */
 class Condition {
     /**
-     * UUIDs of states with an active entry action.
+     * State references with an active entry action.
      */
-    private final Set<String> actionEntry = new HashSet<String>();
+    private final Set<MRef> actionEntry = new HashSet<MRef>();
 
     /**
-     * UUIDs of states with an active do action.
+     * State references with an active do action.
      */
-    private final Set<String> actionDo = new HashSet<String>();
+    private final Set<MRef> actionDo = new HashSet<MRef>();
 
     /**
-     * UUIDs of states with an active exit action.
+     * State references with an active exit action.
      */
-    private final Set<String> actionExit = new HashSet<String>();
+    private final Set<MRef> actionExit = new HashSet<MRef>();
 
     /**
      * Modeling session for searching UUIDs.
@@ -58,67 +60,68 @@ class Condition {
     /**
      * Adds a state to the set of entry actions.
      *
-     * @param uuid Identifier of the target state.
+     * @param ref Reference to the target state.
      */
-    public void addEntryAction(final String uuid) {
-        assertUuidIsState(uuid);
-        actionEntry.add(uuid);
+    public void addEntryAction(final MRef ref) {
+        assertRefIsState(ref);
+        actionEntry.add(ref);
     }
 
     /**
      * Gets the active entry action states.
      *
-     * @return Set of UUIDs of states with an active entry action.
+     * @return Set of references to states with an active entry action.
      */
-    public Set<String> getEntryActions() {
-        return new HashSet<String>(actionEntry);
+    public Set<MRef> getEntryActions() {
+        return new HashSet<MRef>(actionEntry);
     }
 
     /**
      * Adds a state to the set of do actions.
      *
-     * @param uuid Identifier of the target state.
+     * @param ref Reference to the target state.
      */
-    public void addDoAction(final String uuid) {
-        assertUuidIsState(uuid);
-        actionDo.add(uuid);
+    public void addDoAction(final MRef ref) {
+        assertRefIsState(ref);
+        actionDo.add(ref);
     }
 
     /**
      * Gets the active do action states.
      *
-     * @return Set of UUIDs of states with an active do action.
+     * @return Set of references to states with an active do action.
      */
-    public Set<String> getDoActions() {
-        return new HashSet<String>(actionDo);
+    public Set<MRef> getDoActions() {
+        return new HashSet<MRef>(actionDo);
     }
 
     /**
      * Adds a state to the set of exit actions.
      *
-     * @param uuid Identifier of the target state.
+     * @param ref Reference to the target state.
      */
-    public void addExitAction(final String uuid) {
-        assertUuidIsState(uuid);
-        actionExit.add(uuid);
+    public void addExitAction(final MRef ref) {
+        assertRefIsState(ref);
+        actionExit.add(ref);
     }
 
     /**
      * Gets the active exit action states.
      *
-     * @return Set of UUIDs of states with an active exit action.
+     * @return Set of references to states with an active exit action.
      */
-    public Set<String> getExitActions() {
-        return new HashSet<String>(actionExit);
+    public Set<MRef> getExitActions() {
+        return new HashSet<MRef>(actionExit);
     }
 
     /**
-     * Confirms a given UUID refers to a concrete state, which is the only type of
-     * model element that can be added to a condition.
+     * Confirms a given reference points to a state, which is the only type of model
+     * element that can be added to a condition.
      *
-     * @param uuid Identifier to verify.
+     * @param ref Model object reference to verify.
      */
-    private void assertUuidIsState(final String uuid) {
-        assert session.findElementById(FinalState.class, uuid) != null;
+    private void assertRefIsState(final MRef ref) {
+        final MObject target = session.findByRef(ref);
+        assert (target != null) && (target.getMClass().getQualifiedName() == State.MQNAME);
     }
 }
