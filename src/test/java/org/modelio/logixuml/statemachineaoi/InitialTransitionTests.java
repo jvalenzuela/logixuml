@@ -37,7 +37,7 @@ class InitialTransitionTests {
         final State state = MockModel.state(top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
-        final Transition tx = MockModel.transition(initial, state, "");
+        MockModel.transition(initial, state, "");
 
         final Transition result = InitialTransition.getInitialTransition(stateMachine);
         assertEquals(state, result.getTarget());
@@ -73,7 +73,7 @@ class InitialTransitionTests {
         final State substate = MockModel.state(region);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
-        final Transition tx = MockModel.transition(initial, substate, "");
+        MockModel.transition(initial, substate, "");
 
         final Transition result = InitialTransition.getInitialTransition(state);
         assertEquals(substate, result.getTarget());
@@ -124,7 +124,7 @@ class InitialTransitionTests {
         final Region region = MockModel.region(state);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
-        final Transition tx = MockModel.transition(initial, superState, "");
+        MockModel.transition(initial, superState, "");
 
         assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(state));
     }
@@ -138,7 +138,7 @@ class InitialTransitionTests {
         final Region region = MockModel.region(state);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
-        final Transition tx = MockModel.transition(initial, state, "");
+        MockModel.transition(initial, state, "");
 
         assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(state));
     }
@@ -154,7 +154,7 @@ class InitialTransitionTests {
         final Region region = MockModel.region(source);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
-        final Transition tx = MockModel.transition(initial, target, "");
+        MockModel.transition(initial, target, "");
 
         assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(source));
     }
@@ -168,7 +168,7 @@ class InitialTransitionTests {
         final State state = MockModel.state(top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
-        final Transition tx = MockModel.transition(initial, state, "  ");
+        MockModel.transition(initial, state, "  ");
 
         InitialTransition.getInitialTransition(stateMachine);
     }
@@ -182,7 +182,7 @@ class InitialTransitionTests {
         final State state = MockModel.state(top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
-        final Transition tx = MockModel.transition(initial, state, "event");
+        MockModel.transition(initial, state, "event");
 
         assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(stateMachine));
     }
