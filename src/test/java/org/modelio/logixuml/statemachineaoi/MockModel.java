@@ -17,6 +17,7 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.StateVertex;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.metamodel.uml.statik.Package;
 import org.modelio.vcore.smkernel.mapi.MObject;
+import org.modelio.vcore.smkernel.mapi.MRef;
 
 /**
  * Static methods to generate mock model objects.
@@ -143,6 +144,9 @@ class MockModel {
 
         // A UUID is needed to generate an MRef object pointing to the mock object.
         lenient().when(obj.getUuid()).thenReturn(UUID.randomUUID().toString());
+
+        // Register references to mock objects in the mock modeling session.
+        MockModule.setSessionMRef(new MRef(obj), obj);
 
         return obj;
     }
