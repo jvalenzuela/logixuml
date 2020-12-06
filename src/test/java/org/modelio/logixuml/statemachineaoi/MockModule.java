@@ -5,9 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.mockito.Answers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.modelio.api.modelio.model.IModelingSession;
 import org.modelio.api.module.context.IModuleContext;
 import org.modelio.logixuml.impl.LogixUMLModule;
@@ -22,29 +19,14 @@ import org.modelio.vcore.smkernel.mapi.MRef;
  */
 class MockModule {
     /**
-     * Mock context injected into the module constructor.
+     * Initializes the mock module.
      */
-    @Mock
-    private IModuleContext context;
+    static void init() {
+        final IModuleContext context = mock(IModuleContext.class);
+        final LogixUMLModule module = new LogixUMLModule(context);
 
-    /**
-     * Mock module instance.
-     */
-    @InjectMocks
-    private LogixUMLModule module;
-
-    /**
-     * Mock session that is used to resolve MRefs via findByRef().
-     */
-    private IModelingSession session = mock(IModelingSession.class, Answers.RETURNS_DEEP_STUBS);
-
-    /**
-     * Constructor.
-     */
-    MockModule() {
-        MockitoAnnotations.openMocks(this);
-
-        // Setup stub methods to return the mock session.
+        // Setup stub methods to return a mock session.
+        final IModelingSession session = mock(IModelingSession.class, Answers.RETURNS_DEEP_STUBS);
         when(module.getModuleContext().getModelingSession()).thenReturn(session);
     }
 
@@ -54,7 +36,8 @@ class MockModule {
      * @param ref    MRef that will point to the target MObject.
      * @param target Referenced MObject.
      */
-    void setSessionMRef(final MRef ref, final MObject target) {
+    static void setSessionMRef(final MRef ref, final MObject target) {
+        final IModelingSession session = LogixUMLModule.getInstance().getModuleContext().getModelingSession();
         when(session.findByRef(eq(ref))).thenReturn(target);
     }
 }
