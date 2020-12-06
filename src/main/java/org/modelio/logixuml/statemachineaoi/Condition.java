@@ -49,15 +49,6 @@ class Condition {
     }
 
     /**
-     * Constructor used for unit testing where a mock session is created.
-     *
-     * @param session Mock session interface.
-     */
-    public Condition(final IModelingSession session) {
-        this.session = session;
-    }
-
-    /**
      * Adds a state to the set of entry actions.
      *
      * @param ref Reference to the target state.
