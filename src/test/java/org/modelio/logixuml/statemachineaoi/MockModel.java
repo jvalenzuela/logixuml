@@ -54,17 +54,23 @@ class MockModel {
         // Initialize the collection of child initial pseudo states.
         when(region.getSub(InitialPseudoState.class)).thenReturn(new ArrayList<InitialPseudoState>());
 
-        // Add the mock region to the parent's getter method return value.
+        // Configure additional relationships based on the type of parent object.
         switch (parent.getMClass().getQualifiedName()) {
 
-        // State machines only have a single child region.
         case StateMachine.MQNAME:
+            // Set as the state machine's top region.
             when(((StateMachine) parent).getTop()).thenReturn(region);
+
+            // The region itself has no state parent.
+            when(region.getParent()).thenReturn(null);
             break;
 
-        // States have a collection of child regions.
         case State.MQNAME:
+            // Add the region to the state's collection of child regions.
             ((State) parent).getOwnedRegion().add(region);
+
+            // Set the region's parent state.
+            when(region.getParent()).thenReturn((State) parent);
             break;
 
         default:
@@ -101,7 +107,7 @@ class MockModel {
      */
     static InitialPseudoState initialPseudoState(final Region parent) {
         final InitialPseudoState i = modelObject(InitialPseudoState.class, InitialPseudoState.MQNAME, parent, "");
-
+        when(i.getParent()).thenReturn(parent);
         parent.getSub(InitialPseudoState.class).add(i);
 
         // Initialize the outgoing transition list.
@@ -120,6 +126,7 @@ class MockModel {
      */
     static Transition transition(final StateVertex source, final StateVertex target, final String event) {
         final Transition t = modelObject(Transition.class, Transition.MQNAME, null, "");
+        when(t.getSource()).thenReturn(source);
         when(t.getTarget()).thenReturn(target);
 
         // Add the transition to the source's list of outgoing transitions.
