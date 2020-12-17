@@ -35,11 +35,11 @@ class SuperStateTests {
         pkg = MockModel.pkg();
         stateMachine = MockModel.stateMachine(pkg);
         top = MockModel.region(stateMachine);
-        superState = MockModel.state(top);
+        superState = MockModel.state("", top);
         region = MockModel.region(superState);
-        subState = MockModel.state(region);
+        subState = MockModel.state("", region);
         subRegion = MockModel.region(subState);
-        target = MockModel.state(subRegion);
+        target = MockModel.state("", subRegion);
     }
 
     /**

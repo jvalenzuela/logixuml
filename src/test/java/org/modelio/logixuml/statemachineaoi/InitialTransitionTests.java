@@ -34,7 +34,7 @@ class InitialTransitionTests {
      */
     @Test
     void stateMachineInitial() throws UnsupportedUmlException {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
         MockModel.transition(initial, state, "");
@@ -68,9 +68,9 @@ class InitialTransitionTests {
      */
     @Test
     void stateInitial() throws UnsupportedUmlException {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
         final Region region = MockModel.region(state);
-        final State substate = MockModel.state(region);
+        final State substate = MockModel.state("", region);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
         MockModel.transition(initial, substate, "");
@@ -84,7 +84,7 @@ class InitialTransitionTests {
      */
     @Test
     void stateNoRegion() throws UnsupportedUmlException {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
 
         assertNull(InitialTransition.getInitialTransition(state));
     }
@@ -94,7 +94,7 @@ class InitialTransitionTests {
      */
     @Test
     void stateRegionNoInitial() throws UnsupportedUmlException {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
         MockModel.region(state);
 
         assertNull(InitialTransition.getInitialTransition(state));
@@ -105,7 +105,7 @@ class InitialTransitionTests {
      */
     @Test
     void stateMultipleRegions() {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
         MockModel.region(state);
         MockModel.region(state);
 
@@ -117,10 +117,10 @@ class InitialTransitionTests {
      */
     @Test
     void targetSuperState() {
-        final State superState = MockModel.state(top);
+        final State superState = MockModel.state("", top);
         final Region superRegion = MockModel.region(superState);
 
-        final State state = MockModel.state(superRegion);
+        final State state = MockModel.state("", superRegion);
         final Region region = MockModel.region(state);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
@@ -134,7 +134,7 @@ class InitialTransitionTests {
      */
     @Test
     void targetSelf() {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
         final Region region = MockModel.region(state);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
@@ -148,9 +148,9 @@ class InitialTransitionTests {
      */
     @Test
     void targetSibling() {
-        final State target = MockModel.state(top);
+        final State target = MockModel.state("", top);
 
-        final State source = MockModel.state(top);
+        final State source = MockModel.state("", top);
         final Region region = MockModel.region(source);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
@@ -165,7 +165,7 @@ class InitialTransitionTests {
      */
     @Test
     void blankEvent() throws UnsupportedUmlException {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
         MockModel.transition(initial, state, "  ");
@@ -179,7 +179,7 @@ class InitialTransitionTests {
      */
     @Test
     void withEvent() {
-        final State state = MockModel.state(top);
+        final State state = MockModel.state("", top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
         MockModel.transition(initial, state, "event");

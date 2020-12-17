@@ -29,7 +29,7 @@ class MockModel {
      * @return The mock package object.
      */
     static Package pkg() {
-        return modelObject(Package.class, Package.MQNAME, null);
+        return modelObject(Package.class, Package.MQNAME, null, "");
     }
 
     /**
@@ -39,7 +39,7 @@ class MockModel {
      * @return The mock state machine object.
      */
     static StateMachine stateMachine(final MObject parent) {
-        return modelObject(StateMachine.class, StateMachine.MQNAME, parent);
+        return modelObject(StateMachine.class, StateMachine.MQNAME, parent, "");
     }
 
     /**
@@ -49,7 +49,7 @@ class MockModel {
      * @return The mock region element.
      */
     static Region region(final MObject parent) {
-        final Region region = modelObject(Region.class, Region.MQNAME, parent);
+        final Region region = modelObject(Region.class, Region.MQNAME, parent, "");
 
         // Initialize the collection of child initial pseudo states.
         when(region.getSub(InitialPseudoState.class)).thenReturn(new ArrayList<InitialPseudoState>());
@@ -77,11 +77,12 @@ class MockModel {
     /**
      * Generates a mock state model element.
      *
+     * @param name   String to assign as the model object's name.
      * @param parent Object that owns the new mock element in a composition graph.
      * @return The mock state element.
      */
-    static State state(final MObject parent) {
-        final State s = modelObject(State.class, State.MQNAME, parent);
+    static State state(final String name, final MObject parent) {
+        final State s = modelObject(State.class, State.MQNAME, parent, name);
 
         // Initialize the list of child regions.
         when(s.getOwnedRegion()).thenReturn(new BasicEList<Region>());
@@ -99,7 +100,7 @@ class MockModel {
      * @return The mock initial pseudo state element.
      */
     static InitialPseudoState initialPseudoState(final Region parent) {
-        final InitialPseudoState i = modelObject(InitialPseudoState.class, InitialPseudoState.MQNAME, parent);
+        final InitialPseudoState i = modelObject(InitialPseudoState.class, InitialPseudoState.MQNAME, parent, "");
 
         parent.getSub(InitialPseudoState.class).add(i);
 
@@ -118,7 +119,7 @@ class MockModel {
      * @return The mock transition element.
      */
     static Transition transition(final StateVertex source, final StateVertex target, final String event) {
-        final Transition t = modelObject(Transition.class, Transition.MQNAME, null);
+        final Transition t = modelObject(Transition.class, Transition.MQNAME, null, "");
         when(t.getTarget()).thenReturn(target);
 
         // Add the transition to the source's list of outgoing transitions.
@@ -135,15 +136,21 @@ class MockModel {
      * @param cls        Class of model object to mock.
      * @param MClassName Qualified name of the mock object's metac-lass.
      * @param parent     The object owning the mock object in the composition graph.
+     * @param name       String to assign as the object's name.
      * @return The generated mock object.
      */
-    static <T extends MObject> T modelObject(final Class<T> cls, final String MClassName, final MObject parent) {
+    static <T extends MObject> T modelObject(final Class<T> cls, final String MClassName, final MObject parent,
+            final String name) {
         final T obj = mock(cls, Answers.RETURNS_DEEP_STUBS);
         when(obj.getCompositionOwner()).thenReturn(parent);
         lenient().when(obj.getMClass().getQualifiedName()).thenReturn(MClassName);
 
         // A UUID is needed to generate an MRef object pointing to the mock object.
         lenient().when(obj.getUuid()).thenReturn(UUID.randomUUID().toString());
+
+        if (!name.isEmpty()) {
+            when(obj.getName()).thenReturn(name);
+        }
 
         // Register references to mock objects in the mock modeling session.
         MockModule.setSessionMRef(new MRef(obj), obj);

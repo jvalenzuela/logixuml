@@ -33,8 +33,8 @@ public class ConditionTests {
         MockModule.init();
         condition = new Condition();
 
-        final State state1 = MockModel.state(null);
-        final State state2 = MockModel.state(null);
+        final State state1 = MockModel.state("", null);
+        final State state2 = MockModel.state("", null);
         refs.add(new MRef(state1));
         refs.add(new MRef(state2));
 
