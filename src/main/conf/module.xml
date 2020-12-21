@@ -20,6 +20,15 @@
             </Stereotype>
         </Profile>
     </Profiles>
+    <Parameters>
+        <Parameter id="transitionScanModeEnum" uid="1c5c1833-3db5-4b94-9a45-c6ff226604f5" type="Enum" default-value="Dual">
+            <Enumeration>
+                <Literal value="Single"/>
+                <Literal value="Dual"/>
+                <Literal value="Sequential"/>
+            </Enumeration>
+        </Parameter>
+    </Parameters>
     <Gui>
         <Commands>
             <Command id="HelloWorldCommand" label="%HelloWorldCommandLabel" tooltip="%HelloWorldCommandTooltip" image="res/icons/HelloWorldCommand_16.png" group="" modify-model="false" group-image="">
