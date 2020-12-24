@@ -16,6 +16,7 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.StateMachine;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateVertex;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.metamodel.uml.statik.Package;
+import org.modelio.vcore.smkernel.mapi.MClass;
 import org.modelio.vcore.smkernel.mapi.MObject;
 import org.modelio.vcore.smkernel.mapi.MRef;
 
@@ -151,6 +152,10 @@ class MockModel {
         final T obj = mock(cls, Answers.RETURNS_DEEP_STUBS);
         when(obj.getCompositionOwner()).thenReturn(parent);
         lenient().when(obj.getMClass().getQualifiedName()).thenReturn(MClassName);
+
+        // Generate the simple name by splitting the fully-qualified name.
+        final String simpleName = MClassName.split(String.format("\\Q%c\\E", MClass.QUALIFIER_SEP))[1];
+        when(obj.getMClass().getName()).thenReturn(simpleName);
 
         // A UUID is needed to generate an MRef object pointing to the mock object.
         lenient().when(obj.getUuid()).thenReturn(UUID.randomUUID().toString());
