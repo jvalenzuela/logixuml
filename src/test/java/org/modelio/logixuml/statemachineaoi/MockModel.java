@@ -11,11 +11,23 @@ import java.util.UUID;
 import org.eclipse.emf.common.util.BasicEList;
 import org.mockito.Answers;
 import org.mockito.Mockito;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.ChoicePseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.ConnectionPointReference;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.DeepHistoryPseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.EntryPointPseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.ExitPointPseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.FinalState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.ForkPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.InternalTransition;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.JoinPseudoState;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.JunctionPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.ShallowHistoryPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateMachine;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateVertex;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.TerminatePseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.metamodel.uml.statik.Package;
 import org.modelio.vcore.smkernel.mapi.MClass;
@@ -138,6 +150,126 @@ class MockModel {
         when(t.getReceivedEvents()).thenReturn(event);
 
         return t;
+    }
+
+    /**
+     * Generates a mock internal transition model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock internal transition element.
+     */
+    static InternalTransition internalTransition(final MObject parent) {
+        return modelObject(InternalTransition.class, InternalTransition.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a terminate state model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock terminate state element.
+     */
+    static TerminatePseudoState terminatePseudoState(final MObject parent) {
+        return modelObject(TerminatePseudoState.class, TerminatePseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock entry point model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock entry point element.
+     */
+    static EntryPointPseudoState entryPointPseudoState(final MObject parent) {
+        return modelObject(EntryPointPseudoState.class, EntryPointPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock exit point model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock exit point element.
+     */
+    static ExitPointPseudoState exitPointPseudoState(final MObject parent) {
+        return modelObject(ExitPointPseudoState.class, ExitPointPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock fork model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock fork element.
+     */
+    static ForkPseudoState forkPseudoState(final MObject parent) {
+        return modelObject(ForkPseudoState.class, ForkPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock join model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock join element.
+     */
+    static JoinPseudoState joinPseudoState(final MObject parent) {
+        return modelObject(JoinPseudoState.class, JoinPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock junction model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock junction element.
+     */
+    static JunctionPseudoState junctionPseudoState(final MObject parent) {
+        return modelObject(JunctionPseudoState.class, JunctionPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock choice model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock choice element.
+     */
+    static ChoicePseudoState choicePseudoState(final MObject parent) {
+        return modelObject(ChoicePseudoState.class, ChoicePseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock deep history model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock deep history element.
+     */
+    static DeepHistoryPseudoState deepHistoryPseudoState(final MObject parent) {
+        return modelObject(DeepHistoryPseudoState.class, DeepHistoryPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock shallow history model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock shallow history element.
+     */
+    static ShallowHistoryPseudoState shallowHistoryPseudoState(final MObject parent) {
+        return modelObject(ShallowHistoryPseudoState.class, ShallowHistoryPseudoState.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock connection point reference model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock connection point reference element.
+     */
+    static ConnectionPointReference connectionPointReference(final MObject parent) {
+        return modelObject(ConnectionPointReference.class, ConnectionPointReference.MQNAME, parent, "");
+    }
+
+    /**
+     * Generates a mock final state model element.
+     *
+     * @param parent Model object owning the new mock element.
+     * @return The mock final state element.
+     */
+    static FinalState finalState(final MObject parent) {
+        return modelObject(FinalState.class, FinalState.MQNAME, parent, "");
     }
 
     /**
