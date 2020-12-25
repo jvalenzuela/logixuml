@@ -5,10 +5,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.mockito.Answers;
+import org.mockito.Mockito;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
@@ -151,6 +153,21 @@ class MockModel {
             final String name) {
         final T obj = mock(cls, Answers.RETURNS_DEEP_STUBS);
         when(obj.getCompositionOwner()).thenReturn(parent);
+
+        // Update the parent getCompositionChildren() stub to include the new object.
+        // This is done by replacing the child list with a new list containing the
+        // original children plus the new object, instead of adding the new object to
+        // the original list, to accommodate stubs returning generics.
+        if (parent != null) {
+            final List<? extends MObject> origChildren = parent.getCompositionChildren();
+            final List<MObject> newChildren = new ArrayList<MObject>(origChildren);
+            newChildren.add(obj);
+            Mockito.doReturn(newChildren).when(parent).getCompositionChildren();
+        }
+
+        // Create an empty collection for the getCompositionChildren() stub.
+        Mockito.doReturn(new ArrayList<MObject>()).when(obj).getCompositionChildren();
+
         lenient().when(obj.getMClass().getQualifiedName()).thenReturn(MClassName);
 
         // Generate the simple name by splitting the fully-qualified name.
