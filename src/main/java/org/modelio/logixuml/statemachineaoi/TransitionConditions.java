@@ -92,9 +92,8 @@ abstract class TransitionConditions {
      * @param tx Model object defining the transition.
      * @return The source state object. Null if this is the state machine's initial
      *         transition.
-     * @throws UnsupportedUmlException If an unsupported UML object is encountered.
      */
-    private State getSourceState(final Transition tx) throws UnsupportedUmlException {
+    private State getSourceState(final Transition tx) {
         final State sourceState;
         final StateVertex sourceElement = tx.getSource();
         final String sourceType = sourceElement.getMClass().getQualifiedName();
@@ -113,8 +112,11 @@ abstract class TransitionConditions {
             sourceState = region.getParent();
             break;
 
+        // No other element types should be encountered at this point; any unsupported
+        // element will already have been detected.
         default:
-            throw new UnsupportedUmlException(sourceElement);
+            sourceState = null; // Avoid uninitialized local variable error.
+            assert false;
         }
 
         return sourceState;
@@ -144,9 +146,7 @@ abstract class TransitionConditions {
             final String targetType = targetElement.getMClass().getQualifiedName();
 
             // Transitions must target only state objects.
-            if (targetType != State.MQNAME) {
-                throw new UnsupportedUmlException(targetElement);
-            }
+            assert targetType == State.MQNAME;
 
             // Check to see if the target state has its own initial transition.
             final Transition targetInitial = InitialTransition.getInitialTransition(targetElement);
