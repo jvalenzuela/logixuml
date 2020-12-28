@@ -38,51 +38,15 @@
                 <Scope metaclass="ModelTree"/>
                 <Handler class="org.modelio.logixuml.command.HelloWorldCommand"/>
             </Command>
-            <Command id="CreateElementCommandExample" label="%CreateElementCommandExampleLabel" tooltip="%CreateElementCommandExampleTooltip" image="res/icons/Stereotype1_16.png" group="" modify-model="true" group-image="">
-                <Scope metaclass="ModelTree"/>
-                <Handler class="ElementCreate">
-                    <HParameter name="name" value="%CreateElementCommandExampleName"/>
-                    <HParameter name="metaclass" value="Class"/>
-                    <HParameter name="stereotype" value="stereotype1"/>
-                </Handler>
-            </Command>
-            <Command id="CreateDiagramCommandExample" label="%CreateDiagramCommandExampleLabel" tooltip="%CreateDiagramCommandExampleTooltip" image="res/icons/Stereotype2_16.png" group="" modify-model="true" group-image="">
-                <Scope metaclass="ModelTree"/>
-                <Handler class="DiagramCreate">
-                    <HParameter name="name" value="%CreateDiagramCommandExampleName"/>
-                    <HParameter name="metaclass" value="ClassDiagram"/>
-                    <HParameter name="stereotype" value="stereotype2"/>
-                </Handler>
-            </Command>
             <Command id="exportAoiCommand" label="Export AOI" group="" modify-model="false">
                 <Scope metaclass="StateMachine" stereotype="statemachineaoi"/>
                 <Handler class="org.modelio.logixuml.command.ExportAoiCommand"/>
             </Command>
         </Commands>
-        <Tools>
-            <Tool id="CreateElementDiagramCommandExample" label="%CreateElementDiagramCommandExampleLabel" tooltip="%CreateElementDiagramCommandExampleTooltip" image="res/icons/Stereotype1_16.png">
-                <Scope-source metaclass="ModelTree"/>
-                <Handler class="Box">
-                    <HParameter name="name" value="%CreateElementDiagramCommandExampleName"/>
-                    <HParameter name="metaclass" value="Class"/>
-                    <HParameter name="stereotype" value="stereotype1"/>
-                </Handler>
-            </Tool>
-        </Tools>
         <ContextualMenu>
             <CommandRef refid="HelloWorldCommand"/>
-            <CommandRef refid="CreateElementCommandExample"/>
-            <CommandRef refid="CreateDiagramCommandExample"/>
             <CommandRef refid="exportAoiCommand"/>
         </ContextualMenu>
-        <Diagrams>
-            <DiagramType base-diagram="ClassDiagram" stereotype="stereotype2">
-                <Palette keepBasePalette="false">
-                    <ToolRef refid="CreateElementDiagramCommandExample" group="Customization"/>
-                </Palette>
-                <Handler class="StandardCustomizer"/>
-            </DiagramType>
-        </Diagrams>
         <Views/>
     </Gui>
     <Dependencies/>
