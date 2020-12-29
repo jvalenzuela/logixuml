@@ -18,9 +18,9 @@ public class StateMachineAoi {
      * Constructor.
      *
      * @param stateMachine Source state machine model.
-     * @throws UnsupportedUmlException
+     * @throws ExportException
      */
-    public StateMachineAoi(final MObject stateMachine) throws UnsupportedUmlException {
+    public StateMachineAoi(final MObject stateMachine) throws ExportException {
         final Set<MObject> children = getChildren(stateMachine);
         validateElementTypes(children);
     }
@@ -42,9 +42,9 @@ public class StateMachineAoi {
      * machine.
      *
      * @param elements The state machine's child elements.
-     * @throws UnsupportedUmlException
+     * @throws ExportException If an unsupported UML element type was found.
      */
-    private void validateElementTypes(final Set<MObject> elements) throws UnsupportedUmlException {
+    private void validateElementTypes(final Set<MObject> elements) throws ExportException {
         for (final MObject e : elements) {
             switch (e.getMClass().getQualifiedName()) {
 
@@ -59,7 +59,7 @@ public class StateMachineAoi {
 
             default:
                 final String shortName = e.getMClass().getName();
-                throw new UnsupportedUmlException(e, String.format("Unsupported UML element type: %s", shortName));
+                throw new ExportException(String.format("Unsupported UML element type: %s", shortName), e);
             }
         }
     }

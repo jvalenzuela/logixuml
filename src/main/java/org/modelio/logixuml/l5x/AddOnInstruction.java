@@ -14,6 +14,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.modelio.logixuml.statemachineaoi.ExportException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -53,10 +54,15 @@ public class AddOnInstruction {
      * Constructor.
      *
      * @param name AOI name.
-     * @throws AddInstructionException If an invalid name was given.
+     * @throws ExportException If an invalid name was given or an XML parser
+     *                         configuration error occurs.
      */
-    public AddOnInstruction(final String name) throws AddOnInstructionException {
-        validateIdentifier(name, "AOI");
+    public AddOnInstruction(final String name) throws ExportException {
+        try {
+            validateIdentifier(name);
+        } catch (ExportException e) {
+            throw new ExportException(String.format("String is not a valid add-on instruction name: %s", name));
+        }
         Name = name;
         createDoc();
     }
@@ -64,17 +70,16 @@ public class AddOnInstruction {
     /**
      * Generates an initial XML document with the necessary AOI structure.
      *
-     * @throws AddOnInstructionException If an XML parser configuration error
-     *                                   occurs.
+     * @throws ExportException If an XML parser configuration error occurs.
      */
-    private void createDoc() throws AddOnInstructionException {
+    private void createDoc() throws ExportException {
         final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder builder;
 
         try {
             builder = builderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new AddOnInstructionException("XML parser configuration error.", e);
+            throw new ExportException("XML parser configuration error.", e);
         }
 
         Doc = builder.newDocument();
@@ -143,11 +148,11 @@ public class AddOnInstruction {
      * @param dataType String defining the RSLogix data type, e.g. "DINT".
      * @param visible  True to make the parameter visible in the ladder display.
      * @param desc     Optional parameter description string.
-     * @throws AddOnInstructionException If the name is invalid.
+     * @throws ExportException If the name is invalid.
      */
     public void addParameter(final String name, final String usage, final String dataType, final boolean visible,
-            final String... desc) throws AddOnInstructionException {
-        validateIdentifier(name, "parameter");
+            final String... desc) throws ExportException {
+        validateIdentifier(name);
 
         final Element e = Doc.createElement("Parameter");
         Parameters.appendChild(e);
@@ -171,11 +176,10 @@ public class AddOnInstruction {
      * @param name     Tag name.
      * @param dataType RSLogix name for the data type, e.g. "DINT".
      * @param dim      Optional array size if creating an array tag.
-     * @throws AddOnInstructionException If the name is invalid.
+     * @throws ExportException If the name is invalid.
      */
-    public void addLocalTag(final String name, final String dataType, final int... dim)
-            throws AddOnInstructionException {
-        validateIdentifier(name, "local tag");
+    public void addLocalTag(final String name, final String dataType, final int... dim) throws ExportException {
+        validateIdentifier(name);
 
         final Element e = Doc.createElement("LocalTag");
         LocalTags.appendChild(e);
@@ -219,11 +223,11 @@ public class AddOnInstruction {
     /**
      * Writes the AOI to an L5X file.
      *
-     * @throws AddOnInstructionException If an XML transformation error occurs.
-     * @throws IOException               If the L5X file could not be written.
+     * @throws ExportException If an XML transformation error occurs.
+     * @throws IOException     If the L5X file could not be written.
      * @param filename Target L5X file name.
      */
-    public void write() throws AddOnInstructionException, IOException {
+    public void write() throws ExportException, IOException {
         final DOMSource src = new DOMSource(Doc);
         final TransformerFactory xfrFactory = TransformerFactory.newInstance();
         final String filename = Name + ".L5X";
@@ -233,19 +237,17 @@ public class AddOnInstruction {
             final StreamResult dst = new StreamResult(f);
             xfr.transform(src, dst);
         } catch (TransformerException e) {
-            throw new AddOnInstructionException("XML transformation error.", e);
+            throw new ExportException("XML transformation error.", e);
         }
     }
 
     /**
      * Confirms a string is valid for use as a Logix identifier.
      *
-     * @param id      The identifier to test.
-     * @param context The type of identifier begin checked, e.g. local tag,
-     *                parameter, etc.
-     * @throws AddOnInstructionException If the identifier string is invalid.
+     * @param id The identifier to test.
+     * @throws ExportException If the identifier string is invalid.
      */
-    private void validateIdentifier(final String id, final String context) throws AddOnInstructionException {
+    private void validateIdentifier(final String id) throws ExportException {
         // Per RSLogix documentation, which references IEC-1131, Section 2.1.2.
         final String pattern = "" //
                 + "(?x)        # Enable in-line regex comments.\n" //
@@ -258,7 +260,7 @@ public class AddOnInstruction {
                 + "(?<!_)\\z   # Must not end in an underscore.";
 
         if (!id.matches(pattern)) {
-            throw new AddOnInstructionException(String.format("Invalid %1$s identifier: %2$s", context, id));
+            throw new ExportException();
         }
     }
 }

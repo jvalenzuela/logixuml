@@ -33,7 +33,7 @@ class InitialTransitionTests {
      * Confirm the initial transition of a top-level state machine is found.
      */
     @Test
-    void stateMachineInitial() throws UnsupportedUmlException {
+    void stateMachineInitial() throws ExportException {
         final State state = MockModel.state("", top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
@@ -47,7 +47,7 @@ class InitialTransitionTests {
      * Confirm null is returned for a state machine with no initial transition.
      */
     @Test
-    void stateMachineNone() throws UnsupportedUmlException {
+    void stateMachineNone() throws ExportException {
         assertNull(InitialTransition.getInitialTransition(stateMachine));
     }
 
@@ -60,14 +60,14 @@ class InitialTransitionTests {
         MockModel.initialPseudoState(top);
         MockModel.initialPseudoState(top);
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(stateMachine));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(stateMachine));
     }
 
     /**
      * Confirm the initial transition of a state is found.
      */
     @Test
-    void stateInitial() throws UnsupportedUmlException {
+    void stateInitial() throws ExportException {
         final State state = MockModel.state("", top);
         final Region region = MockModel.region(state);
         final State substate = MockModel.state("", region);
@@ -83,7 +83,7 @@ class InitialTransitionTests {
      * Confirm a state with no child region returns null.
      */
     @Test
-    void stateNoRegion() throws UnsupportedUmlException {
+    void stateNoRegion() throws ExportException {
         final State state = MockModel.state("", top);
 
         assertNull(InitialTransition.getInitialTransition(state));
@@ -93,7 +93,7 @@ class InitialTransitionTests {
      * Confirm a state with a child region but no initial transition returns null.
      */
     @Test
-    void stateRegionNoInitial() throws UnsupportedUmlException {
+    void stateRegionNoInitial() throws ExportException {
         final State state = MockModel.state("", top);
         MockModel.region(state);
 
@@ -109,7 +109,7 @@ class InitialTransitionTests {
         MockModel.region(state);
         MockModel.region(state);
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(state));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(state));
     }
 
     /**
@@ -126,7 +126,7 @@ class InitialTransitionTests {
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
         MockModel.transition(initial, superState, "");
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(state));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(state));
     }
 
     /**
@@ -140,7 +140,7 @@ class InitialTransitionTests {
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
         MockModel.transition(initial, state, "");
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(state));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(state));
     }
 
     /**
@@ -156,7 +156,7 @@ class InitialTransitionTests {
         final InitialPseudoState initial = MockModel.initialPseudoState(region);
         MockModel.transition(initial, target, "");
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(source));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(source));
     }
 
     /**
@@ -164,7 +164,7 @@ class InitialTransitionTests {
      * whitespace is accepted.
      */
     @Test
-    void blankEvent() throws UnsupportedUmlException {
+    void blankEvent() throws ExportException {
         final State state = MockModel.state("", top);
 
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
@@ -184,6 +184,6 @@ class InitialTransitionTests {
         final InitialPseudoState initial = MockModel.initialPseudoState(top);
         MockModel.transition(initial, state, "event");
 
-        assertThrows(UnsupportedUmlException.class, () -> InitialTransition.getInitialTransition(stateMachine));
+        assertThrows(ExportException.class, () -> InitialTransition.getInitialTransition(stateMachine));
     }
 }

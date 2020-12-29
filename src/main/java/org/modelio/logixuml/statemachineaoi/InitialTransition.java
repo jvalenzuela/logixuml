@@ -22,9 +22,9 @@ class InitialTransition {
      * @param parent Model object to query.
      * @return The transition originating from the initial pseudo state, or null if
      *         the parent object has no initial transition.
-     * @throws UnsupportedUmlException
+     * @throws ExportException
      */
-    static Transition getInitialTransition(final MObject parent) throws UnsupportedUmlException {
+    static Transition getInitialTransition(final MObject parent) throws ExportException {
         Transition transition = null;
         final Region region = getParentRegion(parent);
 
@@ -46,9 +46,9 @@ class InitialTransition {
      * @param parent Model object to query.
      * @return The region model object that may contain an initial transition; null
      *         of no child regions exist.
-     * @throws UnsupportedUmlException If a state object has multiple regions.
+     * @throws ExportException If a state object has multiple regions.
      */
-    static private Region getParentRegion(final MObject parent) throws UnsupportedUmlException {
+    static private Region getParentRegion(final MObject parent) throws ExportException {
         final String parentType = parent.getMClass().getQualifiedName();
         final Region region;
 
@@ -74,7 +74,7 @@ class InitialTransition {
                 break;
 
             default:
-                throw new UnsupportedUmlException(parent, "Multiple regions are not supported.");
+                throw new ExportException("Multiple regions are not supported.", parent);
             }
             break;
         }
@@ -93,10 +93,10 @@ class InitialTransition {
      *
      * @param region Source region model element.
      * @return The initial pseudo state, or null if none was found.
-     * @throws UnsupportedUmlException If the region contains more than one initial
-     *                                 transition.
+     * @throws ExportException If the region contains more than one initial
+     *                         transition.
      */
-    static private InitialPseudoState findInRegion(final Region region) throws UnsupportedUmlException {
+    static private InitialPseudoState findInRegion(final Region region) throws ExportException {
         final InitialPseudoState initial;
         final List<InitialPseudoState> initials = region.getSub(InitialPseudoState.class);
 
@@ -110,7 +110,7 @@ class InitialTransition {
             break;
 
         default:
-            throw new UnsupportedUmlException(region, "Multiple initial transitions not supported.");
+            throw new ExportException("Multiple initial transitions not supported.", region);
         }
 
         return initial;
@@ -121,17 +121,17 @@ class InitialTransition {
      *
      * @param initial Source initial pseudo state.
      * @return The outgoing transition.
-     * @throws UnsupportedUmlException If the pseudo state does not have a single
-     *                                 outgoing transition.
+     * @throws ExportException If the pseudo state does not have a single outgoing
+     *                         transition.
      */
-    static private Transition getTransition(final InitialPseudoState initial) throws UnsupportedUmlException {
+    static private Transition getTransition(final InitialPseudoState initial) throws ExportException {
         final EList<Transition> outgoing = initial.getOutGoing();
         final Transition transition;
 
         if (outgoing.size() == 1) {
             transition = outgoing.get(0);
         } else {
-            throw new UnsupportedUmlException(initial, "Initial state must have exactly one outgoing transition.");
+            throw new ExportException("Initial state must have exactly one outgoing transition.", initial);
         }
 
         return transition;
@@ -145,14 +145,12 @@ class InitialTransition {
      * @param origin     Model object owning the initial pseudo state where the
      *                   transition originates.
      * @param transition Transition model object to test.
-     * @throws UnsupportedUmlException If the transition is not a valid initial
-     *                                 transition.
+     * @throws ExportException If the transition is not a valid initial transition.
      */
-    static private void validateTransition(final MObject origin, final Transition transition)
-            throws UnsupportedUmlException {
+    static private void validateTransition(final MObject origin, final Transition transition) throws ExportException {
         // Confirm no trigger event is defined.
         if (!transition.getReceivedEvents().trim().isEmpty()) {
-            throw new UnsupportedUmlException(transition, "Initial transitions can not have a trigger event.");
+            throw new ExportException("Initial transitions can not have a trigger event.", transition);
         }
 
         // If this is an initial transition within a state, and not a state machine, it
@@ -161,7 +159,7 @@ class InitialTransition {
             final StateVertex target = transition.getTarget();
             final List<MRef> supers = SuperState.getSuperStateRefs(target);
             if (!supers.contains(new MRef(origin))) {
-                throw new UnsupportedUmlException(origin, "Initial transition must target a substate.");
+                throw new ExportException("Initial transition must target a substate.", origin);
             }
         }
     }

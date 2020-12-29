@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.modelio.logixuml.statemachineaoi.ExportException;
 
 /**
  * Unit tests for the AOI identifier validation regex.
@@ -30,7 +31,7 @@ class AoiIdentifierPatternTests {
     void validIdentifier(String id) {
         try {
             new AddOnInstruction(id);
-        } catch (AddOnInstructionException e) {
+        } catch (ExportException e) {
             fail(String.format("Valid id not accepted: %s", id));
         }
     }
@@ -53,7 +54,7 @@ class AoiIdentifierPatternTests {
             "_123456789012345678901234567890123456789X" // Exceeding maximum length.
     })
     void invalidIdentifier(String id) {
-        assertThrows(AddOnInstructionException.class, () -> new AddOnInstruction(id),
+        assertThrows(ExportException.class, () -> new AddOnInstruction(id),
                 String.format("Invalid id not rejected: %s", id));
     }
 
@@ -61,17 +62,17 @@ class AoiIdentifierPatternTests {
      * Confirm an invalid parameter name is rejected.
      */
     @Test
-    void invalidParameter() throws AddOnInstructionException {
+    void invalidParameter() throws ExportException {
         AddOnInstruction aoi = new AddOnInstruction("aoi");
-        assertThrows(AddOnInstructionException.class, () -> aoi.addParameter("_", "Input", "BOOL", true));
+        assertThrows(ExportException.class, () -> aoi.addParameter("_", "Input", "BOOL", true));
     }
 
     /**
      * Confirm an invalid local tag name is rejected.
      */
     @Test
-    void invalidLocalTag() throws AddOnInstructionException {
+    void invalidLocalTag() throws ExportException {
         AddOnInstruction aoi = new AddOnInstruction("aoi");
-        assertThrows(AddOnInstructionException.class, () -> aoi.addLocalTag("_", "DINT"));
+        assertThrows(ExportException.class, () -> aoi.addLocalTag("_", "DINT"));
     }
 }

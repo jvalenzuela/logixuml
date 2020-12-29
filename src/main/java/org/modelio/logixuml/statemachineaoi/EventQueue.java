@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
-import org.modelio.logixuml.l5x.AddOnInstructionException;
 
 /**
  * A buffer to store and retrieve events, implemented as a FIFO using a DINT
@@ -78,8 +77,9 @@ class EventQueue {
      *
      * @param aoi      Add-on instruction containing the queue.
      * @param capacity Maximum number of events that queue must hold.
+     * @throws ExportException If the AOI resources could not be created.
      */
-    public EventQueue(final AddOnInstruction aoi, final int capacity) {
+    public EventQueue(final AddOnInstruction aoi, final int capacity) throws ExportException {
         this.aoi = aoi;
         this.capacity = capacity;
         createTags();
@@ -91,8 +91,11 @@ class EventQueue {
 
     /**
      * Defines the parameters and local tags used by the queue.
+     *
+     * @throws ExportException If the necessary parameters or local tags could not
+     *                         be created.
      */
-    private void createTags() {
+    private void createTags() throws ExportException {
         try {
             aoi.addParameter(TagNames.OVERFLOW, "Output", "BOOL", true, "True if an overflow has occurred.");
             aoi.addParameter(TagNames.WATERMARK, "Output", "DINT", true, "Highest number of events stored.");
@@ -101,10 +104,10 @@ class EventQueue {
             aoi.addLocalTag(TagNames.HEAD, "DINT");
             aoi.addLocalTag(TagNames.TAIL, "DINT");
             aoi.addLocalTag(TagNames.SIZE, "DINT");
-        } catch (AddOnInstructionException e) {
+        } catch (ExportException e) {
             // These tag names are not derived from UML model names, and should never be
             // invalid.
-            throw new IllegalArgumentException("Failed to create event queue tags.", e);
+            throw new ExportException("Failed to create event queue tags.");
         }
     }
 

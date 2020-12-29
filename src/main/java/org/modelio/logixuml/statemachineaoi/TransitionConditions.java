@@ -56,7 +56,7 @@ abstract class TransitionConditions {
         target = getTargetState(element, source);
 
         if (source == target) {
-            throw new UnsupportedUmlException(element, "Transition must have different source and target states.");
+            throw new ExportException("Transition must have different source and target states.", element);
         }
 
         final List<MRef> exits = computeExitStates(source, target);
@@ -129,9 +129,9 @@ abstract class TransitionConditions {
      * @param tx     Model object defining the transition.
      * @param source Transition origin model object.
      * @return The ultimate target state.
-     * @throws UnsupportedUmlException
+     * @throws ExportException
      */
-    private State getTargetState(final Transition tx, final State source) throws UnsupportedUmlException {
+    private State getTargetState(final Transition tx, final State source) throws ExportException {
         State targetState = null;
         StateVertex targetElement = tx.getTarget();
 

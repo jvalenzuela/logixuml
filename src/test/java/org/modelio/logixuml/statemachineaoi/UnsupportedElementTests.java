@@ -154,13 +154,12 @@ class UnsupportedElementTests {
      * @param obj The target unsupported model object.
      */
     private void assertException(final MObject obj) {
-        UnsupportedUmlException e = assertThrows(UnsupportedUmlException.class,
-                () -> new StateMachineAoi(stateMachine));
+        ExportException e = assertThrows(ExportException.class, () -> new StateMachineAoi(stateMachine));
 
         // Confirm the exception message includes the name of the model object.
         assertTrue(e.getMessage().contains(obj.getMClass().getName()));
 
         // Confirm the exception references the correct model object.
-        assertSame(obj, e.getMObject());
+        assertSame(obj, e.getModelObject());
     }
 }
