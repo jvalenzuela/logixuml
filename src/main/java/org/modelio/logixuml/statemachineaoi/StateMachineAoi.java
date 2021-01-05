@@ -2,6 +2,7 @@ package org.modelio.logixuml.statemachineaoi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
@@ -23,6 +24,7 @@ public class StateMachineAoi {
     public StateMachineAoi(final MObject stateMachine) throws ExportException {
         final Set<MObject> children = getChildren(stateMachine);
         validateElementTypes(children);
+        final Map<String, AoiEvent> events = EventMap.build(children);
     }
 
     /**
