@@ -1,6 +1,7 @@
 package org.modelio.logixuml.structuredtext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -89,6 +90,15 @@ public class IfThen implements IStructuredTextGenerator {
     }
 
     /**
+     * Vararg version of {@link IfThen#addCase(String, List)}.
+     *
+     * @see IfThen#addCase(String, List)
+     */
+    public void addCase(final String exp, final String... statements) {
+        addCase(exp, Arrays.asList(statements));
+    }
+
+    /**
      * Assigns a set of statements to the ELSE block.
      *
      * @param statements The list of structured text statements to include in the
@@ -99,6 +109,15 @@ public class IfThen implements IStructuredTextGenerator {
         assert statements != null;
         assert statements.size() > 0;
         elseStatements = statements;
+    }
+
+    /**
+     * Vararg version of {@link IfThen#addElse(List)}.
+     *
+     * @see IfThen#addElse(List)
+     */
+    public void addElse(final String... statements) {
+        addElse(Arrays.asList(statements));
     }
 
     @Override
