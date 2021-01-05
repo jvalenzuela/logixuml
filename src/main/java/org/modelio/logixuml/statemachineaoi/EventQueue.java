@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
  * A buffer to store and retrieve events, implemented as a FIFO using a DINT
@@ -142,10 +143,13 @@ class EventQueue {
         // Set the overflow flag and generate a processor fault if the queue
         // is full. The processor fault is caused by indexing past the end of
         // the storage array.
-        lines.add(String.format("IF %1$s = %2$d THEN", TagNames.SIZE, capacity));
-        lines.add(String.format("%s := 1;", TagNames.OVERFLOW));
-        lines.add(String.format("%1$s[%2$d] := 0;", TagNames.STORAGE, capacity));
-        lines.add("END_IF;");
+        final IfThen overflowCheck = new IfThen();
+        overflowCheck.addCase( //
+                TagNames.SIZE + " = " + capacity, // Overflow when size = capacity.
+                TagNames.OVERFLOW + " := 1;", // Set overflow output.
+                TagNames.STORAGE + "[" + capacity + "] := 0;" // Generate processor fault.
+        );
+        lines.addAll(overflowCheck.getLines());
 
         // Store the value at the head of the array.
         lines.add(String.format("%1$s[%2$d] := %3$d;", TagNames.STORAGE, TagNames.HEAD, value));
@@ -157,9 +161,12 @@ class EventQueue {
         lines.add(String.format("%s := %s + 1;", TagNames.SIZE));
 
         // Update the high watermark output.
-        lines.add(String.format("IF %1$s > %2$s THEN", TagNames.SIZE, TagNames.WATERMARK));
-        lines.add(String.format("%1$s := %2$s;", TagNames.WATERMARK, TagNames.SIZE));
-        lines.add("END_IF;");
+        final IfThen watermark = new IfThen();
+        watermark.addCase( //
+                TagNames.SIZE + " > " + TagNames.WATERMARK, //
+                TagNames.WATERMARK + " := " + TagNames.SIZE + ";" //
+        );
+        lines.addAll(watermark.getLines());
 
         return unmodifiableList(lines);
     }
@@ -172,27 +179,19 @@ class EventQueue {
      * @return Structured text lines implementing the dequeue operation.
      */
     public List<String> dequeue(final String dest) {
-        ArrayList<String> lines = new ArrayList<String>();
+        final IfThen st = new IfThen();
 
-        // Check to see if any items are in the queue.
-        lines.add(String.format("IF %s > 0 THEN", TagNames.SIZE));
-
-        // Remove the next value from the tail index.
-        lines.add(String.format("%1$s := %2$s[%3$d];", dest, TagNames.STORAGE, TagNames.TAIL));
-
-        // Increment the tail pointer.
-        incrementIndex(TagNames.TAIL, lines);
-
-        // Reduce the current size.
-        lines.add(String.format("%s := %s - 1;", TagNames.TAIL));
+        // Add a case to handle removing an event if the queue has one or more events.
+        final List<String> removeEvent = new ArrayList<>();
+        removeEvent.add(dest + " := " + TagNames.STORAGE + "[" + TagNames.TAIL + "];"); // Remove value from tail index.
+        incrementIndex(TagNames.TAIL, removeEvent); // Increment the tail pointer.
+        removeEvent.add(TagNames.TAIL + " := " + TagNames.TAIL + " - 1;"); // Reduce the current size.
+        st.addCase(TagNames.SIZE + " > 0", removeEvent);
 
         // Clear the destination tag if the queue is empty.
-        lines.add("ELSE");
-        lines.add(String.format("%s := 0;", dest));
+        st.addElse(dest + " := 0;");
 
-        lines.add("END_IF;");
-
-        return unmodifiableList(lines);
+        return unmodifiableList(st.getLines());
     }
 
     /**
@@ -205,9 +204,9 @@ class EventQueue {
         lines.add(String.format("%s := %s + 1;", tag));
 
         // Wrap back to the beginning if the index has reached the end of the array.
-        lines.add(String.format("IF %1$s = %2$d THEN", tag, capacity));
-        lines.add(String.format("%s := 0;", tag));
-        lines.add("END_IF;");
+        final IfThen wrap = new IfThen();
+        wrap.addCase(tag + " = " + capacity, tag + " := 0;");
+        lines.addAll(wrap.getLines());
     }
 
     /**
