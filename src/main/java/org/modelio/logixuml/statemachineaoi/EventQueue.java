@@ -1,5 +1,7 @@
 package org.modelio.logixuml.statemachineaoi;
 
+import static java.util.Collections.unmodifiableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,8 +134,9 @@ class EventQueue {
      * value into the queue.
      *
      * @param value Value to add to the queue.
+     * @return Structured text lines implementing the enqueue operation.
      */
-    public void enqueue(final int value) {
+    public List<String> enqueue(final int value) {
         ArrayList<String> lines = new ArrayList<String>();
 
         // Set the overflow flag and generate a processor fault if the queue
@@ -158,7 +161,7 @@ class EventQueue {
         lines.add(String.format("%1$s := %2$s;", TagNames.WATERMARK, TagNames.SIZE));
         lines.add("END_IF;");
 
-        addLines("Logic", lines);
+        return unmodifiableList(lines);
     }
 
     /**
@@ -166,8 +169,9 @@ class EventQueue {
      * value from the queue
      *
      * @param dest Tag name to receive the value.
+     * @return Structured text lines implementing the dequeue operation.
      */
-    public void dequeue(final String dest) {
+    public List<String> dequeue(final String dest) {
         ArrayList<String> lines = new ArrayList<String>();
 
         // Check to see if any items are in the queue.
@@ -188,7 +192,7 @@ class EventQueue {
 
         lines.add("END_IF;");
 
-        addLines("Logic", lines);
+        return unmodifiableList(lines);
     }
 
     /**
