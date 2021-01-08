@@ -2,6 +2,9 @@ package org.modelio.logixuml.command;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.modelio.api.modelio.navigation.INavigationService;
 import org.modelio.api.module.IModule;
 import org.modelio.api.module.command.DefaultModuleCommandHandler;
@@ -24,6 +27,7 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
             aoi = new StateMachineAoi((StateMachine) selectedElements.get(0));
         } catch (ExportException e) {
             selectExceptionObject(e);
+            showErrorDialog(e);
         }
     }
 
@@ -42,5 +46,13 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
         }
     }
 
+    /**
+     * Displays a GUI dialog reporting an error during AOI export.
+     *
+     * @param e Exception raised during the export.
+     */
+    private void showErrorDialog(final Throwable e) {
+        final Status status = new Status(IStatus.ERROR, "org.modelio.logixuml", e.getMessage(), e.getCause());
+        ErrorDialog.openError(null, "AOI Export Error", null, status);
     }
 }
