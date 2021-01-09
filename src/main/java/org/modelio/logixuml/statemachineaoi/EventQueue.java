@@ -8,6 +8,7 @@ import java.util.List;
 import org.modelio.logixuml.l5x.AddOnInstruction;
 import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ParameterUsage;
+import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
@@ -90,8 +91,8 @@ class EventQueue {
         createTags();
 
         // Empty the queue in the prescan and enable-in false routines.
-        clear("Prescan");
-        clear("EnableInFalse");
+        clear(ScanModeRoutine.Prescan);
+        clear(ScanModeRoutine.EnableInFalse);
     }
 
     /**
@@ -121,9 +122,9 @@ class EventQueue {
     /**
      * Generates a set of structured text commands to empty the queue.
      *
-     * @param routine Name of the routine to append the structured text lines to.
+     * @param routine Routine to append the structured text lines to.
      */
-    private void clear(final String routine) {
+    private void clear(final ScanModeRoutine routine) {
         ArrayList<String> lines = new ArrayList<String>();
 
         lines.add(String.format("%s := 0;", TagNames.HEAD));
@@ -216,10 +217,10 @@ class EventQueue {
     /**
      * Appends a list of structured text lines to an AOI routine.
      *
-     * @param routine Name of the target routine.
+     * @param routine Target routine.
      * @param lines   List of lines to add.
      */
-    private void addLines(final String routine, final List<String> lines) {
+    private void addLines(final ScanModeRoutine routine, final List<String> lines) {
         for (final String s : lines) {
             aoi.addStructuredTextLine(routine, s);
         }

@@ -48,7 +48,7 @@ public class AddOnInstruction {
      * Mapping containing the logic routines, keyed by routine name, with the value
      * as a STContent element containing the structured text.
      */
-    private Map<String, Element> Routines = new HashMap<String, Element>();
+    private Map<ScanModeRoutine, Element> Routines = new HashMap<>();
 
     /**
      * Constructor.
@@ -114,9 +114,9 @@ public class AddOnInstruction {
         // Add parent elements for each routine.
         final Element routines = Doc.createElement("Routines");
         aoi.appendChild(routines);
-        routines.appendChild(routineElement("Prescan"));
-        routines.appendChild(routineElement("Logic"));
-        routines.appendChild(routineElement("EnableInFalse"));
+        routines.appendChild(routineElement(ScanModeRoutine.Prescan));
+        routines.appendChild(routineElement(ScanModeRoutine.Logic));
+        routines.appendChild(routineElement(ScanModeRoutine.EnableInFalse));
     }
 
     /**
@@ -125,9 +125,9 @@ public class AddOnInstruction {
      * @param name Routine name.
      * @returns The generated XML element.
      */
-    private Element routineElement(final String name) {
+    private Element routineElement(final ScanModeRoutine name) {
         final Element routine = Doc.createElement("Routine");
-        routine.setAttribute("Name", name);
+        routine.setAttribute("Name", name.name());
         routine.setAttribute("Type", "ST");
 
         final Element content = Doc.createElement("STContent");
@@ -196,15 +196,15 @@ public class AddOnInstruction {
     /**
      * Appends a line of structured text to a routine.
      *
-     * @param name   Name of the target routine.
-     * @param stLine Structured text line to add.
+     * @param routine Target routine.
+     * @param stLine  Structured text line to add.
      */
-    public void addStructuredTextLine(final String name, final String stLine) {
-        final Element routine = Routines.get(name);
+    public void addStructuredTextLine(final ScanModeRoutine routine, final String stLine) {
+        final Element element = Routines.get(routine);
 
         // Determine the next line number to use.
         final Integer lineNum;
-        final NodeList existingLines = routine.getElementsByTagName("Line");
+        final NodeList existingLines = element.getElementsByTagName("Line");
         if (existingLines.getLength() > 0) {
             final Element lastLine = (Element) existingLines.item(existingLines.getLength() - 1);
             lineNum = new Integer(lastLine.getAttribute("Number")) + 1;
@@ -213,7 +213,7 @@ public class AddOnInstruction {
         }
 
         final Element line = Doc.createElement("Line");
-        routine.appendChild(line);
+        element.appendChild(line);
         line.setAttribute("Number", lineNum.toString());
 
         // Create the CDATA section with the actual content.

@@ -7,6 +7,7 @@ import java.util.List;
 import org.modelio.logixuml.l5x.AddOnInstruction;
 import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ParameterUsage;
+import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
@@ -69,8 +70,8 @@ class AoiEvent {
         // The storage bit is set to one to require a rising edge of the event input
         // during normal logic scan for the event to be detected and queued.
         final String stLine = onsTagName + " := 1;";
-        aoi.addStructuredTextLine("Prescan", stLine);
-        aoi.addStructuredTextLine("EnableInFalse", stLine);
+        aoi.addStructuredTextLine(ScanModeRoutine.Prescan, stLine);
+        aoi.addStructuredTextLine(ScanModeRoutine.EnableInFalse, stLine);
     }
 
     /**
