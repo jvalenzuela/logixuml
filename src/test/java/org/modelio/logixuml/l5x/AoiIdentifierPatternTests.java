@@ -64,7 +64,7 @@ class AoiIdentifierPatternTests {
     @Test
     void invalidParameter() throws ExportException {
         AddOnInstruction aoi = new AddOnInstruction("aoi");
-        assertThrows(ExportException.class, () -> aoi.addParameter("_", "Input", "BOOL", true));
+        assertThrows(ExportException.class, () -> aoi.addParameter("_", ParameterUsage.Input, DataType.BOOL, true));
     }
 
     /**
@@ -73,6 +73,6 @@ class AoiIdentifierPatternTests {
     @Test
     void invalidLocalTag() throws ExportException {
         AddOnInstruction aoi = new AddOnInstruction("aoi");
-        assertThrows(ExportException.class, () -> aoi.addLocalTag("_", "DINT"));
+        assertThrows(ExportException.class, () -> aoi.addLocalTag("_", DataType.DINT));
     }
 }

@@ -144,22 +144,22 @@ public class AddOnInstruction {
      * Creates an AOI parameter.
      *
      * @param name     Parameter name.
-     * @param usage    "Input" or "Output".
-     * @param dataType String defining the RSLogix data type, e.g. "DINT".
+     * @param usage    Parameter direction; input or output.
+     * @param dataType RSLogix data type.
      * @param visible  True to make the parameter visible in the ladder display.
      * @param desc     Optional parameter description string.
      * @throws ExportException If the name is invalid.
      */
-    public void addParameter(final String name, final String usage, final String dataType, final boolean visible,
-            final String... desc) throws ExportException {
+    public void addParameter(final String name, final ParameterUsage usage, final DataType dataType,
+            final boolean visible, final String... desc) throws ExportException {
         validateIdentifier(name);
 
         final Element e = Doc.createElement("Parameter");
         Parameters.appendChild(e);
 
         e.setAttribute("Name", name);
-        e.setAttribute("Usage", usage);
-        e.setAttribute("DataType", dataType);
+        e.setAttribute("Usage", usage.name());
+        e.setAttribute("DataType", dataType.name());
         e.setAttribute("Visible", new Boolean(visible).toString());
 
         // Description is stored in a child element with CDATA content.
@@ -174,18 +174,18 @@ public class AddOnInstruction {
      * Creates a local tag.
      *
      * @param name     Tag name.
-     * @param dataType RSLogix name for the data type, e.g. "DINT".
+     * @param dataType RSLogix name for the data type.
      * @param dim      Optional array size if creating an array tag.
      * @throws ExportException If the name is invalid.
      */
-    public void addLocalTag(final String name, final String dataType, final int... dim) throws ExportException {
+    public void addLocalTag(final String name, final DataType dataType, final int... dim) throws ExportException {
         validateIdentifier(name);
 
         final Element e = Doc.createElement("LocalTag");
         LocalTags.appendChild(e);
 
         e.setAttribute("name", name);
-        e.setAttribute("DataType", dataType);
+        e.setAttribute("DataType", dataType.name());
 
         // Add the optional dimensions attribute for array tags.
         if (dim.length > 0) {

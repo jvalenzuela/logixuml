@@ -5,6 +5,8 @@ import static java.util.Collections.unmodifiableList;
 import java.util.List;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.l5x.DataType;
+import org.modelio.logixuml.l5x.ParameterUsage;
 import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
@@ -59,9 +61,9 @@ class AoiEvent {
      */
     void initializeAoi(final AddOnInstruction aoi) throws ExportException {
         // Create the input and local tag.
-        aoi.addParameter(inputTagName, "Input", "BOOL", false,
+        aoi.addParameter(inputTagName, ParameterUsage.Input, DataType.BOOL, false,
                 "Rising edge to deliver this event to the state machine.");
-        aoi.addLocalTag(onsTagName, "BOOL");
+        aoi.addLocalTag(onsTagName, DataType.BOOL);
 
         // Add lines to prescan and enable-in-false to reset the one-shot storage bit.
         // The storage bit is set to one to require a rising edge of the event input

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.l5x.DataType;
+import org.modelio.logixuml.l5x.ParameterUsage;
 import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
@@ -100,13 +102,15 @@ class EventQueue {
      */
     private void createTags() throws ExportException {
         try {
-            aoi.addParameter(TagNames.OVERFLOW, "Output", "BOOL", true, "True if an overflow has occurred.");
-            aoi.addParameter(TagNames.WATERMARK, "Output", "DINT", true, "Highest number of events stored.");
+            aoi.addParameter(TagNames.OVERFLOW, ParameterUsage.Output, DataType.BOOL, true,
+                    "True if an overflow has occurred.");
+            aoi.addParameter(TagNames.WATERMARK, ParameterUsage.Output, DataType.DINT, true,
+                    "Highest number of events stored.");
 
-            aoi.addLocalTag(TagNames.STORAGE, "DINT", capacity);
-            aoi.addLocalTag(TagNames.HEAD, "DINT");
-            aoi.addLocalTag(TagNames.TAIL, "DINT");
-            aoi.addLocalTag(TagNames.SIZE, "DINT");
+            aoi.addLocalTag(TagNames.STORAGE, DataType.DINT, capacity);
+            aoi.addLocalTag(TagNames.HEAD, DataType.DINT);
+            aoi.addLocalTag(TagNames.TAIL, DataType.DINT);
+            aoi.addLocalTag(TagNames.SIZE, DataType.DINT);
         } catch (ExportException e) {
             // These tag names are not derived from UML model names, and should never be
             // invalid.
