@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.modelio.api.modelio.navigation.INavigationService;
 import org.modelio.api.module.IModule;
@@ -61,19 +61,16 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
     }
 
     /**
-     * Opens a dialog to select the output filename.
+     * Opens a dialog to select the output directory.
      *
-     * @param aoiName
      * @param context LogixUML module context.
-     * @return Absolute path to the target L5X file, or null if the Cancel button
+     * @return Absolute path to the target directory, or null if the Cancel button
      *         was pressed.
      */
-    private String getTargetFilename(final String aoiName, final IModuleContext context) {
+    private String getTargetPath(final IModuleContext context) {
         final Shell parent = DefaultShellProvider.getBestParentShell();
-        final FileDialog dialog = new FileDialog(parent);
-        dialog.setText("Select AOI Export File Name");
-        dialog.setFileName(aoiName + ".L5X");
-        dialog.setFilterExtensions(new String[] { "*.L5X" });
+        final DirectoryDialog dialog = new DirectoryDialog(parent);
+        dialog.setText("Select AOI Export Directory");
 
         // Set the starting path to the same as the model project.
         final Path path = context.getProjectStructure().getPath();
