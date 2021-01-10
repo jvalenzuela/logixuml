@@ -3,6 +3,7 @@ package org.modelio.logixuml.l5x;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -218,6 +219,18 @@ public class AddOnInstruction {
 
         // Create the CDATA section with the actual content.
         line.appendChild(Doc.createCDATASection(stLine));
+    }
+
+    /**
+     * Appends a sequence of structured text lines to a routine.
+     *
+     * @param routine Target routine.
+     * @param lines   ST lines to append.
+     */
+    public void addStructuredTextLines(final ScanModeRoutine routine, final List<String> lines) {
+        for (final String l : lines) {
+            addStructuredTextLine(routine, l);
+        }
     }
 
     /**

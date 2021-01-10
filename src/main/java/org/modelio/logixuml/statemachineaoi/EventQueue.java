@@ -132,7 +132,7 @@ class EventQueue {
         lines.add(String.format("%s := 0;", TagNames.SIZE));
         lines.add(String.format("%s := 0;", TagNames.OVERFLOW));
 
-        addLines(routine, lines);
+        aoi.addStructuredTextLines(routine, lines);
     }
 
     /**
@@ -212,17 +212,5 @@ class EventQueue {
         final IfThen wrap = new IfThen();
         wrap.addCase(tag + " = " + capacity, tag + " := 0;");
         lines.addAll(wrap.getLines());
-    }
-
-    /**
-     * Appends a list of structured text lines to an AOI routine.
-     *
-     * @param routine Target routine.
-     * @param lines   List of lines to add.
-     */
-    private void addLines(final ScanModeRoutine routine, final List<String> lines) {
-        for (final String s : lines) {
-            aoi.addStructuredTextLine(routine, s);
-        }
     }
 }
