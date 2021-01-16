@@ -34,7 +34,7 @@ class EventMapTests {
     @BeforeEach
     void initModel() {
         modelElements = new HashSet<>();
-        final StateMachine stateMachine = MockModel.stateMachine(null);
+        final StateMachine stateMachine = MockModel.stateMachine("sm", null);
         modelElements.add(stateMachine);
         final Region region = MockModel.region(stateMachine);
         modelElements.add(region);

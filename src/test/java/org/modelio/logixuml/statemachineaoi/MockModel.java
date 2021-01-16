@@ -50,11 +50,12 @@ class MockModel {
     /**
      * Generates a mock state machine model element.
      *
+     * @param name   String to return from getName().
      * @param parent Object that owns the new mock element in a composition graph.
      * @return The mock state machine object.
      */
-    static StateMachine stateMachine(final MObject parent) {
-        return modelObject(StateMachine.class, StateMachine.MQNAME, parent, "");
+    static StateMachine stateMachine(final String name, final MObject parent) {
+        return modelObject(StateMachine.class, StateMachine.MQNAME, parent, name);
     }
 
     /**
@@ -309,9 +310,7 @@ class MockModel {
         // A UUID is needed to generate an MRef object pointing to the mock object.
         lenient().when(obj.getUuid()).thenReturn(UUID.randomUUID().toString());
 
-        if (!name.isEmpty()) {
-            when(obj.getName()).thenReturn(name);
-        }
+        when(obj.getName()).thenReturn(name);
 
         // Register references to mock objects in the mock modeling session.
         MockModule.setSessionMRef(new MRef(obj), obj);

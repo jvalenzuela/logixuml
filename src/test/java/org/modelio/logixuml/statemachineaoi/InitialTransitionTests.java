@@ -25,7 +25,7 @@ class InitialTransitionTests {
      */
     @BeforeEach
     void constructBaseMockModel() {
-        stateMachine = MockModel.stateMachine(null);
+        stateMachine = MockModel.stateMachine("sm", null);
         top = MockModel.region(stateMachine);
     }
 

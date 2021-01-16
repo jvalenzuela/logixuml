@@ -64,7 +64,7 @@ abstract class TransitionConditionTests {
         MockModule.init();
 
         // Initialize root model objects.
-        stateMachine = MockModel.stateMachine(null);
+        stateMachine = MockModel.stateMachine("sm", null);
         top = MockModel.region(stateMachine);
 
         expectedConditions = new ArrayList<Condition>();

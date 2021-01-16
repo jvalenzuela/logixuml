@@ -33,7 +33,7 @@ class SuperStateTests {
     @BeforeEach
     private void createMockModel() {
         pkg = MockModel.pkg();
-        stateMachine = MockModel.stateMachine(pkg);
+        stateMachine = MockModel.stateMachine("sm", pkg);
         top = MockModel.region(stateMachine);
         superState = MockModel.state("", top);
         region = MockModel.region(superState);

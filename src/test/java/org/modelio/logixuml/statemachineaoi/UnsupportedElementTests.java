@@ -34,7 +34,7 @@ class UnsupportedElementTests {
 
     @BeforeEach
     private void createMockModel() {
-        stateMachine = MockModel.stateMachine(null);
+        stateMachine = MockModel.stateMachine("sm", null);
         top = MockModel.region(stateMachine);
     }
 
