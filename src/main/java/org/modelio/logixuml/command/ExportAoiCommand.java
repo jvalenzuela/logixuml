@@ -26,9 +26,12 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
     @Override
     public void actionPerformed(List<MObject> selectedElements, IModule module) {
         final IModuleContext context = module.getModuleContext();
-        final StateMachineAoi aoi;
         try {
-            aoi = new StateMachineAoi((StateMachine) selectedElements.get(0));
+            final StateMachineAoi aoi = new StateMachineAoi((StateMachine) selectedElements.get(0));
+            final String path = getTargetPath(context);
+            if (path != null) {
+                aoi.export(path);
+            }
         } catch (ExportException e) {
             selectExceptionObject(e, context);
             showErrorDialog(e);

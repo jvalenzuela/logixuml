@@ -1,7 +1,11 @@
 package org.modelio.logixuml.l5x;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,21 +240,30 @@ public class AddOnInstruction {
     /**
      * Writes the AOI to an L5X file.
      *
-     * @throws ExportException If an XML transformation error occurs.
-     * @throws IOException     If the L5X file could not be written.
-     * @param filename Target L5X file name.
+     * @param dir Target directory for the L5X file.
+     * @throws ExportException If the L5X file could not be written.
      */
-    public void write() throws ExportException, IOException {
+    public void write(final String dir) throws ExportException {
         final DOMSource src = new DOMSource(Doc);
         final TransformerFactory xfrFactory = TransformerFactory.newInstance();
-        final String filename = Name + ".L5X";
+        final Path path;
 
-        try (final FileOutputStream f = new FileOutputStream(filename)) {
+        // Combine the target directory and output file name into a complete, absolute
+        // path.
+        try {
+            path = Paths.get(dir, Name + ".L5X");
+        } catch (InvalidPathException e) {
+            throw new ExportException("Invalid output path.", e);
+        }
+
+        try (final OutputStream f = Files.newOutputStream(path)) {
             final Transformer xfr = xfrFactory.newTransformer();
             final StreamResult dst = new StreamResult(f);
             xfr.transform(src, dst);
         } catch (TransformerException e) {
             throw new ExportException("XML transformation error.", e);
+        } catch (IOException e) {
+            throw new ExportException("Error writing L5X file.", e);
         }
     }
 
