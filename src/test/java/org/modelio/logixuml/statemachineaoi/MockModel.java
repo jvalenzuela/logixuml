@@ -1,5 +1,7 @@
 package org.modelio.logixuml.statemachineaoi;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,6 +31,7 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.StateMachine;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateVertex;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.TerminatePseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
+import org.modelio.metamodel.uml.infrastructure.ModelElement;
 import org.modelio.metamodel.uml.statik.Package;
 import org.modelio.vcore.smkernel.mapi.MClass;
 import org.modelio.vcore.smkernel.mapi.MObject;
@@ -271,6 +274,17 @@ class MockModel {
      */
     static FinalState finalState(final MObject parent) {
         return modelObject(FinalState.class, FinalState.MQNAME, parent, "");
+    }
+
+    /**
+     * Adds a mock stereotype property table value.
+     *
+     * @param element  Element that would normally have the stereotype applied.
+     * @param property Property name.
+     * @param value    Property value.
+     */
+    static void addProperty(final ModelElement element, final String property, final String value) {
+        when(element.getProperty(anyString(), anyString(), eq(property))).thenReturn(value);
     }
 
     /**
