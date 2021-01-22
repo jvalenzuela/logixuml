@@ -89,6 +89,7 @@ public class StateMachineAoi {
             case StateMachineDiagram.MQNAME:
             case Region.MQNAME:
             case Transition.MQNAME:
+            case TypedPropertyTable.MQNAME:
                 break;
 
             default:
