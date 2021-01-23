@@ -17,7 +17,7 @@ import org.modelio.vcore.smkernel.mapi.MObject;
 
 public class StateMachineAoi {
     /**
-     * String added to the state machine model name to from the AOI's name.
+     * String added to the state machine model name to form the AOI's name.
      */
     private static String NAME_PREFIX = "stateMachine_";
 
