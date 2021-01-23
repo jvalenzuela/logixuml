@@ -127,10 +127,10 @@ class EventQueue {
     private void clear(final ScanModeRoutine routine) {
         ArrayList<String> lines = new ArrayList<String>();
 
-        lines.add(String.format("%s := 0;", TagNames.HEAD));
-        lines.add(String.format("%s := 0;", TagNames.TAIL));
-        lines.add(String.format("%s := 0;", TagNames.SIZE));
-        lines.add(String.format("%s := 0;", TagNames.OVERFLOW));
+        lines.add(TagNames.HEAD + " := 0;");
+        lines.add(TagNames.TAIL + " := 0;");
+        lines.add(TagNames.SIZE + " := 0;");
+        lines.add(TagNames.OVERFLOW + " := 0;");
 
         aoi.addStructuredTextLines(routine, lines);
     }
@@ -157,13 +157,13 @@ class EventQueue {
         lines.addAll(overflowCheck.getLines());
 
         // Store the value at the head of the array.
-        lines.add(String.format("%1$s[%2$d] := %3$d;", TagNames.STORAGE, TagNames.HEAD, value));
+        lines.add(TagNames.STORAGE + "[" + TagNames.HEAD + "] := " + value + ";");
 
         // Increment the head pointer.
         incrementIndex(TagNames.HEAD, lines);
 
         // Increment the current size.
-        lines.add(String.format("%s := %s + 1;", TagNames.SIZE));
+        lines.add(TagNames.SIZE + " := " + TagNames.SIZE + " + 1;");
 
         // Update the high watermark output.
         final IfThen watermark = new IfThen();
@@ -206,7 +206,7 @@ class EventQueue {
      * @param lines List of structured text lines to append onto.
      */
     private void incrementIndex(final String tag, final List<String> lines) {
-        lines.add(String.format("%s := %s + 1;", tag));
+        lines.add(tag + " := " + tag + " + 1;");
 
         // Wrap back to the beginning if the index has reached the end of the array.
         final IfThen wrap = new IfThen();
