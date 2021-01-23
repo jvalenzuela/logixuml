@@ -58,7 +58,13 @@ class MockModel {
      * @return The mock state machine object.
      */
     static StateMachine stateMachine(final String name, final MObject parent) {
-        return modelObject(StateMachine.class, StateMachine.MQNAME, parent, name);
+        final StateMachine sm = modelObject(StateMachine.class, StateMachine.MQNAME, parent, name);
+
+        // Add a set of default property table values.
+        addProperty(sm, "eventQueueSize", "1");
+        addProperty(sm, "transitionScanMode", "single");
+
+        return sm;
     }
 
     /**
