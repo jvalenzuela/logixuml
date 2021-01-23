@@ -41,7 +41,7 @@ class EventMap {
      */
     static private List<String> getEventNames(final Set<MObject> elements) {
         final List<String> names = elements.stream() //
-                .filter(e -> e.getMClass().getQualifiedName() == Transition.MQNAME) // Remove non-transition elements.
+                .filter(e -> e.getMClass().getQualifiedName().equals(Transition.MQNAME)) // Remove non-transitions.
                 .map(e -> (Transition) e) // Cast to Transition objects.
                 .filter(t -> t.getReceivedEvents() != null) // Ignore transitions with no event.
                 .map(t -> t.getReceivedEvents().trim()) // Extract event names.
