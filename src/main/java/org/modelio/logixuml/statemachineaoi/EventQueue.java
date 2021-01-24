@@ -60,13 +60,13 @@ class EventQueue {
          * Output BOOL parameter that is set if an attempt is made to enqueue more items
          * than the queue can hold.
          */
-        private final static String OVERFLOW = "event_queue_overflow";
+        private final static String OVERFLOW = "eventQ_overflow";
 
         /**
          * Output DINT parameter that contains the highest number of events ever stored
          * in the queue.
          */
-        private final static String WATERMARK = "event_queue_watermark";
+        private final static String WATERMARK = "eventQ_watermark";
     }
 
     /**
