@@ -12,6 +12,7 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.metamodel.uml.infrastructure.Note;
+import org.modelio.metamodel.uml.infrastructure.properties.TypedPropertyTable;
 import org.modelio.vcore.model.CompositionGetter;
 import org.modelio.vcore.smkernel.mapi.MObject;
 
