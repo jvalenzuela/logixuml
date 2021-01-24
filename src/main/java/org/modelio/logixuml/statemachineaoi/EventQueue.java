@@ -9,6 +9,7 @@ import org.modelio.logixuml.l5x.AddOnInstruction;
 import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ParameterUsage;
 import org.modelio.logixuml.l5x.ScanModeRoutine;
+import org.modelio.logixuml.structuredtext.Halt;
 import org.modelio.logixuml.structuredtext.IfThen;
 
 /**
@@ -145,15 +146,12 @@ class EventQueue {
     public List<String> enqueue(final int value) {
         ArrayList<String> lines = new ArrayList<String>();
 
-        // Set the overflow flag and generate a processor fault if the queue
-        // is full. The processor fault is caused by indexing past the end of
-        // the storage array.
+        // Set the overflow flag and halt the processor if the queue is full.
         final IfThen overflowCheck = new IfThen();
-        overflowCheck.addCase( //
-                TagNames.SIZE + " = " + capacity, // Overflow when size = capacity.
-                TagNames.OVERFLOW + " := 1;", // Set overflow output.
-                TagNames.STORAGE + "[" + capacity + "] := 0;" // Generate processor fault.
-        );
+        final List<String> overflowStatements = new ArrayList<>();
+        overflowStatements.add(TagNames.OVERFLOW + " := 1;");
+        overflowStatements.addAll(Halt.getLines());
+        overflowCheck.addCase(TagNames.SIZE + " = " + capacity, overflowStatements);
         lines.addAll(overflowCheck.getLines());
 
         // Store the value at the head of the array.

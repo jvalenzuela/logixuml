@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.structuredtext.Halt;
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
@@ -35,6 +36,7 @@ public class StateMachineAoi {
      */
     public StateMachineAoi(final MObject stateMachine) throws ExportException {
         aoi = new AddOnInstruction(getName(stateMachine));
+        Halt.createTags(aoi);
         final Set<MObject> children = getChildren(stateMachine);
         validateElementTypes(children);
         final Map<String, AoiEvent> events = EventMap.build(children);
