@@ -1,16 +1,20 @@
 package org.modelio.logixuml.statemachineaoi;
 
+import static java.util.Collections.unmodifiableList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.Halt;
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
+import org.modelio.metamodel.uml.behavior.stateMachineModel.StateMachine;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.metamodel.uml.infrastructure.Note;
 import org.modelio.metamodel.uml.infrastructure.properties.TypedPropertyTable;
@@ -29,6 +33,16 @@ public class StateMachineAoi {
     private final AddOnInstruction aoi;
 
     /**
+     * Object handling the event queue implementation.
+     */
+    private final EventQueue eventQ;
+
+    /**
+     * Set of AoiEvent objects keyed by event name.
+     */
+    private final Map<String, AoiEvent> events;
+
+    /**
      * Constructor.
      *
      * @param stateMachine Source state machine model.
@@ -39,7 +53,15 @@ public class StateMachineAoi {
         Halt.createTags(aoi);
         final Set<MObject> children = getChildren(stateMachine);
         validateElementTypes(children);
-        final Map<String, AoiEvent> events = EventMap.build(children);
+        final StereotypeProperties props = new StereotypeProperties((StateMachine) stateMachine);
+        eventQ = new EventQueue(aoi, props.getEventQueueSize());
+
+        events = EventMap.build(children);
+        for (final AoiEvent e : events.values()) {
+            e.initializeAoi(aoi);
+        }
+
+        buildLogicRoutine();
     }
 
     /**
@@ -100,6 +122,33 @@ public class StateMachineAoi {
                 throw new ExportException(String.format("Unsupported UML element type: %s", shortName), e);
             }
         }
+    }
+
+    /**
+     * Constructs the add-on instruction's logic routine.
+     */
+    private void buildLogicRoutine() {
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, queueEvents());
+    }
+
+    /**
+     * Builds a block of structured text evaluating event inputs and adding them to
+     * the event queue.
+     *
+     * @return List of structured text lines.
+     */
+    private List<String> queueEvents() {
+        // Events are evaluated in order based on the event, not tag, name. This sorting
+        // is intended only to produce repeatable structured text output, not to
+        // guarantee the order in which events arriving in the same scan are queued.
+        final List<String> st = //
+                events.keySet().stream()// Extract event names.
+                        .sorted() // Sort by event name.
+                        .map(events::get) // Map back to sorted AoiEvent objects.
+                        .map(e -> e.evalInput(eventQ)) // Generate ST lines.
+                        .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll); // Assemble into a list.
+
+        return unmodifiableList(st);
     }
 
     /**
