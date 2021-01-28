@@ -1,6 +1,11 @@
 package org.modelio.logixuml.statemachineaoi;
 
+import static java.util.Collections.unmodifiableList;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.modelio.api.modelio.model.IModelingSession;
@@ -114,5 +119,32 @@ class Condition {
     private void assertRefIsState(final MRef ref) {
         final MObject target = session.findByRef(ref);
         assert (target != null) && (target.getMClass().getQualifiedName() == State.MQNAME);
+    }
+
+    /**
+     * Generates a structured text statements to energize the state action outputs
+     * active in this condition.
+     *
+     * @param stateMap Mapping to resolve MRefs to objects handling the state output
+     *                 tags.
+     * @return List of structured text statements.
+     */
+    List<String> setOutputs(final Map<MRef, AoiState> stateMap) {
+        final List<String> st = new ArrayList<>();
+
+        for (final MRef ref : actionEntry) {
+            final AoiState state = stateMap.get(ref);
+            st.add(state.setEntryOutput(true));
+        }
+        for (final MRef ref : actionDo) {
+            final AoiState state = stateMap.get(ref);
+            st.add(state.setDoOutput(true));
+        }
+        for (final MRef ref : actionExit) {
+            final AoiState state = stateMap.get(ref);
+            st.add(state.setExitOutput(true));
+        }
+
+        return unmodifiableList(st);
     }
 }
