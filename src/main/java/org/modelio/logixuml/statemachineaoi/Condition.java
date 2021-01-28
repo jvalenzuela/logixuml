@@ -118,7 +118,7 @@ class Condition {
      */
     private void assertRefIsState(final MRef ref) {
         final MObject target = session.findByRef(ref);
-        assert (target != null) && (target.getMClass().getQualifiedName() == State.MQNAME);
+        assert (target != null) && target.getMClass().getQualifiedName().equals(State.MQNAME);
     }
 
     /**
