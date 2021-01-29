@@ -295,6 +295,12 @@ class MockModel {
 
     /**
      * Creates a mock model object.
+     * <p>
+     * String arguments that are returned exactly from stub methods, such as
+     * MClassName, are duplicated here to produce a distinct string object with the
+     * same value; the stub method then returns this duplicate. This is done to
+     * assist in catching incorrect string comparisons done with identity(==)
+     * instead of equals().
      *
      * @param cls        Class of model object to mock.
      * @param MClassName Qualified name of the mock object's metac-lass.
@@ -321,7 +327,7 @@ class MockModel {
         // Create an empty collection for the getCompositionChildren() stub.
         Mockito.doReturn(new ArrayList<MObject>()).when(obj).getCompositionChildren();
 
-        lenient().when(obj.getMClass().getQualifiedName()).thenReturn(MClassName);
+        lenient().when(obj.getMClass().getQualifiedName()).thenReturn(new String(MClassName));
 
         // Generate the simple name by splitting the fully-qualified name.
         final String simpleName = MClassName.split(String.format("\\Q%c\\E", MClass.QUALIFIER_SEP))[1];
@@ -330,7 +336,7 @@ class MockModel {
         // A UUID is needed to generate an MRef object pointing to the mock object.
         lenient().when(obj.getUuid()).thenReturn(UUID.randomUUID().toString());
 
-        when(obj.getName()).thenReturn(name);
+        when(obj.getName()).thenReturn(new String(name));
 
         // Register references to mock objects in the mock modeling session.
         MockModule.setSessionMRef(new MRef(obj), obj);
