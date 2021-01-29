@@ -128,27 +128,7 @@ public class StateMachineAoi {
      * Constructs the add-on instruction's logic routine.
      */
     private void buildLogicRoutine() {
-        aoi.addStructuredTextLines(ScanModeRoutine.Logic, queueEvents());
-    }
-
-    /**
-     * Builds a block of structured text evaluating event inputs and adding them to
-     * the event queue.
-     *
-     * @return List of structured text lines.
-     */
-    private List<String> queueEvents() {
-        // Events are evaluated in order based on the event, not tag, name. This sorting
-        // is intended only to produce repeatable structured text output, not to
-        // guarantee the order in which events arriving in the same scan are queued.
-        final List<String> st = //
-                events.keySet().stream()// Extract event names.
-                        .sorted() // Sort by event name.
-                        .map(events::get) // Map back to sorted AoiEvent objects.
-                        .map(e -> e.evalInput(eventQ)) // Generate ST lines.
-                        .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll); // Assemble into a list.
-
-        return unmodifiableList(st);
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, eventQ.enqueueEvents(events.values()));
     }
 
     /**

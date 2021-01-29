@@ -3,6 +3,7 @@ package org.modelio.logixuml.statemachineaoi;
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
@@ -137,13 +138,27 @@ class EventQueue {
     }
 
     /**
+     * Generates a list of structured text statements to add any event with an input
+     * rising edge to the event queue.
+     *
+     * @param events Set of objects representing the events to be evaluated.
+     * @return Structured text lines.
+     */
+    List<String> enqueueEvents(final Collection<AoiEvent> events) {
+        return unmodifiableList(events.stream() //
+                .map(e -> e.evalInput(this)) //
+                .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll) //
+        );
+    }
+
+    /**
      * Generates a set of structured text commands in the logic routine to place a
      * value into the queue.
      *
      * @param value Value to add to the queue.
      * @return Structured text lines implementing the enqueue operation.
      */
-    public List<String> enqueue(final int value) {
+    List<String> enqueueValue(final int value) {
         ArrayList<String> lines = new ArrayList<String>();
 
         // Set the overflow flag and halt the processor if the queue is full.

@@ -86,7 +86,7 @@ class AoiEvent {
         // input rising edge.
         final IfThen ifBlock = new IfThen();
         final String onsExp = inputTagName + " AND NOT " + onsTagName;
-        ifBlock.addCase(onsExp, eventQueue.enqueue(id));
+        ifBlock.addCase(onsExp, eventQueue.enqueueValue(id));
         final List<String> stLines = ifBlock.getLines();
 
         // Update the ONS storage bit after the IF/THEN block.
