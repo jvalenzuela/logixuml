@@ -146,7 +146,7 @@ abstract class TransitionConditions {
             final String targetType = targetElement.getMClass().getQualifiedName();
 
             // Transitions must target only state objects.
-            assert targetType == State.MQNAME;
+            assert targetType.equals(State.MQNAME);
 
             // Check to see if the target state has its own initial transition.
             final Transition targetInitial = InitialTransition.getInitialTransition(targetElement);

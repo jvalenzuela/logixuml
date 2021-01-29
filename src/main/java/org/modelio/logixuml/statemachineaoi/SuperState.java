@@ -25,13 +25,13 @@ class SuperState {
             state = state.getCompositionOwner();
 
             // Filter out all non-state object types that can contain states, e.g. regions.
-            if (state.getMClass().getQualifiedName() == State.MQNAME) {
+            if (state.getMClass().getQualifiedName().equals(State.MQNAME)) {
                 supers.add((State) state);
             }
 
             // Continue traversing up the graph until the the parent state machine is
             // encountered.
-        } while (state.getMClass().getQualifiedName() != StateMachine.MQNAME);
+        } while (!state.getMClass().getQualifiedName().equals(StateMachine.MQNAME));
 
         return supers;
     }

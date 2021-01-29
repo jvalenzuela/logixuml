@@ -155,7 +155,7 @@ class InitialTransition {
 
         // If this is an initial transition within a state, and not a state machine, it
         // must target a sub-state.
-        if (origin.getMClass().getQualifiedName() == State.MQNAME) {
+        if (origin.getMClass().getQualifiedName().equals(State.MQNAME)) {
             final StateVertex target = transition.getTarget();
             final List<MRef> supers = SuperState.getSuperStateRefs(target);
             if (!supers.contains(new MRef(origin))) {
