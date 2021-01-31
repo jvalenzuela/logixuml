@@ -143,7 +143,7 @@ class StateGetTransitionTests {
         } catch (ExportException e) {
             fail();
         }
-        assertTrue(map.containsKey("event"));
+        assertTrue(map.containsKey("superEvent"));
     }
 
     /**
