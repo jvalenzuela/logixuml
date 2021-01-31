@@ -1,9 +1,9 @@
 package org.modelio.logixuml.structuredtext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Generates a CASE_OF structured text block.
@@ -27,7 +27,7 @@ public class CaseOf implements IStructuredTextGenerator {
      */
     public CaseOf(final String expression) {
         this.expression = expression;
-        cases = new TreeMap<>();
+        cases = new HashMap<>();
     }
 
     /**
