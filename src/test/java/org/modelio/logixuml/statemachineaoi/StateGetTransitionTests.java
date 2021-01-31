@@ -85,8 +85,8 @@ class StateGetTransitionTests {
     @ParameterizedTest
     @ValueSource(strings = { "event", "EVENT", "  Event \t\n\r" })
     void duplicateEvent(final String dupEvent) {
-        final Transition tx1 = MockModel.transition(source, expectedTarget, "event");
-        final Transition tx2 = MockModel.transition(source, expectedTarget, dupEvent);
+        MockModel.transition(source, expectedTarget, "event");
+        MockModel.transition(source, expectedTarget, dupEvent);
         try {
             final AoiState aoiState = new AoiState(source);
             ExportException e = assertThrows(ExportException.class, () -> aoiState.getTransitions(txFactory));
