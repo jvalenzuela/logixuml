@@ -28,6 +28,7 @@ class StateMachineNameTests {
      * @return The mock state machine model.
      */
     private MObject mockStateMachine(final String name) {
+        MockModule.init();
         final StateMachine sm = MockModel.stateMachine(name, null);
         final Region top = MockModel.region(sm);
         final State state = MockModel.state("state", top);
