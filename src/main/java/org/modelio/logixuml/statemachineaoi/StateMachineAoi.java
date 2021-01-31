@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
+import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.Halt;
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
@@ -43,13 +44,29 @@ public class StateMachineAoi {
     private final Map<String, AoiEvent> events;
 
     /**
+     * Names for local tags that are not derived from model objects.
+     */
+    private class TagNames {
+        /**
+         * ID of the condition describing the current output states.
+         */
+        private final static String CONDITION_VARIABLE = "cv";
+
+        /**
+         * ID of the event that has been removed from the event queue and is being
+         * evaluated for triggering a transition.
+         */
+        private final static String CURRENT_EVENT = "e";
+    }
+
+    /**
      * Constructor.
      *
      * @param stateMachine Source state machine model.
      * @throws ExportException
      */
     public StateMachineAoi(final MObject stateMachine) throws ExportException {
-        aoi = new AddOnInstruction(getName(stateMachine));
+        aoi = initializeAoi(stateMachine);
         Halt.createTags(aoi);
         final Set<MObject> children = getChildren(stateMachine);
         validateElementTypes(children);
@@ -62,6 +79,29 @@ public class StateMachineAoi {
         }
 
         buildLogicRoutine();
+    }
+
+    /**
+     * Instantiates the add-on instruction and allocates static resources.
+     *
+     * @param stateMachine Source state machine model object.
+     * @return The created AOI object.
+     * @throws ExportException If the state machine name is invalid.
+     */
+    private AddOnInstruction initializeAoi(final MObject stateMachine) throws ExportException {
+        final AddOnInstruction aoi = new AddOnInstruction(getName(stateMachine));
+
+        // Create the condition variable tag and ensure it is reset in prescan and
+        // enable-in false.
+        aoi.addLocalTag(TagNames.CONDITION_VARIABLE, DataType.DINT);
+        final String resetCv = TagNames.CONDITION_VARIABLE + " := 0;";
+        aoi.addStructuredTextLine(ScanModeRoutine.Prescan, resetCv);
+        aoi.addStructuredTextLine(ScanModeRoutine.EnableInFalse, resetCv);
+
+        // The current event tag does not need to be reset in non-logic scan modes.
+        aoi.addLocalTag(TagNames.CURRENT_EVENT, DataType.DINT);
+
+        return aoi;
     }
 
     /**
