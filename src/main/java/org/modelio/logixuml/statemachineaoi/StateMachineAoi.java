@@ -54,6 +54,22 @@ public class StateMachineAoi {
     private final Map<MRef, AoiState> states;
 
     /**
+     * Value of condition variable tag when the AOI is scanned true for the first
+     * time, following either Prescan or after being scanned false. This value must
+     * be zero so it does not collide with dynamically-allocated condition IDs,
+     * which are always non-zero. The first condition of the state machine's
+     * top-level initial transition will follow this in the condition sequence,
+     * although it doesn't necessarily have to be 1.
+     */
+    private static final int RESET_CONDITION = 0;
+
+    /**
+     * Value representing the absence of an event. This must be zero because actual
+     * event IDs are non-zero.
+     */
+    private static final int NO_EVENT = 0;
+
+    /**
      * Names for local tags that are not derived from model objects.
      */
     private class TagNames {
@@ -109,7 +125,7 @@ public class StateMachineAoi {
         // Create the condition variable tag and ensure it is reset in prescan and
         // enable-in false.
         aoi.addLocalTag(TagNames.CONDITION_VARIABLE, DataType.DINT);
-        final String resetCv = TagNames.CONDITION_VARIABLE + " := 0;";
+        final String resetCv = TagNames.CONDITION_VARIABLE + " := " + RESET_CONDITION + ";";
         aoi.addStructuredTextLine(ScanModeRoutine.Prescan, resetCv);
         aoi.addStructuredTextLine(ScanModeRoutine.EnableInFalse, resetCv);
 
