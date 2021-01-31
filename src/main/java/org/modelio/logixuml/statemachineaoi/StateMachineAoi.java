@@ -3,13 +3,16 @@ package org.modelio.logixuml.statemachineaoi;
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.IntSupplier;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
 import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ScanModeRoutine;
+import org.modelio.logixuml.structuredtext.CaseOf;
 import org.modelio.logixuml.structuredtext.Halt;
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
@@ -21,6 +24,7 @@ import org.modelio.metamodel.uml.infrastructure.Note;
 import org.modelio.metamodel.uml.infrastructure.properties.TypedPropertyTable;
 import org.modelio.vcore.model.CompositionGetter;
 import org.modelio.vcore.smkernel.mapi.MObject;
+import org.modelio.vcore.smkernel.mapi.MRef;
 
 public class StateMachineAoi {
     /**
@@ -42,6 +46,12 @@ public class StateMachineAoi {
      * Set of AoiEvent objects keyed by event name.
      */
     private final Map<String, AoiEvent> events;
+
+    /**
+     * Mapping of references to state model objects to the object handling the AOI
+     * implementation of each state.
+     */
+    private final Map<MRef, AoiState> states;
 
     /**
      * Names for local tags that are not derived from model objects.
@@ -76,6 +86,11 @@ public class StateMachineAoi {
         events = EventMap.build(children);
         for (final AoiEvent e : events.values()) {
             e.initializeAoi(aoi);
+        }
+
+        states = StateMap.build(children);
+        for (final AoiState state : states.values()) {
+            state.initializeAoi(aoi);
         }
 
         buildLogicRoutine();
@@ -168,7 +183,60 @@ public class StateMachineAoi {
      * Constructs the add-on instruction's logic routine.
      */
     private void buildLogicRoutine() {
+        // Object generating unique integer identifiers for every condition.
+        final IntSupplier ConditionVarSupplier = new IntegerIdentifier();
+
+        // Mapping to store the integer identifier assigned to every possible condition,
+        // stable and transition.
+        final Map<Integer, Condition> conditions = new HashMap<>();
+
+        // Integer identifier for conditions representing the stable output condition
+        // for each state.
+        final Map<MRef, Integer> stableConditions = new HashMap<>();
+
+        for (final MRef ref : states.keySet()) {
+            final int id = ConditionVarSupplier.getAsInt();
+            conditions.put(id, states.get(ref).getStableCondition());
+            stableConditions.put(ref, id);
+        }
+
         aoi.addStructuredTextLines(ScanModeRoutine.Logic, eventQ.enqueueEvents(events.values()));
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, setStateOutputs(conditions));
+    }
+
+    /**
+     * Generates a set of structured text statements setting the state outputs based
+     * on the current condition.
+     *
+     * @param conditions Integer IDs for all possible conditions.
+     * @return Structured text statements.
+     */
+    private List<String> setStateOutputs(final Map<Integer, Condition> conditions) {
+        final List<String> st = new ArrayList<>();
+
+        // Begin by unconditionally clearing all outputs.
+        for (final AoiState state : states.values()) {
+            st.add(state.setEntryOutput(false));
+            st.add(state.setDoOutput(false));
+            st.add(state.setExitOutput(false));
+        }
+
+        // Evaluate the current condition variable, and energize outputs associated with
+        // the current condition.
+        final CaseOf cvCases = new CaseOf(TagNames.CONDITION_VARIABLE);
+        for (final int cv : conditions.keySet()) {
+            cvCases.addCase(cv, conditions.get(cv).setOutputs(states));
+        }
+        cvCases.addElse(Halt.getLines()); // Fault on undefined condition variable.
+        st.addAll(cvCases.getLines());
+
+        // The state active outputs can now be set as they are just a function of the
+        // entry, do, and exit outputs.
+        for (final AoiState state : states.values()) {
+            st.add(state.setActiveOutput());
+        }
+
+        return unmodifiableList(st);
     }
 
     /**
