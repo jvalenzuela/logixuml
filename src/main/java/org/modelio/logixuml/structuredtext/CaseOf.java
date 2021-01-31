@@ -62,7 +62,6 @@ public class CaseOf implements IStructuredTextGenerator {
     private void storeCase(final Integer selector, final List<String> statements) {
         assert !cases.containsKey(selector); // All selector values must be unique.
         assert statements != null;
-        assert statements.size() > 0;
         cases.put(selector, statements);
     }
 
