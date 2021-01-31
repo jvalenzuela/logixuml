@@ -1,5 +1,6 @@
 package org.modelio.logixuml.statemachineaoi;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,6 +16,7 @@ import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateMachine;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
+import org.modelio.vcore.smkernel.mapi.MRef;
 
 /**
  * Unit tests for transitions generated from a single state.
@@ -167,7 +169,7 @@ class StateGetTransitionTests {
         } catch (ExportException e) {
             fail();
         }
-        assertSame(expectedTarget, map.get("event").getTarget());
+        assertEquals(new MRef(expectedTarget), map.get("event").getTarget());
     }
 
     /**

@@ -80,10 +80,10 @@ abstract class TransitionConditions {
     /**
      * Getter method to acquire the transition's ultimate target state.
      *
-     * @return The transition's ultimate target state.
+     * @return Reference to the transition's ultimate target state.
      */
-    State getTarget() {
-        return target;
+    MRef getTarget() {
+        return new MRef(target);
     }
 
     /**

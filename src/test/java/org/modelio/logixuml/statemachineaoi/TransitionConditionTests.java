@@ -598,10 +598,8 @@ abstract class TransitionConditionTests {
      * list.
      */
     protected void assertCorrectResult() {
-        // Confirm the target state is the same. MRefs are compared instead of state
-        // objects because MRefs include the model object name in the assertion failure
-        // message.
-        assertEquals(new MRef(target), new MRef(result.getTarget()), "Target state differs.");
+        // Confirm the target state is the same.
+        assertEquals(new MRef(target), result.getTarget(), "Target state differs.");
 
         final List<Condition> resultConditions = result.getConditions();
 
