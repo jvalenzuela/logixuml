@@ -203,7 +203,7 @@ class EventQueue {
         final List<String> removeEvent = new ArrayList<>();
         removeEvent.add(dest + " := " + TagNames.STORAGE + "[" + TagNames.TAIL + "];"); // Remove value from tail index.
         incrementIndex(TagNames.TAIL, removeEvent); // Increment the tail pointer.
-        removeEvent.add(TagNames.TAIL + " := " + TagNames.TAIL + " - 1;"); // Reduce the current size.
+        removeEvent.add(TagNames.SIZE + " := " + TagNames.SIZE + " - 1;"); // Reduce the current size.
         st.addCase(TagNames.SIZE + " > 0", removeEvent);
 
         // Clear the destination tag if the queue is empty.
