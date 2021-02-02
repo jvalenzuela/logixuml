@@ -45,6 +45,8 @@ class InitialTransitionTests {
 
     /**
      * Confirm null is returned for a state machine with no initial transition.
+     *
+     * @see StateMachineInitialTransitionTests#noInitial()
      */
     @Test
     void stateMachineNone() throws ExportException {
