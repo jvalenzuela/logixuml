@@ -1,6 +1,7 @@
 package org.modelio.logixuml.structuredtext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,15 @@ public class CaseOf implements IStructuredTextGenerator {
      */
     public void addCase(final int selector, final List<String> statements) {
         storeCase(selector, statements);
+    }
+
+    /**
+     * Vararg version of {@link CaseOf#addCase(String, List)}.
+     *
+     * @see CaseOf#addCase(String, List)
+     */
+    public void addCase(final int selector, final String... statements) {
+        storeCase(selector, Arrays.asList(statements));
     }
 
     /**
