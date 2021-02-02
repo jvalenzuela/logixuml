@@ -3,6 +3,7 @@ package org.modelio.logixuml.statemachineaoi;
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.modelio.logixuml.l5x.DataType;
 import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.CaseOf;
 import org.modelio.logixuml.structuredtext.Halt;
+import org.modelio.logixuml.structuredtext.IfThen;
+import org.modelio.logixuml.structuredtext.WhileDo;
 import org.modelio.metamodel.diagrams.StateMachineDiagram;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
@@ -52,6 +55,35 @@ public class StateMachineAoi {
      * implementation of each state.
      */
     private final Map<MRef, AoiState> states;
+
+    /**
+     * Container to maintain the sequence of condition identifiers during a
+     * transition.
+     */
+    private final ConditionIdSequence cvSeq;
+
+    /**
+     * Object generating transition conditions according to the selected transition
+     * scan mode.
+     */
+    private final TransitionConditionsFactory transitionFactory;
+
+    /**
+     * Object generating unique, integer identifiers for every condition.
+     */
+    private final IntSupplier conditionIdSupplier;
+
+    /**
+     * Mapping of the integer identifier assigned to every possible output
+     * condition, stable and transition.
+     */
+    private final Map<Integer, Condition> conditions;
+
+    /**
+     * Integer identifier for conditions representing the stable output condition
+     * for each state.
+     */
+    private final Map<MRef, Integer> stableConditions;
 
     /**
      * Value of condition variable tag when the AOI is scanned true for the first
@@ -98,6 +130,7 @@ public class StateMachineAoi {
         validateElementTypes(children);
         final StereotypeProperties props = new StereotypeProperties((StateMachine) stateMachine);
         eventQ = new EventQueue(aoi, props.getEventQueueSize());
+        transitionFactory = new TransitionConditionsFactory(props.getTransitionScanMode());
 
         events = EventMap.build(children);
         for (final AoiEvent e : events.values()) {
@@ -109,6 +142,21 @@ public class StateMachineAoi {
             state.initializeAoi(aoi);
         }
 
+        conditionIdSupplier = new IntegerIdentifier();
+        conditions = new HashMap<>();
+        stableConditions = new HashMap<>();
+        cvSeq = new ConditionIdSequence();
+
+        // Generate identifiers for the stable conditions of every state. Stable
+        // conditions must all be allocated before any transitional conditions. See
+        // triggerTransitions() for details.
+        for (final MRef ref : states.keySet()) {
+            final int id = conditionIdSupplier.getAsInt();
+            conditions.put(id, states.get(ref).getStableCondition());
+            stableConditions.put(ref, id);
+        }
+
+        buildInitialTransition(stateMachine);
         buildLogicRoutine();
     }
 
@@ -196,28 +244,145 @@ public class StateMachineAoi {
     }
 
     /**
-     * Constructs the add-on instruction's logic routine.
+     * Allocates the conditions required for the state machine's top-level initial
+     * transition.
+     *
+     * @param stateMachine Source state machine model object.
+     * @throws ExportException If the state machine's initial transition is absent
+     *                         or invalid.
      */
-    private void buildLogicRoutine() {
-        // Object generating unique integer identifiers for every condition.
-        final IntSupplier ConditionVarSupplier = new IntegerIdentifier();
-
-        // Mapping to store the integer identifier assigned to every possible condition,
-        // stable and transition.
-        final Map<Integer, Condition> conditions = new HashMap<>();
-
-        // Integer identifier for conditions representing the stable output condition
-        // for each state.
-        final Map<MRef, Integer> stableConditions = new HashMap<>();
-
-        for (final MRef ref : states.keySet()) {
-            final int id = ConditionVarSupplier.getAsInt();
-            conditions.put(id, states.get(ref).getStableCondition());
-            stableConditions.put(ref, id);
+    private void buildInitialTransition(final MObject stateMachine) throws ExportException {
+        final Transition initial = InitialTransition.getInitialTransition(stateMachine);
+        if (initial == null) {
+            throw new ExportException("State machine must have a top-level initial transition.");
         }
+        final TransitionConditions txConditions = transitionFactory.build(initial);
+
+        // The reset condition must lead directly to the initial transition's
+        // first condition so the initial transition is executed immediately after
+        // prescan or scan-false.
+        cvSeq.storeNext(RESET_CONDITION, allocateConditionId(txConditions));
+    }
+
+    /**
+     * Constructs the add-on instruction's logic routine.
+     *
+     * @throws ExportException If an invalid transition was found.
+     */
+    private void buildLogicRoutine() throws ExportException {
+        // The ST for this block must be generated before the block advancing the
+        // condition variable through transitions because the condition IDs for those
+        // transitions are allocated here. The generated ST is then added to the routine
+        // below.
+        final List<String> transitionLoop = triggerTransitions();
 
         aoi.addStructuredTextLines(ScanModeRoutine.Logic, eventQ.enqueueEvents(events.values()));
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, cvSeq.advance(TagNames.CONDITION_VARIABLE));
+
+        // Append the transition trigger block here.
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, transitionLoop);
+
         aoi.addStructuredTextLines(ScanModeRoutine.Logic, setStateOutputs(conditions));
+    }
+
+    /**
+     * Builds structured text statements to remove events from the event queue one
+     * at a time, checking if each will initiate a transition from the currently
+     * active state.
+     *
+     * @return Structured text lines.
+     * @throws ExportException If an invalid transition was found.
+     */
+    private List<String> triggerTransitions() throws ExportException {
+        // This entire block is contained within a WHILE_DO loop to continually remove
+        // events from the event queue until it is either depleted or an event triggers
+        // a transition. Triggering a transition can only occur when the state machine
+        // is in a stable condition, i.e. not in the midst of a transition, so the loop
+        // condition is based on the condition variable remaining within the range of
+        // stable conditions.
+        final int lastStableCondition = Collections.max(stableConditions.values());
+        final WhileDo loop = new WhileDo(TagNames.CONDITION_VARIABLE + " <= " + lastStableCondition);
+
+        // The loop begins by removing the next event from the event queue.
+        loop.addStatements(TagNames.CURRENT_EVENT + " := " + NO_EVENT + ";");
+        loop.addStatements(eventQ.dequeue(TagNames.CURRENT_EVENT));
+
+        // Terminate the loop if the event queue is empty.
+        final IfThen noEvent = new IfThen();
+        noEvent.addCase(TagNames.CURRENT_EVENT + " = " + NO_EVENT, "EXIT;");
+        loop.addStatements(noEvent.getLines());
+
+        // Build a CASE_OF block with a case for every stable condition to evaluate the
+        // current event for possible transition triggers.
+        final CaseOf stateTransitions = new CaseOf(TagNames.CONDITION_VARIABLE);
+        for (final MRef ref : states.keySet()) {
+            stateTransitions.addCase(stableConditions.get(ref), evaluateEvent(ref));
+        }
+        stateTransitions.addElse(Halt.getLines());
+        loop.addStatements(stateTransitions.getLines());
+
+        return unmodifiableList(loop.getLines());
+    }
+
+    /**
+     * Generates a list of structured text statements to initiate a transition from
+     * a given state based on the current event.
+     *
+     * @param ref Reference to the source state.
+     * @return Structured text statements.
+     * @throws ExportException If a problem was found with the transitions leaving
+     *                         the source state.
+     */
+    private List<String> evaluateEvent(final MRef ref) throws ExportException {
+        final List<String> st = new ArrayList<>();
+        final Map<String, TransitionConditions> transitions = states.get(ref).getTransitions(transitionFactory);
+
+        // Iterate through every event triggering a transition from the source state.
+        for (final String event : transitions.keySet()) {
+            final TransitionConditions tx = transitions.get(event);
+            final int firstConditionId = allocateConditionId(tx);
+
+            // Generate an IF_THEN block to set the condition variable to the transition's
+            // first condition ID if this is the current event.
+            final IfThen eventActive = new IfThen();
+            eventActive.addCase(TagNames.CURRENT_EVENT + " = " + events.get(event).getId(),
+                    TagNames.CONDITION_VARIABLE + " := " + firstConditionId + ";");
+            st.addAll(eventActive.getLines());
+        }
+
+        return unmodifiableList(st);
+    }
+
+    /**
+     * Allocates identifiers for each condition in a given transition.
+     *
+     * @param t Source transition object.
+     * @return The identifier of the transition's first condition.
+     */
+    private int allocateConditionId(final TransitionConditions t) {
+        int firstId = 0;
+        int lastId = 0;
+        for (final Condition c : t.getConditions()) {
+            final int id = conditionIdSupplier.getAsInt();
+            conditions.put(id, c);
+
+            if (firstId == 0) {
+                firstId = id;
+            }
+
+            // Store the sequence of conditions for those following the first.
+            if (lastId != 0) {
+                cvSeq.storeNext(lastId, id);
+            }
+
+            lastId = id;
+        }
+
+        // The stable condition of the target state follows the transition's final
+        // condition.
+        cvSeq.storeNext(lastId, stableConditions.get(t.getTarget()));
+
+        return firstId;
     }
 
     /**
