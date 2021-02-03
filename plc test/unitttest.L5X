@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="20.01" TargetName="unitttest" TargetType="Controller" ContainsContext="false" Owner="admin" ExportDate="Thu Feb 04 04:29:42 2021" ExportOptions="DecoratedData ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Target" Name="unitttest" ProcessorType="Emulator" MajorRev="20" MinorRev="11" TimeSlice="20" ShareUnusedTimeSlice="1" ProjectCreationDate="Thu Feb 04 03:54:15 2021" LastModifiedDate="Thu Feb 04 04:19:05 2021" SFCExecutionControl="CurrentActive" SFCRestartPosition="MostRecent"
+ SFCLastScan="DontScan" ProjectSN="16#0000_0000" MatchProjectToController="false" CanUseRPIFromProducer="false" InhibitAutomaticFirmwareUpdate="0">
+<RedundancyInfo Enabled="false" KeepTestEditsOnSwitchOver="false" IOMemoryPadPercentage="90" DataTablePadPercentage="50"/>
+<Security Code="0" ChangesToDetect="16#ffff_ffff_ffff_ffff"/>
+<SafetyInfo/>
+<DataTypes/>
+<Modules>
+<Module Name="Local" CatalogNumber="Emulator" Vendor="1" ProductType="14" ProductCode="53" Major="20" Minor="11" ParentModule="Local" ParentModPortId="1" Inhibited="false" MajorFault="true"
+>
+<EKey State="ExactMatch"/>
+<Ports>
+<Port Id="1" Address="2" Type="ICP" Upstream="false">
+<Bus Size="10"/>
+</Port>
+</Ports>
+</Module>
+</Modules>
+<AddOnInstructionDefinitions/>
+<Tags/>
+<Programs>
+<Program Name="results" TestEdits="false" MainRoutineName="summary" Disabled="false">
+<Tags/>
+<Routines>
+<Routine Name="summary" Type="RLL"/>
+</Routines>
+</Program>
+<Program Name="stateMachineInitialSubstate" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Top-level initial transition for the entire state machine that targets a sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="stateMachineInitialSubstateNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Top-level initial transition for the entire state machine that targets a deeply-nested sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="stateMachineInitialSuperstateInitial" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Top-level initial transition for the entire state machine that targets a super-state that has its own initial transition.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="stateMachineInitialSuperstateInitialNest" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Top-level initial transition for the entire state machine targeting a super-state that has its own initial transition to a deeply-nested sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="stateMachineInitialTop" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Top-level initial transition for the entire state machine that targets a top-level simple state.]]>
+</Description>
+<Tags>
+<Tag Name="pass" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+</Tags>
+<Routines/>
+</Program>
+<Program Name="transitionFromSubstateInitial" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a sub-state to its enclosing super-state where the super-state has its own initial transition.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionFromSubstateInitialNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a deeply-nested sub-state to the top-level super-state where the super-state has its own initial transition.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSubstateSibling" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition to a state within the same super-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateEntry" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition targeting a sub-state within a super-state that does not contain the source state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateEntryNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition to a deeply-nested sub-state within a top-level super-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateExit" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition leaving the super-state containing the source sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateExitNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition leaving a super-state from a deeply-nested sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateInitial" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition to a super-state with its own initial transition.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionSuperstateInitialNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition to a super-state with its own initial transition targeting a deeply-nested sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionTopSibling" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition between two, top-level states.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionToSubstate" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a super-state to one of its sub-states.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionToSubstateNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a super-state to a deeply-nested sub-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionToSuperstate" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a sub-state to its enclosing super-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="transitionToSuperstateNested" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Transition from a deeply-nested sub-state to its top-level enclosing super-state.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+</Programs>
+<Tasks>
+<Task Name="MainTask" Type="CONTINUOUS" Priority="10" Watchdog="500" DisableUpdateOutputs="false" InhibitTask="false">
+<ScheduledPrograms>
+<ScheduledProgram Name="results"/>
+<ScheduledProgram Name="stateMachineInitialTop"/>
+<ScheduledProgram Name="stateMachineInitialSubstate"/>
+<ScheduledProgram Name="stateMachineInitialSubstateNested"/>
+<ScheduledProgram Name="stateMachineInitialSuperstateInitial"/>
+<ScheduledProgram Name="stateMachineInitialSuperstateInitialNest"/>
+<ScheduledProgram Name="transitionTopSibling"/>
+<ScheduledProgram Name="transitionSubstateSibling"/>
+<ScheduledProgram Name="transitionToSuperstate"/>
+<ScheduledProgram Name="transitionToSuperstateNested"/>
+<ScheduledProgram Name="transitionToSubstate"/>
+<ScheduledProgram Name="transitionToSubstateNested"/>
+<ScheduledProgram Name="transitionSuperstateExit"/>
+<ScheduledProgram Name="transitionSuperstateExitNested"/>
+<ScheduledProgram Name="transitionSuperstateEntry"/>
+<ScheduledProgram Name="transitionSuperstateEntryNested"/>
+<ScheduledProgram Name="transitionSuperstateInitial"/>
+<ScheduledProgram Name="transitionSuperstateInitialNested"/>
+<ScheduledProgram Name="transitionFromSubstateInitial"/>
+<ScheduledProgram Name="transitionFromSubstateInitialNested"/>
+</ScheduledPrograms>
+</Task>
+</Tasks>
+<CommPorts>
+<SerialPort Channel="0" BaudRate="19200" Parity="No Parity" DataBits="8 Bits of Data" StopBits="1 Stop Bit" ComDriverId="DF1" RTSOffDelay="0" RTSSendDelay="0" ControlLine="No Handshake" RemoteModeChangeFlag="false" ModeChangeAttentionChar="27"
+ SystemModeCharacter="83" UserModeCharacter="85" DCDWaitDelay="0">
+<ASCII XONXOFFEnable="false" DeleteMode="0" EchoMode="0" TerminationChars="65293" AppendChars="2573" BufferSize="82"/>
+<DF1 DuplicateDetection="true" ErrorDetection="BCC Error" EmbeddedResponseEnable="Autodetect" DF1Mode="Pt to Pt" ACKTimeout="50" NAKReceiveLimit="3" ENQTransmitLimit="3" TransmitRetries="3" StationAddress="0" ReplyMessageWait="5" PollingMode="Message Based (slave can initiate messages)"
+ MasterMessageTransmit="Between station polls" NormalPollNodeFile="&lt;NA&gt;" NormalPollGroupSize="0" PriorityPollNodeFile="&lt;NA&gt;" ActiveStationFile="&lt;NA&gt;" SlavePollTimeout="3000" EOTSuppression="0" MaxStationAddress="31" TokenHoldFactor="1" EnableStoreFwd="false" StoreFwdFile="&lt;NA&gt;"
+/>
+</SerialPort>
+</CommPorts>
+<CST MasterID="0"/>
+<WallClockTime LocalTimeAdjustment="0" TimeZone="0"/>
+<Trends/>
+<TimeSynchronize Priority1="128" Priority2="128" PTPEnable="false"/>
+</Controller>
+</RSLogix5000Content>
