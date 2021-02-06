@@ -1,0 +1,10 @@
+@startuml
+
+skinparam {
+          Shadowing false
+          monochrome true
+          StateBackgroundColor white
+          backgroundColor transparent
+}
+
+@enduml
