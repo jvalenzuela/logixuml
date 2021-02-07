@@ -4,6 +4,8 @@ skinparam {
           Shadowing false
           monochrome true
           StateBackgroundColor white
+          StateBorderColor black
+          ArrowColor black
           backgroundColor transparent
 }
 
