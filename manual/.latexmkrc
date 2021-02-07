@@ -3,6 +3,9 @@ $pdf_mode = 1;
 $jobname = "manual";
 
 
+ensure_path('TEXINPUTS', './figures/plantuml//');
+
+
 # Create a custom dependency to generate images from PlantUML.
 add_cus_dep('puml', 'pdf_tex', 1, 'convert_plantuml');
 
