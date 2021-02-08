@@ -1,0 +1,8 @@
+' Include file for timing diagrams.
+
+@startuml
+
+!include skinparam.puml
+mode compact
+
+@enduml
