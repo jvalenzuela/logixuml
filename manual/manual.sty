@@ -29,15 +29,15 @@
 % Creates a figure from a PlantUML diagram.
 %
 % Arguments:
-% 1 - Name of the input file, without the pdf_tex extension.
+% 1 - Name of the input file, without the pdf_tex extension. This will also be
+%     used to create a reference label name by adding the fig: prefix.
 % 2 - Caption text.
-% 3 - Reference label name, without the fig: prefix.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand*{\plantUmlFigure}[3]{
+\newcommand*{\plantUmlFigure}[2]{
   \begin{figure}[h]
     \centering
     \input{#1.pdf_tex}
     \caption{#2}
-    \label{fig:#3}
+    \label{fig:#1}
   \end{figure}
 }
