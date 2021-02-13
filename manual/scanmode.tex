@@ -1,0 +1,113 @@
+\section{Transition Scan Mode}
+
+A state machine add-on instruction effects transitions by actuating its
+do, exit, and entry outputs throughout a series of sequential scans.
+Each time the AOI is scanned during a transition these outputs are updated
+to reflect the next step in the transition until the target state is achieved.
+
+The number of scans required to complete a transition and the outputs
+energized in each scan are configured with the
+\identifier{transitionScanMode} property of the \identifier{stateMachineAoi}
+stereotype applied to the state machine. All transitions within the state
+machine operate according to the selected scan mode, although different
+state machines within the same Modelio project may utilize different
+transition scan modes.
+
+Three transition scan modes are available: single, dual, and sequential.
+The \identifier{transitionScanMode} property has no default value, and
+must be explicitly set to one of these values. The selection is not
+case-sensitive, and any surrounding whitespace is ignored.
+
+The transition shown in Figure~\ref{fig:transitionScanModeStateMachine}
+will be used to describe the behavior of each transition scan mode.
+
+\plantUmlFigure{transitionScanModeStateMachine}
+               {Transition scan mode example state machine.}
+
+Regardless of the selected scan mode each exit and entry output involved in
+a transition is energized only once during a given transition, and only for
+a single scan. The scan modes differ in the set of outputs activated in
+each transitional scan.
+
+
+\subsection{Single Mode}
+
+When \identifier{transitionScanMode} is set to single the entire transition,
+regardless of topology, is performed in one scan. All exit and entry
+outputs are energized simultaneously, followed by the stable condition
+of the target state.
+
+Figure~\ref{fig:transitionScanModeSingleTiming} illustrates single
+transition scan mode behavior.
+The triggering event is delivered to the state machine at scan~1; all do
+outputs are de-energized, and all exit and entry outputs are energized.
+The transition is complete at scan~2 with all entry and exit outputs
+turned off and the do outputs for both \identifier{super2} and
+\identifier{target} energized.
+
+\plantUmlFigure{transitionScanModeSingleTiming}
+               {Single transition scan mode timing example.}
+
+
+\subsection{Dual Mode}
+
+Dual mode separates the exit and entry outputs into distinct scans;
+exit outputs are energized first, followed by entry outputs.
+For most transitions this will occupy two scans, however, some transitions
+do not incur both exit and entry actions. The most common example is
+the top-level initial transition for the entire state machine, which never
+leaves any state. Transitions that only exit or enter states,
+but not both, will complete in one scan in dual mode.
+
+A timing chart for the example transition running in dual mode is shown
+in Figure~\ref{fig:transitionScanModeDualTiming}. The triggering event
+initiates the transition at scan~1, de-energizing all do outputs and turning
+on all exit outputs. The entry outputs are then activated at scan~2, and
+the transition completes in scan~3.
+
+\plantUmlFigure{transitionScanModeDualTiming}
+               {Dual transition scan mode timing example.}
+
+
+\subsection{Sequential Mode}
+
+The sequential scan mode allocates a scan for each state boundry that must
+be traversed, energizing a single exit or entry output each
+scan. This sequence begins with exiting the source state. If the source
+is contained in a composite state, subsequent scans will progressively
+leave the next immediate composite state. Each scan that exits a state will
+cause two transitions of the outputs associated with the state being
+exited: the do output will deenergize and the exit output will energize.
+Exit scans will continue until the common composite state containing both
+the source and target is reached, if one exists.
+
+The transition will begin entering states after exiting all states that need
+to be left, starting with the outermost composite state, and
+continuing inwards until arriving at the ultimate target. Each state that
+needs to be entered requires two scans. The first causes the entry output
+to energize, and the second turns the entry output off and the do output on;
+the do output remains on for the remainder of the transition.
+
+The timing chart in Figure~\ref{fig:transitionScanModeSequentialTiming}
+shows how the example transition operates in sequential mode.
+When the triggering event arrives at scan~1 it causes an exit from only the
+innermost origin state, \identifier{source}. Egress continues in scan~2
+by exiting the next level composite state, \identifier{super1},
+in the same fashion. All states that need to be exited have done so at scan~3,
+and the transition begins entering destination states starting from
+\identifier{super2}. The composite state \identifier{super2} has been entered
+by scan~4 and the transition proceeds to enter \identifier{target}.
+The transition is then complete at scan~5 where \identifier{super2} and
+\identifier{target} have been fully-entered and the stable condition has
+been attained with both do outputs on.
+
+\plantUmlFigure{transitionScanModeSequentialTiming}
+               {Sequential transition scan mode timing example.}
+
+Unlike single and dual mode, the number of scans required to complete a
+transition can vary in sequential mode. It is still deterministic in that
+the number of scans for a given transition is a function of the state
+machine topology, so the same transition will always require the same number
+of scans. However, other transitions can differ, as opposed to single and
+dual mode where the maximum number of scans for all transitions is fixed,
+and independent of state machine configuration.

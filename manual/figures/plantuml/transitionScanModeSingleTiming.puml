@@ -1,0 +1,40 @@
+@startuml
+
+
+!include timing.puml
+
+
+binary "event\\_e" as e
+binary "stateDo\\_source" as doSrc
+binary "stateDo\\_super1" as doSuper1
+binary "stateExit\\_source" as exitSrc
+binary "stateExit\\_super1" as exitSuper1
+binary "stateEntry\\_super2" as entrySuper2
+binary "stateEntry\\_target" as entryTarget
+binary "stateDo\\_super2" as doSuper2
+binary "stateDo\\_target" as doTarget
+
+
+@0
+doSrc is 1
+doSuper1 is 1
+
+@1
+e is 1
+doSrc is 0
+doSuper1 is 0
+exitSrc is 1
+exitSuper1 is 1
+entrySuper2 is 1
+entryTarget is 1
+
+@2
+exitSrc is 0
+exitSuper1 is 0
+entrySuper2 is 0
+entryTarget is 0
+doSuper2 is 1
+doTarget is 1
+
+
+@enduml
