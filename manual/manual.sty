@@ -41,3 +41,16 @@
     \label{fig:#1}
   \end{figure}
 }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Typesets strings used to identify objects such as UML elements or PLC tags.
+%
+% Arguments:
+% 1 - The identifier string.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\identifier}[1]{%
+  \mbox{% Place within an mbox to inhibit line breaks.
+    \texttt{#1}% Apply a different typeface.
+  }%
+}
