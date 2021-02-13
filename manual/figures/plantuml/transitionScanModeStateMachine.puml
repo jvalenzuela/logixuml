@@ -1,0 +1,15 @@
+@startuml
+hide empty description
+!include skinparam.puml
+
+state super1 {
+      source :
+}
+
+state super2 {
+      target :
+}
+
+source -> target : e
+
+@enduml
