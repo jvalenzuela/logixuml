@@ -1,0 +1,20 @@
+@startuml
+
+
+!include skinparam.puml
+
+
+state super1 {
+      sub1 :
+}
+
+state super2 {
+      [*] --> sub2
+      sub2 :
+}
+
+source -left-> super1 : e1
+source -right-> super2 : e2
+
+
+@enduml
