@@ -1,0 +1,96 @@
+\section{Supported UML}
+
+Modelio supports a wide range of elements defined in \textcite{OMGUML}.
+LogixUML, however, is only capable of converting a subset of these into
+add-on instructions. This section describes the UML elements supported
+by LogixUML, along with details on how they are implemented in the output
+AOIs.
+
+
+\subsection{State Machines}
+
+The name of the resulting add-on instruction will be the state machine's
+name prefixed with \identifier{stateMachine\_}, e.g. exporting a state
+machine named \identifier{monitor} will yield a
+\identifier{stateMachine\_monitor} add-on instruction.
+The state machine name must therefore conform to the convention defined
+in \textcite[Chapter~2]{AOI}.
+
+Behavior of the state machine add-on instruction for the various scan
+modes is as follows.
+
+\begin{description}
+  \item[Prescan] All outputs are set to zero. Any information regarding
+    the active state or transition is reset. The event queue, which is
+    covered in~\S\ref{??}, is emptied.
+
+  \item[True] The rung-out condition and \identifier{active} output are set
+    true. Event inputs are evaluated to detect rising edges. The state machine
+    operates starting with its initial transition. The entry, exit, and
+    do outputs are energized according to the state machine's condition.
+
+  \item[False] Same as Prescan with the addition that the state machine
+    remains inert, not evaluating or responding to any event inputs.
+\end{description}
+
+
+\subsection{States}
+\label{ss:states}
+
+
+\subsection{Initial Pseudostates}
+
+
+\subsection{Regions}
+
+As discussed in~\S\ref{ss:states}, LogixUML supports only simple and
+composite states. Simple states have no regions, and composite states
+can have only a single region containing the initial pseudostate and
+all substates.
+
+A region can be activated in two ways per \textcite[\S14.2.3.2]{OMGUML}:
+\introTechnicalTerm{default activation} or
+\introTechnicalTerm{explicit activation}.
+Figure~\ref{fig:regionDefaultActivation} shows the two cases where
+default activation is applicable due to a transition terminating
+on the boundry of a composite state. The transition triggered by
+event \identifier{e1} will complete with state \identifier{super1}
+active, but will not enter state \identifier{sub1}.
+Since composite state \identifier{super2} includes an initial
+pseudostate, the transition triggered by event \identifier{e2} will
+result in entering both \identifier{super2} and \identifier{sub2}.
+
+\plantUmlFigure{regionDefaultActivation}
+               {Entering regions via default activation.}
+
+An example of explicit activation is depicted in
+Figure~\ref{fig:regionExplicitActivation}, where the transition triggered
+by event \identifier{e} terminates on the contained substate
+\identifier{sub1}. In this case, states \identifier{super1} and
+\identifier{sub1} are entered;
+state \identifier{sub2} is not entered because the initial pseudostate
+applies only when the region is entered with default activation per
+\textcite[\S14.2.3.7]{OMGUML}.
+
+\plantUmlFigure{regionExplicitActivation}
+               {Entering a region with explicit activation.}
+
+
+\subsection{Transitions}
+
+
+\subsection{Events}
+
+
+\subsection{Stereotypes}
+
+Only the stereotype defined by the LogixUML module,
+\identifier{stateMachineAoi}, is permitted, and it must be applied to
+every state machine that will be exported to an add-on instruction.
+See \S\ref{??} for additional details.
+
+
+\subsection{Notes}
+
+Note elements may be attached to any element. Their presence and content
+are ignored by LogixUML.
