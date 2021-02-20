@@ -81,6 +81,31 @@ applies only when the region is entered with default activation per
 
 \subsection{Events}
 
+Events can be reused to trigger multiple transitions by using the
+same name as the \inputField{Received event} for several transitions.
+The only restriction is the same event cannot trigger more than
+one transition originating from a given state.
+Event names are not case-sensitive as they are used to generate AOI input
+parameters, which are also case-insensitive, so events that differ only in
+case will be considered the same.
+
+The transitions shown in Figure~\ref{fig:duplicateEvent} provide an example
+of event reuse, all of which will yield two AOI input parameters:
+\identifier{event\_x} and \identifier{event\_y}.
+The transitions originating from state \identifier{s1} are invalid because
+both are triggered from the same event, \identifier{y},
+resulting in ambiguity in determining which to execute in response to the event.
+The transitions triggered by event \identifier{x} are valid, even though both
+are enabled in the context of state \identifier{sub}.
+Transitions originating from a substate have priority over those
+from a containing superstate per \textcite[\S14.2.3.9.4]{OMGUML}, so
+event \identifier{x} would cause a transition to \identifier{s2} if the
+state machine is in \identifier{sub}, or to \identifier{s1} if the state
+machine is in \identifier{super} but not \identifier{sub}.
+
+\plantUmlFigure{duplicateEvent}
+               {Duplicate event names.}
+
 
 \subsection{Stereotypes}
 
