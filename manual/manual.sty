@@ -11,6 +11,7 @@
 \RequirePackage{biblatex}
 \RequirePackage{graphicx}
 \RequirePackage{color}
+\RequirePackage{menukeys}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,4 +65,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand*{\introTechnicalTerm}[1]{%
   \textit{#1}% Apply a specific typeface.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Typesets the name of a user input field.
+%
+% Arguments:
+% 1 - The field name.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\inputField}[1]{%
+  \textsf{#1}% Apply a specific typeface.
 }

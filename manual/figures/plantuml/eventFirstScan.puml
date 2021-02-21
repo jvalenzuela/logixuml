@@ -1,0 +1,22 @@
+@startuml
+
+
+!include timing.puml
+
+
+binary "active" as active
+binary "event\\_e1" as e1
+binary "event\\_e2" as e2
+
+
+@0
+
+@1
+active is 1
+e1 is 1
+
+@2
+e2 is 1
+
+
+@enduml

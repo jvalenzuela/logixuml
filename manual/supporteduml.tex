@@ -81,6 +81,39 @@ applies only when the region is entered with default activation per
 
 \subsection{Events}
 
+The implementation of events is based on \introTechnicalTerm{ChangeEvents}
+as described in \textcite[\S13.3.3.3]{OMGUML}, with a boolean AOI input
+serving as the \introTechnicalTerm{changeExpression}. LogixUML extracts
+the string entered in the \inputField{Received event} property for
+all transitions
+in the state machine, and defines a boolean input parameter for each,
+adding the \identifier{event\_} prefix. Since events are used to create
+input parameters, their names must be valid add-on instruction parameter
+names.
+
+Event inputs are edge-sensitive; the add-on instruction interprets the
+input rising edge as an event occurrence. Furthermore,
+the rising edge must occur after the AOI is initially scanned true.
+The timing diagram shown in Figure~\ref{fig:eventFirstScan} illustrates
+event input edge detection. The AOI is first scanned true at scan~1, and
+energzies its \identifier{active} output; this can be a result of either
+the processor's first scan or if the AOI has conditional rung-in
+conditions which transition from false to true.
+The input for event \identifier{e1} also transitions true at scan~1, but
+is ignored as it did not occur after the AOI's initial scan true.
+Scan~2 presents the AOI with a rising edge for event \identifier{e2},
+which is interpreted as an event occurrence and handled accordingly.
+
+\plantUmlFigure{eventFirstScan}
+               {Event inputs at first scan.}
+
+A simple method for generating an event for conditions that may be
+true when the AOI is first scanned true is to use the AOI's
+\identifier{active} output as a series condition for energizing the
+event's input. The \identifier{active} output is unconditionally energized
+when the AOI is first scanned, which will generate a rising edge on the
+next scan.
+
 Events can be reused to trigger multiple transitions by using the
 same name as the \inputField{Received event} for several transitions.
 The only restriction is the same event cannot trigger more than
@@ -105,6 +138,11 @@ machine is in \identifier{super} but not \identifier{sub}.
 
 \plantUmlFigure{duplicateEvent}
                {Duplicate event names.}
+
+Modelio's default theme settings do not show a transition's triggering
+event in the diagram. Event names can be made visible by selecting
+\menu{Configuration > Diagram themes}, and enabling the
+\directory{Transition / Show label} option.
 
 
 \subsection{Stereotypes}
