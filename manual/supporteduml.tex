@@ -40,6 +40,35 @@ modes is as follows.
 
 \subsection{Initial Pseudostates}
 
+Initial pseudostates are supported in two contexts: at the state machine's
+top-level region, and within a composite state. The following requirements
+apply to both:
+
+\begin{itemize}
+  \item There can be at most one initial pseudostate in a region.
+
+  \item An initial pseudostate must have exactly one outgoing transition.
+
+  \item The outgoing transition must not have a triggering event.
+\end{itemize}
+
+A state machine must have an initial pseudostate defining its behaviour
+immediately after the AOI is scanned true; the departing transition may lead
+to any state. Initial pseudostates are optional for composite states,
+and if present, must terminate on a substate directly or indirectly contained
+by the region owning the initial pseudostate.
+
+Figure~\ref{fig:initialPseudostateCompositeStates} contains examples of
+initial pseudostates in composite states. State \identifier{superX}
+contains a valid initial pseudostate with a transition leading to
+a contained substate; \identifier{subY} would also be a valid target
+for this transition. The initial pseudostate in \identifier{s1} is
+ill-formed because the target state, \identifier{s2}, is not contained within
+the same region.
+
+\plantUmlFigure{initialPseudostateCompositeStates}
+               {Initial pseudostates with composite states.}
+
 
 \subsection{Regions}
 
