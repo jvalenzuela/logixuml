@@ -1,0 +1,22 @@
+@startuml
+
+
+!include skinparam.puml
+
+state superX {
+  [*] -> subZ
+  state subY {
+    state subZ {
+    }
+  }
+}
+
+state s1 {
+  [*] -> s2
+}
+
+state s2 {
+}
+
+
+@enduml
