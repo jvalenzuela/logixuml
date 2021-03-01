@@ -1,0 +1,28 @@
+/'
+SKIP_PLANTUML
+This image needs to be manually modified because PlantUML can not
+generate external transition arrows.
+'/
+
+@startuml
+
+
+!include skinparam.puml
+
+
+state super1 {
+      state sub1
+}
+
+state super2 {
+      state sub2
+}
+
+
+super1 -left-> sub1
+
+' This transition needs to be made external.
+super2 -left-> sub2
+
+
+@enduml
