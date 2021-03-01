@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   contentScriptType="application/ecmascript"
+   contentStyleType="text/css"
+   height="131px"
+   preserveAspectRatio="none"
+   style="width:292px;height:131px;background:#00000000;"
+   version="1.1"
+   viewBox="0 0 292 131"
+   width="292px"
+   zoomAndPan="magnify"
+   id="svg42"
+   sodipodi:docname="localTransition.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata46">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     id="namedview44"
+     showgrid="false"
+     inkscape:zoom="2.1164384"
+     inkscape:cx="100.27094"
+     inkscape:cy="9.0121154"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg42" />
+  <defs
+     id="defs2" />
+  <g
+     id="g40">
+    <!--MD5=[f7b91a383264ee4f7d43ce398563433d]
+cluster super1-->
+    <rect
+       fill="#FFFFFF"
+       height="118"
+       rx="12.5"
+       ry="12.5"
+       style="stroke:#000000;stroke-width:1.5;"
+       width="119"
+       x="7"
+       y="7"
+       id="rect4" />
+    <rect
+       height="84.3906"
+       rx="12.5"
+       ry="12.5"
+       style="stroke:#00000000;stroke-width:1.0;fill:none;"
+       width="113"
+       x="10"
+       y="37.6094"
+       id="rect6" />
+    <line
+       style="stroke:#000000;stroke-width:1.5;fill:none;"
+       x1="7"
+       x2="126"
+       y1="34.6094"
+       y2="34.6094"
+       id="line8" />
+    <text
+       fill="#000000"
+       font-family="sans-serif"
+       font-size="14"
+       lengthAdjust="spacing"
+       textLength="44"
+       x="44.5"
+       y="25.5332"
+       id="text10">super1</text>
+    <!--MD5=[35bf66b88d16a31c91b1497bbaa8c9ac]
+cluster super2-->
+    <rect
+       fill="#FFFFFF"
+       height="118"
+       rx="12.5"
+       ry="12.5"
+       style="stroke:#000000;stroke-width:1.5;"
+       width="119"
+       x="166"
+       y="7"
+       id="rect12" />
+    <rect
+       height="84.3906"
+       rx="12.5"
+       ry="12.5"
+       style="stroke:#00000000;stroke-width:1.0;fill:none;"
+       width="113"
+       x="169"
+       y="37.6094"
+       id="rect14" />
+    <line
+       style="stroke:#000000;stroke-width:1.5;fill:none;"
+       x1="166"
+       x2="285"
+       y1="34.6094"
+       y2="34.6094"
+       id="line16" />
+    <text
+       fill="#000000"
+       font-family="sans-serif"
+       font-size="14"
+       lengthAdjust="spacing"
+       textLength="44"
+       x="203.5"
+       y="25.5332"
+       id="text18">super2</text>
+    <g
+       id="super1.sub1">
+      <rect
+         fill="#FFFFFF"
+         height="50"
+         rx="12.5"
+         ry="12.5"
+         style="stroke:#000000;stroke-width:1.5;"
+         width="51"
+         x="50.5"
+         y="51"
+         id="rect20" />
+      <line
+         style="stroke:#000000;stroke-width:1.5;"
+         x1="50.5"
+         x2="101.5"
+         y1="78.6094"
+         y2="78.6094"
+         id="line22" />
+      <text
+         fill="#000000"
+         font-family="sans-serif"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="31"
+         x="60.5"
+         y="70.5332"
+         id="text24">sub1</text>
+    </g>
+    <g
+       id="super2.sub2">
+      <rect
+         fill="#FFFFFF"
+         height="50"
+         rx="12.5"
+         ry="12.5"
+         style="stroke:#000000;stroke-width:1.5;"
+         width="51"
+         x="209.5"
+         y="51"
+         id="rect27" />
+      <line
+         style="stroke:#000000;stroke-width:1.5;"
+         x1="209.5"
+         x2="260.5"
+         y1="78.6094"
+         y2="78.6094"
+         id="line29" />
+      <text
+         fill="#000000"
+         font-family="sans-serif"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="31"
+         x="219.5"
+         y="70.5332"
+         id="text31">sub2</text>
+    </g>
+    <!--MD5=[5fb2047f16e68208d5ac7a7a27bda919]
+reverse link sub1 to super1-->
+    <path
+       d="M 45.27,76 H 7.1274442"
+       id="sub1-backto-super1"
+       style="fill:none;stroke:#000000;stroke-width:1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <polygon
+       fill="#000000"
+       points="50.47,76,41.47,72,45.47,76,41.47,80,50.47,76"
+       style="stroke:#000000;stroke-width:1.0;"
+       id="polygon35" />
+    <!--MD5=[8d12dd20ca86b4fe80487aa3328384a1]
+reverse link sub2 to super2-->
+    <path
+       d="M 204.27,76 C 156.18998,76 129.59085,62.576298 166.32951,54.737864"
+       id="sub2-backto-super2"
+       style="fill:none;stroke:#000000;stroke-width:1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <polygon
+       fill="#000000"
+       points="209.47,76,200.47,72,204.47,76,200.47,80,209.47,76"
+       style="stroke:#000000;stroke-width:1.0;"
+       id="polygon38" />
+    <!--MD5=[5b98f77925992881edfe55244d07f9a3]
+@startuml
+
+
+!include skinparam.puml
+
+
+state super1 {
+      state sub1
+}
+
+state super2 {
+      state sub2
+}
+
+
+super1 -left-> sub1
+
+' This transition needs to be made external.
+super2 -left-> sub2
+
+
+@enduml
+
+@startuml
+
+
+
+skinparam {
+          Shadowing false
+          monochrome true
+          StateBackgroundColor white
+          StateBorderColor black
+          ArrowColor black
+          backgroundColor transparent
+}
+
+
+
+state super1 {
+      state sub1
+}
+
+state super2 {
+      state sub2
+}
+
+
+super1 -left-> sub1
+
+super2 -left-> sub2
+
+
+@enduml
+
+PlantUML version 1.2021.01(Tue Feb 02 15:55:08 CST 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: US
+-->
+  </g>
+</svg>

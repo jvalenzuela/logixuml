@@ -6,7 +6,6 @@ add-on instructions. This section describes the UML elements supported
 by LogixUML, along with details on how they are implemented in the output
 AOIs.
 
-
 \subsection{State Machines}
 
 The name of the resulting add-on instruction will be the state machine's
@@ -106,6 +105,44 @@ applies only when the region is entered with default activation per
 
 
 \subsection{Transitions}
+
+Three transition types are defined in \textcite[\S14.2.3.8.1]{OMGUML}:
+\introTechnicalTerm{external}, \introTechnicalTerm{local},
+and \introTechnicalTerm{internal}. LogixUML supports only external and local
+transitions with the exception that self-transitions are not allowed; the
+source and target states must be different.
+
+The method by which LogixUML distinguishes between external and local
+transitions differs from the standard. \textcite[\S14.2.4.9]{OMGUML}
+states a transition is external if the arrow departs the source's
+boundry, or local if the arrow is fully-contained within the source's boundry.
+LogixUML only evaluates the relationship between the source and target states;
+how the transition arrow is drawn makes no difference. The transition is
+treated as local if the target is contained within the source, otherwise
+it is considered external.
+
+Figure~\ref{fig:localTransition} shows two different notations that are both
+treated as local transitions. The transition to \identifier{sub1} is drawn
+as a traditional local transition with the arrow completely within the
+source. LogixUML executes the second transition to \identifier{sub2} in the
+same manner, even though it is drawn as an external transition per the
+standard. Neither transition will trigger the exit action of their
+respective source states.
+
+\plantUmlFigure{localTransition}
+               {Examples of local transitions.}
+
+It is recommended to draw all local transitions using the standard method,
+regardless of the fact that LogixUML does not use the arrow path
+to differentiate between external and local transitions. Maintaining
+consistency between the visual depiction and system behavior serves to
+reduce confusion by not unnecessarily deviating from established
+notation.
+
+The duration of a transtion, measured in the number of times the state machine
+add-on instruction must be consecutively scanned true, is nonzero for all
+transitions. Exactly how many scans are required is configurable,
+and is discussed in detail in~\S\ref{sec:scanMode}.
 
 
 \subsection{Events}
