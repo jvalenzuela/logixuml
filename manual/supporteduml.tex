@@ -36,6 +36,33 @@ modes is as follows.
 \subsection{States}
 \label{ss:states}
 
+LogixUML supports \introTechnicalTerm{simple} and
+\introTechnicalTerm{composite} states as defined in
+\textcite[\S14.2.3.4.1]{OMGUML}; \introTechnicalTerm{submachine} states are
+not supported. Composite states can be nested to any depth, however, a
+composite state may only have a single region.
+
+Every state must have a name unique throughout the entire state
+machine. State names are used to construct add-on instruction parameter names,
+so they are not case-sensitive and must confirm to Logix tag name
+conventions.
+
+The exported add-on instruction will include a set of boolean output parameters
+defined for each state. These outputs represent the entry, exit, and do
+activities described in \textcite[\S14.2.3.4.3]{OMGUML}, and are intended to
+be used by the application logic to enable actions associated with each
+state. The outputs are named with the prefixes
+\identifier{stateEntry\_}, \identifier{stateExit\_}, and
+\identifier{stateDo\_}, followed by the state name. These outputs are defined
+as neither visible nor required, so they are not shown on the add-on
+instruction's face and do not need to be assigned a separate tag.
+
+One additional boolean output is provided for each state, named with the
+\identifier{stateActive\_} prefix. It is simply the logical OR of the
+entry, exit, and do outputs. This output is defined as visible and not
+required, so it will appear as a flag on the right edge of the
+instruction face.
+
 
 \subsection{Initial Pseudostates}
 
