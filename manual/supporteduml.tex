@@ -8,12 +8,36 @@ AOIs.
 
 \subsection{State Machines}
 
+State machines are the top-level diagram type defining behavior
+that LogixUML implements as an add-on instruction. \textcite[\S14]{OMGUML}
+defines two kinds of state machines: \introTechnicalTerm{behavior}
+and \introTechnicalTerm{protocol}. Only behavior state machines are
+supported, and are configured as such by setting the state machine
+\identifier{Kind} property to \identifier{Dynamic}.
+
+Any state machine intended to be exported as an add-on instruction
+must have the \identifier{stateMachineAoi} stereotype applied.
+This stereotype is defined by the LogixUML module, and serves to
+identify the state machine as a canididate for exporting to an add-on
+instruction and provide configuration properties customizing the
+AOI's implementation. Details about stereotype properties are presented
+in~\S\ref{sec:scanMode} and~\S\ref{sec:eventQueue}.
+
 The name of the resulting add-on instruction will be the state machine's
 name prefixed with \identifier{stateMachine\_}, e.g. exporting a state
 machine named \identifier{monitor} will yield a
 \identifier{stateMachine\_monitor} add-on instruction.
 The state machine name must therefore conform to the convention defined
 in \textcite[Chapter~2]{AOI}.
+
+In addition to the parameters defined by the state machine's content,
+such as states and events, the add-on instruction will include a
+boolean output representing the condition of the entire state machine.
+This output, named \identifier{active}, is unconditionally set to~1 when
+the AOI is scanned true, and set to~0 in Prescan or if the AOI
+is scanned false. The \identifier{active} output is defined as visible
+and non-required, appearing as a flag on the right side of the
+instruction's face.
 
 Behavior of the state machine add-on instruction for the various scan
 modes is as follows.
