@@ -1,0 +1,60 @@
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+
+    \node (start)
+          [flowchart terminator]
+          {Start};
+
+    \node (enqueue)
+          [flowchart process, below=of start]
+          {Enqueue\\Events};
+
+    \node (stable)
+          [flowchart decision, below=of enqueue]
+          {Stable};
+
+    \node (queue empty)
+          [flowchart decision, below left=of stable]
+          {Queue\\Empty};
+
+    \node (dequeue)
+          [flowchart process, below=of queue empty]
+          {Dequeue\\Event};
+
+    \node (check trigger)
+          [flowchart decision, left=of dequeue]
+          {Transition\\Triggered};
+
+    \node (advance transition)
+          [flowchart process, below right=of stable]
+          {Advance\\Transition};
+
+    \node (end)
+          [flowchart terminator, below=6 of stable]
+          {End};
+
+
+    \begin{scope}[flowchart arrow, every node/.style=very near start]
+      \draw (start) -- (enqueue);
+
+      \draw (enqueue) -- (stable);
+
+      \draw (stable) -| node[anchor=south] {No} (advance transition);
+      \draw (stable) -| node[anchor=south] {Yes} (queue empty);
+
+      \draw (queue empty) -- node[anchor=east] {No} (dequeue);
+      \draw (queue empty) -| node[anchor=south] {Yes} (end);
+
+      \draw (dequeue) -- (check trigger);
+
+      \draw (check trigger) |- node[anchor=east] {No} (queue empty);
+      \draw (check trigger) |- node[anchor=east] {Yes} (end);
+
+      \draw (advance transition) |- (end);
+    \end{scope}
+
+  \end{tikzpicture}
+  \caption{Add-on instruction logic flow.}
+  \label{fig:aoiFlowchart}
+\end{figure}
