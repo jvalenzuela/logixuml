@@ -1,9 +1,11 @@
 package org.modelio.logixuml.command;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -35,6 +37,8 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
         } catch (ExportException e) {
             selectExceptionObject(e, context);
             showErrorDialog(e);
+        } catch (AssertionError e) {
+            showAssertionDialog(e);
         }
     }
 
@@ -61,6 +65,24 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
     private void showErrorDialog(final Throwable e) {
         final Status status = new Status(IStatus.ERROR, "org.modelio.logixuml", e.getMessage(), e.getCause());
         ErrorDialog.openError(null, "AOI Export Error", null, status);
+    }
+
+    /**
+     * Displays a GUI dialog reporting an assertion failure.
+     *
+     * @param e The assertion error.
+     */
+    private void showAssertionDialog(final Throwable e) {
+        // Build a MultiStatus object containing the stack trace.
+        final List<Status> childStatus = new ArrayList<>();
+        for (final StackTraceElement stackTraceElement : e.getStackTrace()) {
+            childStatus.add(new Status(IStatus.ERROR, "org.modelio.logixuml", stackTraceElement.toString()));
+        }
+        final MultiStatus ms = new MultiStatus("org.modelio.logixuml", IStatus.ERROR,
+                childStatus.toArray(new Status[] {}), e.toString(), e);
+
+        ErrorDialog.openError(null, "Assertion Error",
+                "Oops, something didn't work as planned. Please report this as a bug.", ms);
     }
 
     /**
