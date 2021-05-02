@@ -12,6 +12,8 @@
 \RequirePackage{graphicx}
 \RequirePackage{color}
 \RequirePackage{menukeys}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,3 +79,37 @@
 \newcommand*{\inputField}[1]{%
   \textsf{#1}% Apply a specific typeface.
 }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Flowchart Styles
+%
+% TikZ style definitions for flowchart components.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzstyle{flowchart terminator} =
+          [
+            rectangle,
+            rounded corners,
+            align=center,
+            draw
+          ]
+
+\tikzstyle{flowchart process} =
+          [
+            rectangle,
+            align=center,
+            draw
+          ]
+
+\tikzstyle{flowchart decision} =
+          [
+            diamond,
+            align=center,
+            draw
+          ]
+
+\tikzstyle{flowchart arrow} =
+          [
+            -Latex,
+            draw
+          ]
