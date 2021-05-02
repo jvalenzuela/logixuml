@@ -32,7 +32,7 @@ public class Halt {
             aoi.addLocalTag(TagNames.ARRAY, DataType.DINT, 1);
             aoi.addLocalTag(TagNames.INDEX, DataType.DINT);
         } catch (ExportException e) {
-            assert false; // These tags should never be invalid.
+            throw new AssertionError(); // These tags should never be invalid.
         }
     }
 

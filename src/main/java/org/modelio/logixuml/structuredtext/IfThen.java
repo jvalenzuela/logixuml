@@ -31,13 +31,22 @@ public class IfThen implements IStructuredTextGenerator {
          *                   true.
          */
         Case(final String expression, final List<String> statements) {
-            assert expression != null;
+            if (expression == null) {
+                throw new AssertionError();
+            }
+
             final String trimmedExp = expression.trim();
-            assert !trimmedExp.isEmpty();
+            if (trimmedExp.isEmpty()) {
+                throw new AssertionError();
+            }
             this.expression = trimmedExp;
 
-            assert statements != null;
-            assert statements.size() > 0;
+            if (statements == null) {
+                throw new AssertionError();
+            }
+            if (statements.size() == 0) {
+                throw new AssertionError();
+            }
             this.statements = statements;
         }
 
@@ -105,9 +114,17 @@ public class IfThen implements IStructuredTextGenerator {
      *                   ELSE block.
      */
     public void addElse(final List<String> statements) {
-        assert elseStatements == null; // Only one else block is allowed.
-        assert statements != null;
-        assert statements.size() > 0;
+        // Only one else block is allowed.
+        if (elseStatements != null) {
+            throw new AssertionError();
+        }
+
+        if (statements == null) {
+            throw new AssertionError();
+        }
+        if (statements.size() == 0) {
+            throw new AssertionError();
+        }
         elseStatements = statements;
     }
 

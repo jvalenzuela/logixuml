@@ -26,7 +26,9 @@ public class WhileDo {
      * @param exp Boolean expression controlling the loop.
      */
     public WhileDo(final String exp) {
-        assert !exp.isEmpty();
+        if (exp.isEmpty()) {
+            throw new AssertionError();
+        }
         expression = exp;
         body = new ArrayList<>();
     }

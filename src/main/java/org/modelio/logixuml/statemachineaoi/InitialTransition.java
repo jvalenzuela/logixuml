@@ -81,8 +81,7 @@ class InitialTransition {
 
         // Only state machines and states should be queried for initial transitions.
         default:
-            region = null;
-            assert false : parentType;
+            throw new AssertionError(parentType);
         }
 
         return region;

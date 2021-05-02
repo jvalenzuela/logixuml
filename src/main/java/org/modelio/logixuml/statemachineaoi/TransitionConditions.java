@@ -115,8 +115,7 @@ abstract class TransitionConditions {
         // No other element types should be encountered at this point; any unsupported
         // element will already have been detected.
         default:
-            sourceState = null; // Avoid uninitialized local variable error.
-            assert false;
+            throw new AssertionError(sourceType);
         }
 
         return sourceState;
@@ -146,7 +145,9 @@ abstract class TransitionConditions {
             final String targetType = targetElement.getMClass().getQualifiedName();
 
             // Transitions must target only state objects.
-            assert targetType.equals(State.MQNAME);
+            if (!targetType.equals(State.MQNAME)) {
+                throw new AssertionError(targetType);
+            }
 
             // Check to see if the target state has its own initial transition.
             final Transition targetInitial = InitialTransition.getInitialTransition(targetElement);

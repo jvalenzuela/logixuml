@@ -14,9 +14,17 @@ class IntegerIdentifier implements IntSupplier {
 
     @Override
     public int getAsInt() {
-        assert value < Integer.MAX_VALUE; // Sanity check to ensure the result will fit into a DINT.
+        // Sanity check to ensure the result will fit into a DINT.
+        if (value >= Integer.MAX_VALUE) {
+            throw new AssertionError(value);
+        }
+
         value++; // Increment first to ensure non-zero values.
-        assert value > 0;
+
+        if (value <= 0) {
+            throw new AssertionError(value);
+        }
+
         return value;
     }
 }

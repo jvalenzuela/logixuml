@@ -32,11 +32,15 @@ class ConditionIdSequence {
     void storeNext(final int current, final int next) {
         // An existing relationship should never be overwritten as the IDs for all
         // transition conditions must be unique.
-        assert !nextId.containsKey(current);
+        if (nextId.containsKey(current)) {
+            throw new AssertionError(current);
+        }
 
         // If the next ID already exists as a value it must be a stable condition at
         // the completion of a transition, so it must not also be a key.
-        assert !nextId.containsValue(next) || !nextId.containsKey(next);
+        if (nextId.containsValue(next) && nextId.containsKey(next)) {
+            throw new AssertionError(next);
+        }
 
         nextId.put(current, next);
     }
