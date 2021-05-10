@@ -3,6 +3,17 @@ $pdf_mode = 1;
 $jobname = "manual";
 
 
+# Check to ensure PlantUML is available.
+unless (-e 'plantuml.jar') {
+    print <<'END_MESSAGE';
+PlantUML not found.
+Ensure plantuml.jar is located in the manual subdirectory.
+See https://plantuml.com.
+END_MESSAGE
+    exit 2;
+}
+
+
 ensure_path('TEXINPUTS', './figures/plantuml//');
 
 
