@@ -1,0 +1,124 @@
+\section{Event Queue}
+\label{sec:eventQueue}
+
+
+\subsection{Operation}
+
+An AOI state machine is considered in a stable state configuration when
+not executing a transition. Every time it is scanned true in this stable
+condition it will evaluate received events to determine
+if a transition is triggered
+originating from the currently active state configuration. Trigger evaluation
+is applied to events one at a time, and if a transition is triggered,
+further evaluation of events is postponed until the active transition
+fully completes and returns the state machine to another stable state
+configuration. This process of handling events one a time and deferring
+events while executing a transition is referred to in
+\textcite[\S14.2.3.9.1]{OMGUML} as the
+\introTechnicalTerm{run-to-completion paradigm}.
+
+The arrival of events in the form of event input rising edges can
+temporarily exceed the state machine's evaluation ability since the latter
+will only consume events while stable, yet event inputs have no such
+restriction. This situation can occur when multiple events arrive in the
+same scan or during a transition, thus the state machine cannot immediately
+process some or all of the new events.
+To ensure events are not lost in these cases
+a storage mechanism is required to hold events until
+the state machine reaches a stable state configuration.
+\textcite[\S13.3.3]{OMGUML} describes an
+\introTechnicalTerm{event pool} where events are stored until dispatched,
+one at a time, to the state machine. LogixUML implements this event pool
+as an \introTechnicalTerm{event queue} using first-in first-out, or
+\introTechnicalTerm{FIFO}, behavior, where the order events are
+placed into the queue is the same in which they are removed and dispatched
+to the state machine. Events are queued in scan order, i.e., new events are
+always queued after any arriving in previous scans. The order of
+events arriving in the same scan is undefined.
+
+The basic outline of an AOI state machine's execution during each true scan,
+implementing the run-to-completion paradigm with the event queue, is
+illustrated in Figure~\ref{fig:aoiFlowchart}.
+
+\begin{description}
+  \item[Enqueue Events] All event inputs are evaluated to detect rising
+    edges, which cause their associated events to be placed into the
+    event queue.
+
+  \item[Stable] Is the state machine in a stable configuration? In other
+    words, is it not currently in the midst of a transition?
+
+  \item[Advance Transition] Proceed to the next step in the current
+    transition according to the state machine's configured scan mode.
+    AOI execution then ends unconditionally, even if the next step is the
+    final step in the transition: the stable configuration of the
+    target state.
+
+  \item[Queue Empty] Evaluate the content of the event queue to see if it
+    holds any events. If no events are found, AOI execution ends and the
+    state machine remains stable.
+
+  \item[Dequeue Event] Remove a single event from the event queue according
+    to FIFO ordering.
+
+  \item[Transition Triggered] Evaluate the dequeued event to determine if it
+    satisfies a transition trigger from the current state configuration.
+    If a transition is triggered, AOI execution completes with the
+    first step of the transition, otherwise the event is discarded and
+    execution loops back to fetch the next event.
+\end{description}
+
+\input{aoiflowchart}
+
+
+\subsection{Configuration}
+
+The event queue capacity is configured with the
+\identifier{eventQueueSize} property of the
+\identifier{stateMachineAoi} stereotype. Valid values are~1--8,
+inclusive, specifying the maximum number of events that can be queued.
+When selecting a size keep in mind every event is stored in
+the event queue before being dispatched to the state machine,
+even when the event queue is initially empty and a new event can be
+evaluated immediately.
+
+
+\subsection{Overflow}
+
+Overflow of the event queue will occur if an event arrives when the queue
+is full, and this condition must be handled as part of the guarantee that
+events are not lost.
+LogixUML considers event queue overflow a design problem,
+with the state machine or the surrounding application logic, and
+therefore treats overflow as an unrecoverable error by stopping the processor.
+Additionally, the AOI will energize its \identifier{eventQ\_overflow}
+output to help identify the culprit state machine instance; this output
+will automatically reset during prescan. Internally, the AOI generates
+a major fault to halt the processor, which can also be used to locate the
+problem state machine. Do not use the controller fault handler
+to clear the major fault caused by an event queue overflow.
+
+
+\subsection{Monitoring}
+
+State machine add-on instructions internally monitor the available space in
+the event queue to maintain a record of peak usage. This metric is
+available through the \identifier{eventQ\_watermark} output
+to evaluate both event queue sizing and state machine performance
+\emph{in situ}. The output functions as a low
+watermark, reflecting the smallest number of free slots encountered during
+operation; a value of zero indicates the event queue was completely
+full at some point.
+
+The watermark function can be cleared with the
+\identifier{eventQ\_watermark\_reset} input. Setting this input true will
+reset the watermark to current event queue capacity, overwriting any
+previously captured value. Resetting the watermark has no effect on event
+queue operation; it does not cause any events to be discarded or inhibit
+queuing of new events. The watermark input can be exercised at any
+time without impacting state machine behavior.
+
+The reset function is available only when the
+AOI is evaluated true or false during normal program scan; it does not
+work in prescan. The reset input is level sensitive, i.e., the reset
+function persists as long as the input remains true.
