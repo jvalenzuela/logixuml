@@ -3,6 +3,7 @@
 
 
 \subsection{Operation}
+\label{ss:eventQueueOperation}
 
 An AOI state machine is considered in a stable state configuration when
 not executing a transition. Every time it is scanned true in this stable
@@ -122,3 +123,44 @@ The reset function is available only when the
 AOI is evaluated true or false during normal program scan; it does not
 work in prescan. The reset input is level sensitive, i.e., the reset
 function persists as long as the input remains true.
+
+
+\subsection{Examples}
+
+Operation of the run-to-completion paradigm and event queue is
+demonstrated using the state machine depicted in
+Figure~\ref{fig:eventQueueStateMachine}. For simpliticy these examples
+assume the state machine is configured for single transition scan mode
+as described in \S\ref{ss:scanModeSingle},
+and begin with the state machine stable in \identifier{s1}.
+
+\plantUmlFigure{eventQueueStateMachine}
+               {State machine for event queue examples.}
+
+In the first example case, shown in Figure~\ref{fig:eventQueueTiming1},
+events \identifier{e1} and \identifier{e2} arrive simultaneously at scan~1.
+As described in \S\ref{ss:eventQueueOperation}, events arriving in the same
+scan can be queued in any order, and case~1 explores behavior if
+\identifier{e1} is queued before \identifier{e2}. Both events are queued
+upon arrival,
+and since the state machine is stable in \identifier{s1}, \identifier{e1}
+is dequeued and dispatched to the state machine, triggering the transition
+to \identifier{s2}. The transition progresses through scans~1 and~2.
+The state machine is again stable in \identifier{s2} when the AOI is
+evaluated at scan~3, and the next event is removed from the event queue,
+\identifier{e2}, triggering the final transition to \identifier{s3}.
+
+\plantUmlFigure{eventQueueTiming1}
+               {Event queue timing example, case~1.}
+
+The other possibile result of \identifier{e1} and \identifier{e2} arriving
+simultaneously is \identifier{e2} being queued ahead of \identifier{e1};
+this is shown in Figure~\ref{fig:eventQueueTiming2}. Both events again
+arrive at scan~1, however, this time \identifier{e2} is dequeued first
+and dispatched to the state machine, initiating a transition to \identifier{e3}.
+The state machine reaches a stable configuration in scan~3 and \identifier{e1}
+is then removed from the queue. Event \identifier{e1} is discarded as no
+transition triggered by \identifier{e1} exists from \identifier{s3}.
+
+\plantUmlFigure{eventQueueTiming2}
+               {Event queue timing example, case~2.}
