@@ -11,7 +11,7 @@
     </ClassPath>
     <Profiles>
         <Profile uid="ee27d796-28f9-4cb7-8b53-3721a3773892" id="LogixUMLProfile">
-            <Stereotype name="statemachineaoi" metaclass="StateMachine" is-hidden="false" label="State Machine AOI" uid="61d9a1a0-f1d1-4a9f-b087-7f3ff00985e6">
+            <Stereotype name="StateMachineAoi" metaclass="StateMachine" is-hidden="false" label="StateMachineAoi" uid="61d9a1a0-f1d1-4a9f-b087-7f3ff00985e6">
                 <PropertyTable id="stateMachineAoiParameters" uid="f5b2a450-7a1b-44a5-9751-f3c3d142e2ca">
                     <PropertyDefinition id="eventQueueSize" default-value="" is-editable="true" uid="b0efafc8-acc1-4e92-bf5f-bf563f51ffb2">
                         <TypeRef id="Unsigned"/>

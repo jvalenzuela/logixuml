@@ -83,7 +83,7 @@ class StereotypeProperties {
      * @return The property value.
      */
     private String getTableValue(final String key) {
-        String value = stateMachine.getProperty("LogixUML", "statemachineaoi", key);
+        String value = stateMachine.getProperty("LogixUML", "StateMachineAoi", key);
 
         // getProperty() will return null if no value has been entered since the
         // stereotype was applied. Convert this to an empty string, matching the default
