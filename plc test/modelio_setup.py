@@ -7,6 +7,10 @@ from org.modelio.metamodel.uml.statik import Package
 import os
 
 
+# Set of all available scan modes.
+SCAN_MODES = frozenset(['single', 'dual', 'sequential'])
+
+
 def import_patterns():
     """Loads and applies all pattern files found in the workspace path."""
     instance = Modelio.getInstance()
@@ -27,4 +31,16 @@ def import_patterns():
 
         # Apply(instantiate) the pattern in the project.
         pattern_name = ptn[:-5] # Strip extension.
-        pattern_svc.applyPattern(pattern_name, {pattern_name:pkg})
+        params = {pattern_name:pkg}
+
+        # Pattern names ending with a '_' are duplicated for each scan mode,
+        # and require a $(name) parameter so each variant can be assigend
+        # a unique name.
+        if pattern_name.endswith('_'):
+            for mode in SCAN_MODES:
+                params['$(name)'] = ''.join((pattern_name, mode))
+                pattern_svc.applyPattern(pattern_name, params)
+
+        # All other patterns are applied once as-is.
+        else:
+            pattern_svc.applyPattern(pattern_name, params)
