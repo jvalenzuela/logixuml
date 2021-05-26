@@ -3,12 +3,30 @@
 """
 
 import java.nio.file.Paths
+from org.modelio.metamodel.uml.behavior.stateMachineModel import StateMachine
 from org.modelio.metamodel.uml.statik import Package
 import os
 
 
+# Name of the module defining the stereotype.
+MODULE_NAME = 'LogixUML'
+
+
+# Name of the stereotype defined by the module that will be applied to all
+# state machines.
+STEREOTYPE_NAME = 'StateMachineAoi'
+
+
+# Event queue size applied to all state machines.
+EVENT_QUEUE_SIZE = 2
+
+
 # Set of all available scan modes.
 SCAN_MODES = frozenset(['single', 'dual', 'sequential'])
+
+
+# Scan mode for state machines that don't specify a scan mode in their name.
+DEFAULT_SCAN_MODE = 'single'
 
 
 def import_patterns():
@@ -44,3 +62,18 @@ def import_patterns():
         # All other patterns are applied once as-is.
         else:
             pattern_svc.applyPattern(pattern_name, params)
+
+
+def apply_stereotypes():
+    """Adds the stereotype and sets property values for all state machines."""
+    for sm in session.findByClass(StateMachine):
+        sm.addStereotype(MODULE_NAME, STEREOTYPE_NAME)
+        sm.setProperty(MODULE_NAME, STEREOTYPE_NAME, 'eventQueueSize',
+                       str(EVENT_QUEUE_SIZE))
+
+        # Set the scan mode based on the state machine name, or use the default
+        # if the name does not define a specific mode.
+        suffix = sm.name.split('_')[-1]
+        scan_mode = suffix if suffix in SCAN_MODES else DEFAULT_SCAN_MODE
+        sm.setProperty(MODULE_NAME, STEREOTYPE_NAME, 'transitionScanMode',
+                       scan_mode)
