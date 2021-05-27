@@ -77,3 +77,7 @@ def apply_stereotypes():
         scan_mode = suffix if suffix in SCAN_MODES else DEFAULT_SCAN_MODE
         sm.setProperty(MODULE_NAME, STEREOTYPE_NAME, 'transitionScanMode',
                        scan_mode)
+
+
+import_patterns()
+apply_stereotypes()
