@@ -21,8 +21,13 @@ STEREOTYPE_NAME = 'StateMachineAoi'
 EVENT_QUEUE_SIZE = 2
 
 
-# Set of all available scan modes.
-SCAN_MODES = frozenset(['single', 'dual', 'sequential'])
+# Set of all available scan modes and the suffix applied to state machines
+# duplicated for each scan mode.
+SCAN_MODES = {
+    'single':'1',
+    'dual':'2',
+    'sequential':'s'
+}
 
 
 # Scan mode for state machines that don't specify a scan mode in their name.
@@ -42,6 +47,10 @@ def import_patterns():
     packages = session.findByClass(Package)
     pkg = [p for p in packages if p.name != 'UML Types'][0]
 
+    # Mapping of state machine name to scan mode for state machines that
+    # require a non-default scan mode.
+    sm_modes = {}
+
     for ptn in [f for f in os.listdir(work_path) if f.endswith('.umlt')]:
         # Load the pattern file into the pattern catalog.
         pattern_path = java.nio.file.Paths.get(work_path, ptn)
@@ -56,28 +65,33 @@ def import_patterns():
         # a unique name.
         if pattern_name.endswith('_'):
             for mode in SCAN_MODES:
-                params['$(name)'] = ''.join((pattern_name, mode))
+                name = ''.join((pattern_name, SCAN_MODES[mode]))
+                params['$(name)'] = name
                 pattern_svc.applyPattern(pattern_name, params)
+
+                sm_modes[name] = mode
 
         # All other patterns are applied once as-is.
         else:
             pattern_svc.applyPattern(pattern_name, params)
 
+    return sm_modes
 
-def apply_stereotypes():
+
+def apply_stereotypes(sm_modes):
     """Adds the stereotype and sets property values for all state machines."""
     for sm in session.findByClass(StateMachine):
         sm.addStereotype(MODULE_NAME, STEREOTYPE_NAME)
         sm.setProperty(MODULE_NAME, STEREOTYPE_NAME, 'eventQueueSize',
                        str(EVENT_QUEUE_SIZE))
 
-        # Set the scan mode based on the state machine name, or use the default
-        # if the name does not define a specific mode.
-        suffix = sm.name.split('_')[-1]
-        scan_mode = suffix if suffix in SCAN_MODES else DEFAULT_SCAN_MODE
+        try:
+            scan_mode = sm_modes[sm.name]
+        except KeyError:
+            scan_mode = DEFAULT_SCAN_MODE
         sm.setProperty(MODULE_NAME, STEREOTYPE_NAME, 'transitionScanMode',
                        scan_mode)
 
 
-import_patterns()
-apply_stereotypes()
+sm_modes = import_patterns()
+apply_stereotypes(sm_modes)
