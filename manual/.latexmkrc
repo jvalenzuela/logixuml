@@ -45,7 +45,7 @@ sub convert_plantuml {
                              "-jar",
                              "plantuml.jar",
                              "-tsvg",
-                             "\"$_[0].puml\"");
+                             "$_[0].puml");
         system(@plantuml_args);
     }
 
@@ -54,8 +54,8 @@ sub convert_plantuml {
         my @inkscape_args = ("inkscape",
                              "--export-area-drawing",
                              "--without-gui",
-                             "--file=\"$_[0].svg\"",
-                             "--export-pdf=\"$_[0].pdf\"",
+                             "--file=$_[0].svg",
+                             "--export-pdf=$_[0].pdf",
                              "--export-latex");
         system(@inkscape_args);
     }
