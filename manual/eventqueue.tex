@@ -49,7 +49,7 @@ illustrated in Figure~\ref{fig:aoiFlowchart}.
   \item[Stable] Is the state machine in a stable configuration? In other
     words, is it not currently in the midst of a transition?
 
-  \item[Advance Transition] Proceed to the next step in the current
+  \item[Advance Transition] Proceed to the next step in the
     transition according to the state machine's configured scan mode.
     AOI execution then ends unconditionally, even if the next step is the
     final step in the transition: the stable configuration of the
@@ -131,7 +131,7 @@ Operation of the run-to-completion paradigm and event queue is
 demonstrated using the state machine depicted in
 Figure~\ref{fig:eventQueueStateMachine}. For simpliticy these examples
 assume the state machine is configured for single transition scan mode
-as described in \S\ref{ss:scanModeSingle},
+described in \S\ref{ss:scanModeSingle},
 and begin with the state machine stable in \identifier{s1}.
 
 \plantUmlFigure{eventQueueStateMachine}
