@@ -18,6 +18,65 @@
 		</repository>
 	</repositories>
 
+	<!-- profiles
+
+	These profiles are intended to handle problems during unit testing
+	due to the MDAKit declaring a Windows-specific SWT dependency.
+	Unit tests employ mock objects, which require SWT at some level,
+	even though the tests do not exercise any GUI functionality.
+	These platform-specific profiles define the appropriate
+	SWT jar to replace the one excluded from the MDAKit.
+	-->
+	<profiles>
+		<!--
+		Include the correct Linux SWT dependency, replacing the Windows
+		one excluded from the MDAKit.
+		-->
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<name>Linux</name>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.platform</groupId>
+					<artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+					<version>3.110.0</version>
+					<scope>provided</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.eclipse.platform</groupId>
+							<artifactId>org.eclipse.swt</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<!--
+		Use the same SWT artifact excluded from the MDAKit when building
+		in Windows.
+		 -->
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.modelio</groupId>
+					<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+					<version>3.110.0.v20190305-0602</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>modelio</id>
@@ -38,6 +97,18 @@
 			<version>[4.0.0,4.0.1)</version>
 			<type>pom</type>
 			<scope>provided</scope>
+
+			<!--
+			This dependency does not work when running unit tests on Linux
+			platforms. It is excluded here so the correct dependency can
+			be added via OS-specific profiles.
+			 -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.modelio</groupId>
+					<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Library inclusion example -->
