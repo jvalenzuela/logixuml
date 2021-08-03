@@ -17,7 +17,231 @@
 </Ports>
 </Module>
 </Modules>
-<AddOnInstructionDefinitions/>
+<AddOnInstructionDefinitions>
+<AddOnInstructionDefinition Name="unitTest_case" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-02T13:30:44.005Z" CreatedBy="VM\Admin" EditedDate="2021-08-03T13:04:35.678Z" EditedBy="VM\Admin" SoftwareRevision="v20.00">
+<Description>
+<![CDATA[Unit Test Case]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="pass" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[True when all configured scans have been executed with no assertion failures.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="fail" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[True if one or more assertions failed.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="scan" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Current scan being executed, zero-based.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="assert_fail" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Interface for assertion AOIs to cancel the test; true to stop the test.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="last_scan" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<Description>
+<![CDATA[Highest scan defined by an associated assertion AOI.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[This instruction oversees the execution of a single test case where a function is validated throughout a series of scans. It is used with a set of assertion AOIs to confirm required conditions at each scan.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Comment>
+<![CDATA[Capture the final scan set by the assertion AOIs and reset the scan counter to begin the test. The scan counter is reset to -1 so the first scan will be 0.]]>
+</Comment>
+<Text>
+<![CDATA[XIC(s:fs)[MOV(scan,last_scan) ,MOV(-1,scan) ];]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[[EQU(scan,last_scan) XIO(assert_fail) ,XIC(pass) ]OTE(pass);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Text>
+<![CDATA[XIC(assert_fail)OTE(fail);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Comment>
+<![CDATA[Incremenet the scan counter while the test is in progress.
+]]>
+</Comment>
+<Text>
+<![CDATA[XIO(pass)XIO(fail)ADD(scan,1,scan);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Comment>
+<![CDATA[Reset the scan counter after the test completes.
+]]>
+</Comment>
+<Text>
+<![CDATA[[XIC(pass) ,XIC(fail) ]MOV(-1,scan);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="Prescan" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Clear the scan counter in preparation for assertion AOIs to register the last scan number during their prescan.]]>
+</Comment>
+<Text>
+<![CDATA[CLR(scan);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[OTU(assert_fail);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="unitTest_assertTrue" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="true" CreatedDate="2021-08-02T13:33:20.895Z" CreatedBy="VM\Admin" EditedDate="2021-08-03T13:09:20.943Z" EditedBy="VM\Admin" SoftwareRevision="v20.00">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="scan" TagType="Base" DataType="DINT" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[Scan number where this condition must be true.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="unit_test_case" TagType="Base" DataType="unitTest_case" Usage="InOut" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Parent test case.]]>
+</Description>
+</Parameter>
+<Parameter Name="fail" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[True if this assertion was not true on the target scan.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags/>
+<Routines>
+<Routine Name="EnableInFalse" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Register an assertion failure if this instruction is scanned false at the target test scan.
+]]>
+</Comment>
+<Text>
+<![CDATA[EQU(unit_test_case.scan,scan)OTL(fail);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Comment>
+<![CDATA[Signal the controlling unitTest_case AOI that an assertion has failed.
+]]>
+</Comment>
+<Text>
+<![CDATA[XIC(fail)OTL(unit_test_case.assert_fail);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="Logic" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[This instruction confirms a boolean condition is true at a single scan during a unit test case. No logic exists in this routine since EnableIn true requires no action; see the EnableInFalse routine for failure semantics.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="Prescan" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Update the final scan number if this assertion has been defined with a higher scan number. This is how the parent test case determines the total number of scans in the test.
+]]>
+</Comment>
+<Text>
+<![CDATA[GRT(scan,unit_test_case.scan)MOV(scan,unit_test_case.scan);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[OTU(fail);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
+</AddOnInstructionDefinitions>
 <Tags/>
 <Programs>
 <Program Name="results" TestEdits="false" MainRoutineName="summary" Disabled="false">
