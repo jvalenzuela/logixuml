@@ -48,10 +48,20 @@ public class ExportAoiCommand extends DefaultModuleCommandHandler {
     public void actionPerformed(List<MObject> selectedElements, IModule module) {
         final IModuleContext context = module.getModuleContext();
         try {
-            final StateMachineAoi aoi = new StateMachineAoi((StateMachine) selectedElements.get(0));
+            // Generate the set of AOIs from the selected state machine model
+            // objects.
+            final List<StateMachineAoi> aois = new ArrayList<>();
+            for (final MObject element: selectedElements) {
+                aois.add(new StateMachineAoi((StateMachine) element));
+            }
+
+            // Select an output directory and write all AOIs if no state
+            // machines raised an exception.
             final String path = getTargetPath(context);
             if (path != null) {
-                aoi.export(path);
+                for (final StateMachineAoi aoi: aois) {
+                    aoi.export(path);
+                }
             }
         } catch (ExportException e) {
             selectExceptionObject(e, context);
