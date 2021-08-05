@@ -123,7 +123,7 @@ public class AddOnInstruction {
         controller.appendChild(aoiDefs);
 
         final Element aoi = Doc.createElement("AddOnInstructionDefinition");
-        aoi.setAttribute("name", Name);
+        aoi.setAttribute("Name", Name);
         aoi.setAttribute("Use", "Target");
         aoi.setAttribute("ExecutePrescan", "true");
         aoi.setAttribute("ExecuteEnableInFalse", "true");
