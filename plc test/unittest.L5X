@@ -2526,7 +2526,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="unitTest_case" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-02T13:30:44.005Z" CreatedBy="VM\Admin" EditedDate="2021-08-03T13:04:35.678Z" EditedBy="VM\Admin" SoftwareRevision="v20.00">
+<AddOnInstructionDefinition Name="unitTest_case" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-02T13:30:44.005Z" CreatedBy="VM\Admin" EditedDate="2021-08-09T08:58:41.724Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Description>
 <![CDATA[Unit Test Case]]>
 </Description>
@@ -2541,7 +2541,7 @@
 <![CDATA[Enable Output - System Defined Parameter]]>
 </Description>
 </Parameter>
-<Parameter Name="pass" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Parameter Name="pass" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="None">
 <Description>
 <![CDATA[True when all configured scans have been executed with no assertion failures.]]>
 </Description>
