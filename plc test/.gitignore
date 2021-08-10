@@ -1,1 +1,8 @@
 Project*/
+*.L5X
+!unittest.L5X
+*.ACD
+*.Sem
+*.Wrk
+*BAK*
+*.Recovery
