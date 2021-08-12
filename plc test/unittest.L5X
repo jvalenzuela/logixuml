@@ -2811,6 +2811,18 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </Data>
 </Tag>
+<Tag Name="pass_stateMachineInitSuperInitNest_2" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateMachineInitSuperInitNest_s" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_stateMachineInitSuperInit_dual" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Data>00</Data>
 <Data Format="Decorated">
@@ -2848,7 +2860,7 @@
 <RLLContent>
 <Rung Number="0" Type="N">
 <Text>
-<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)OTE(pass_all);]]>
+<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_all);]]>
 </Text>
 </Rung>
 </RLLContent>
@@ -6744,6 +6756,1236 @@
 </Routine>
 </Routines>
 </Program>
+<Program Name="stateMachineInitSuperInitNest_2" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="30" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="30">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[1]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[2]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[3]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[4]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[5]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[6]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[7]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[8]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[9]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[10]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[11]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[12]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[13]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[14]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[15]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[16]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[17]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[18]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[19]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[20]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[21]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[22]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[23]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[24]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[25]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[26]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[27]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[28]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[29]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_smInitSuperInitNest_2" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_smInitSuperInitNest_2">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="stateEntry_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_superstate" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Validate a top-level initial transition for the entire state machine targeting a super-state that has its own initial transition to a deeply-nested sub-state in dual-scan transition mode.
+]]>
+</Comment>
+<Text>
+<![CDATA[unitTest_case(tc,pass_stateMachineInitSuperInitNest_2);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_smInitSuperInitNest_2(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[### Scan 0 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_superstate)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[1],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_superstate)unitTest_assertTrue(assertions[2],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[3],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_mid)unitTest_assertTrue(assertions[4],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="8" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[5],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="9" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_mid)unitTest_assertTrue(assertions[6],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="10" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[7],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="11" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_target)unitTest_assertTrue(assertions[8],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="12" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[9],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="13" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_mid)unitTest_assertTrue(assertions[10],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="14" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[11],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="15" Type="N">
+<Comment>
+<![CDATA[### Scan 1 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="16" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[12],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="17" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[13],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="18" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[14],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="19" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[15],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="20" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_mid)unitTest_assertTrue(assertions[16],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="21" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[17],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="22" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_mid)unitTest_assertTrue(assertions[18],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="23" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[19],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="24" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_target)unitTest_assertTrue(assertions[20],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="25" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[21],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="26" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_target)unitTest_assertTrue(assertions[22],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="27" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_target)unitTest_assertTrue(assertions[23],1,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateMachineInitSuperInitNest_s" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="50" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 
+01 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="50">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[1]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[2]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[3]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[4]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[5]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[6]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[7]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[8]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[9]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[10]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[11]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[12]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[13]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[14]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[15]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[16]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[17]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[18]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[19]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[20]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[21]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[22]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[23]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[24]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[25]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[26]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[27]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[28]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[29]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[30]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[31]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[32]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[33]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[34]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[35]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[36]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[37]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[38]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[39]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[40]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[41]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[42]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[43]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[44]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[45]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[46]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[47]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[48]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[49]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_smInitSuperInitNest_s" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_smInitSuperInitNest_s">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="stateEntry_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_mid" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_superstate" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Validate a top-level initial transition for the entire state machine targeting a super-state that has its own initial transition to a deeply-nested sub-state in sequential-scan transition mode.
+]]>
+</Comment>
+<Text>
+<![CDATA[unitTest_case(tc,pass_stateMachineInitSuperInitNest_s);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_smInitSuperInitNest_s(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[### Scan 0 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_superstate)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[1],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_superstate)unitTest_assertTrue(assertions[2],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[3],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_mid)unitTest_assertTrue(assertions[4],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="8" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[5],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="9" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_mid)unitTest_assertTrue(assertions[6],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="10" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateActive_mid)unitTest_assertTrue(assertions[7],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="11" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_target)unitTest_assertTrue(assertions[8],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="12" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[9],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="13" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_target)unitTest_assertTrue(assertions[10],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="14" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateActive_target)unitTest_assertTrue(assertions[11],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="15" Type="N">
+<Comment>
+<![CDATA[### Scan 1 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="16" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[12],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="17" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[13],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="18" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[14],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="19" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[15],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="20" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_mid)unitTest_assertTrue(assertions[16],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="21" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[17],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="22" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_mid)unitTest_assertTrue(assertions[18],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="23" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[19],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="24" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_target)unitTest_assertTrue(assertions[20],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="25" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[21],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="26" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_target)unitTest_assertTrue(assertions[22],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="27" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateActive_target)unitTest_assertTrue(assertions[23],1,tc);]]>
+</Text>
+</Rung>
+<Rung Number="28" Type="N">
+<Comment>
+<![CDATA[### Scan 2 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="29" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[24],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="30" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[25],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="31" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[26],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="32" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[27],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="33" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_mid)unitTest_assertTrue(assertions[28],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="34" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[29],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="35" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_mid)unitTest_assertTrue(assertions[30],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="36" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[31],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="37" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateEntry_target)unitTest_assertTrue(assertions[32],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="38" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[33],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="39" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_target)unitTest_assertTrue(assertions[34],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="40" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_target)unitTest_assertTrue(assertions[35],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="41" Type="N">
+<Comment>
+<![CDATA[### Scan 3 ###
+]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="42" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[36],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="43" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[37],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="44" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[38],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="45" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[39],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="46" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_mid)unitTest_assertTrue(assertions[40],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="47" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_mid)unitTest_assertTrue(assertions[41],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="48" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_mid)unitTest_assertTrue(assertions[42],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="49" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_mid)unitTest_assertTrue(assertions[43],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="50" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_target)unitTest_assertTrue(assertions[44],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="51" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_target)unitTest_assertTrue(assertions[45],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="52" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_target)unitTest_assertTrue(assertions[46],3,tc);]]>
+</Text>
+</Rung>
+<Rung Number="53" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateActive_target)unitTest_assertTrue(assertions[47],3,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
 <Program Name="stateMachineInitSuperInit_dual" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Tags>
 <Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="20" Constant="false" ExternalAccess="None">
@@ -7990,6 +9232,8 @@
 <ScheduledProgram Name="stateMachineInitSuperInit_dual"/>
 <ScheduledProgram Name="stateMachineInitSuperInit_seq"/>
 <ScheduledProgram Name="stateMachineInitSuperInitNest_1"/>
+<ScheduledProgram Name="stateMachineInitSuperInitNest_2"/>
+<ScheduledProgram Name="stateMachineInitSuperInitNest_s"/>
 <ScheduledProgram Name="transitionTopSibling"/>
 <ScheduledProgram Name="transitionSubstateSibling"/>
 <ScheduledProgram Name="transitionToSuperstate"/>
