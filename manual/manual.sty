@@ -46,7 +46,7 @@
 \newcommand*{\plantUmlFigure}[2]{
   \begin{figure}[htb]
     \centering
-    \input{#1.pdf_tex}
+    \InputIfFileExists{#1.pdf_tex}{}{}
     \caption{#2}
     \label{fig:#1}
   \end{figure}
