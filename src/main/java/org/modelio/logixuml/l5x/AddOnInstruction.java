@@ -39,6 +39,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.modelio.logixuml.statemachineaoi.ExportException;
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -241,7 +242,11 @@ public class AddOnInstruction {
         line.setAttribute("Number", lineNum.toString());
 
         // Create the CDATA section with the actual content.
-        line.appendChild(Doc.createCDATASection(stLine));
+        // Empty lines are replaced with a single whitespace to ensure the
+        // CDATA section node is created, as it is required by RSLogix.
+        final String cdataContent = stLine.isEmpty() ? " " : stLine;
+        final CDATASection cdataNode = Doc.createCDATASection(cdataContent);
+        line.appendChild(cdataNode);
     }
 
     /**
