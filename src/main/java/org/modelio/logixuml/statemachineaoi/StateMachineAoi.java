@@ -21,8 +21,10 @@ package org.modelio.logixuml.statemachineaoi;
 
 import static java.util.Collections.unmodifiableList;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -189,6 +191,12 @@ public class StateMachineAoi {
     private AddOnInstruction initializeAoi(final MObject stateMachine) throws ExportException {
         final AddOnInstruction aoi = new AddOnInstruction(getName(stateMachine));
 
+        // Begin each routine with a header comment.
+        final List<String> header = buildRoutineComment(stateMachine);
+        aoi.addStructuredTextLines(ScanModeRoutine.Logic, header);
+        aoi.addStructuredTextLines(ScanModeRoutine.Prescan, header);
+        aoi.addStructuredTextLines(ScanModeRoutine.EnableInFalse, header);
+
         // Create the condition variable tag and ensure it is reset in prescan and
         // enable-in false.
         aoi.addLocalTag(TagNames.CONDITION_VARIABLE, DataType.DINT);
@@ -200,6 +208,35 @@ public class StateMachineAoi {
         aoi.addLocalTag(TagNames.CURRENT_EVENT, DataType.DINT);
 
         return aoi;
+    }
+
+    /**
+     * Constructs the structured text comment placed at the beginning of every
+     * routine.
+     *
+     * @param stateMachine Source state machine model object.
+     * @return List of structured text lines containing the header comment.
+     */
+    private List<String> buildRoutineComment(final MObject stateMachine) {
+        final List<String> lines = new ArrayList<>();
+
+        final Date date = new Date();
+        final String timestamp = DateFormat.getDateInstance().format(date);
+
+        lines.add("/*");
+        lines.add("!! Do not modify this add-on instruction !!");
+        lines.add("");
+        lines.add(
+                "This AOI was automatically generated from a UML state machine using the Modelio modeling software and LogixUML module.");
+        lines.add(
+                "Any modifications must be applied first to the state machine, followed by exporting an updated AOI.");
+        lines.add("");
+        lines.add("Source state machine: " + stateMachine.getName());
+        lines.add("Exported by: " + System.getProperty("user.name"));
+        lines.add("Exported on: " + timestamp);
+        lines.add("*/");
+
+        return unmodifiableList(lines);
     }
 
     /**
