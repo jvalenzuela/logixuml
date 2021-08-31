@@ -12065,6 +12065,48 @@
 </Tag>
 </Tags>
 <Programs>
+<Program Name="externalNested_1" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target not contained within the source's parent in single-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="externalNested_2" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target not contained within the source's parent in dual-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="externalNested_s" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target not contained within the source's parent in sequential-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="external_1" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target not contained within the source's parent in single-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="external_2" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target not contained within the source's parent in dual-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="external_s" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target not contained within the source's parent in sequential-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
 <Program Name="fromSubstateInitialNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Tags>
 <Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="40" Constant="false" ExternalAccess="None">
@@ -15445,6 +15487,48 @@
 </RLLContent>
 </Routine>
 </Routines>
+</Program>
+<Program Name="localNested_1" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target contained within the source's parent in single-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="localNested_2" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target contained within the source's parent in dual-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="localNested_s" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a deeply-nested substate to a target contained within the source's parent in sequential-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="local_1" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target contained within the source's parent in single-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="local_2" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target contained within the source's parent in dual-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="local_s" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate a transition from a substate to a target contained within the source's parent in sequential-scan transition mode.]]>
+</Description>
+<Tags/>
+<Routines/>
 </Program>
 <Program Name="results" TestEdits="false" MainRoutineName="summary" Disabled="false">
 <Tags>
@@ -43285,6 +43369,25 @@ Test begins after the initial transition completes and the event is delivered to
 <Task Name="results" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
 <ScheduledPrograms>
 <ScheduledProgram Name="results"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_grpTran" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating group transitions as defined by UML v2.5.1, 14.2.3.8.2.]]>
+</Description>
+<ScheduledPrograms>
+<ScheduledProgram Name="external_1"/>
+<ScheduledProgram Name="external_2"/>
+<ScheduledProgram Name="external_s"/>
+<ScheduledProgram Name="externalNested_1"/>
+<ScheduledProgram Name="externalNested_2"/>
+<ScheduledProgram Name="externalNested_s"/>
+<ScheduledProgram Name="local_1"/>
+<ScheduledProgram Name="local_2"/>
+<ScheduledProgram Name="local_s"/>
+<ScheduledProgram Name="localNested_1"/>
+<ScheduledProgram Name="localNested_2"/>
+<ScheduledProgram Name="localNested_s"/>
 </ScheduledPrograms>
 </Task>
 <Task Name="_stateMachineInitial" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
