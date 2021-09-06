@@ -605,6 +605,8 @@ abstract class TransitionConditionTests {
 
         generateResult();
         generateExpectedFromSubstateInitialNested(mid);
+
+        assertCorrectResult();
     }
 
     /**
