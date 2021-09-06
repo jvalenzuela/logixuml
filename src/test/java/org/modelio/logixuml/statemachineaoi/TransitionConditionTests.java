@@ -20,6 +20,7 @@
 package org.modelio.logixuml.statemachineaoi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -894,7 +895,14 @@ abstract class TransitionConditionTests {
      */
     protected void assertCorrectResult() {
         // Confirm the target state is the same.
-        assertEquals(new MRef(target), result.getTarget(), "Target state differs.");
+        if (target != null) {
+            assertEquals(new MRef(target), result.getTarget(), "Target state differs.");
+        } else {
+            // An undefined target must be accompanied by an empty list of expected
+            // conditions. This assertion is a sanity check for the target and
+            // expectedConditions; it is not intended to verify results.
+            assertTrue(expectedConditions.isEmpty());
+        }
 
         final List<Condition> resultConditions = result.getConditions();
 
