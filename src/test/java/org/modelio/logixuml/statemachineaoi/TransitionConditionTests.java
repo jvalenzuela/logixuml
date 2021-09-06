@@ -615,6 +615,280 @@ abstract class TransitionConditionTests {
     abstract protected void generateExpectedFromSubstateInitialNested(final State mid);
 
     /**
+     * Transition resulting from an event defined in a superstate, containing the
+     * source but not the target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionExternal.png">
+     */
+    @Test
+    void groupTransitionExternal() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        target = MockModel.state("target", top);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionExternal(superstate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionExternal().
+     */
+    abstract protected void generateExpectedGroupTransitionExternal(final State superstate);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing the
+     * deeply-nested source but not the target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionExternalNested.png">
+     */
+    @Test
+    void groupTransitionExternalNested() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        final State mid = MockModel.state("mid", superRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        target = MockModel.state("target", top);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionExternalNested(superstate, mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionExternalNested().
+     */
+    abstract protected void generateExpectedGroupTransitionExternalNested(final State superstate, final State mid);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing both
+     * the source and target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionLocal.png">
+     */
+    @Test
+    void groupTransitionLocal() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        target = MockModel.state("target", superRegion);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionLocal(superstate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionLocal().
+     */
+    abstract protected void generateExpectedGroupTransitionLocal(final State superstate);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing both
+     * the source and target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionLocalNested.png">
+     */
+    @Test
+    void groupTransitionLocalNested() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        final State mid = MockModel.state("mid", superRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        target = MockModel.state("target", superRegion);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionLocalNested(superstate, mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionLocalNested().
+     */
+    abstract protected void generateExpectedGroupTransitionLocalNested(final State superstate, final State mid);
+
+    /**
+     * Transition resulting from an event defined in a superstate, targeting the
+     * source substate.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSelf.png">
+     */
+    @Test
+    void groupTransitionToSelf() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        target = MockModel.state("source", superRegion);
+        source = target;
+        transition = MockModel.transition(superstate, target, null);
+
+        generateResult();
+
+        // Scan mode subclasses do not implement an expected result method because the
+        // expected result is an empty set for all scan modes.
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Transition resulting from an event defined in a superstate, targeting the
+     * source substate, where the source has it's own initial transition.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSelfInitial.png">
+     */
+    @Test
+    void groupTransitionToSelfInitial() throws ExportException {
+        final State superstate = MockModel.state("super", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        final Region sourceRegion = MockModel.region(source);
+        final State subState = MockModel.state("sub", sourceRegion);
+        final InitialPseudoState initial = MockModel.initialPseudoState(sourceRegion);
+        MockModel.transition(initial, subState, "");
+        transition = MockModel.transition(superstate, source, "");
+
+        generateResult();
+
+        // Scan mode subclasses do not implement an expected result method because the
+        // expected result is an empty set for all scan modes.
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Transition resulting from an event defined in a superstate, targeting an
+     * enclosing superstate.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSuper.png">
+     */
+    @Test
+    void groupTransitionToSuper() throws ExportException {
+        target = MockModel.state("target", top);
+        final Region targetRegion = MockModel.region(target);
+        final State mid = MockModel.state("mid", targetRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        transition = MockModel.transition(mid, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionToSuper(mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionToSuper().
+     */
+    abstract protected void generateExpectedGroupTransitionToSuper(final State mid);
+
+    /**
+     * Transition resulting from an event defined in a superstate, targeting an
+     * enclosing superstate that has its own initial transition.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSuperInitial.png">
+     */
+    @Test
+    void groupTransitionToSuperInitial() throws ExportException {
+        target = MockModel.state("target", top);
+        final Region targetRegion = MockModel.region(target);
+        final State mid = MockModel.state("mid", targetRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        final State subState = MockModel.state("sub", targetRegion);
+        final InitialPseudoState initial = MockModel.initialPseudoState(targetRegion);
+        MockModel.transition(initial, subState, "");
+        transition = MockModel.transition(mid, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionToSuperInitial(mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionToSuperInitial().
+     */
+    abstract protected void generateExpectedGroupTransitionToSuperInitial(final State mid);
+
+    /**
+     * Transition resulting from an event defined in a superstate, targeting a
+     * substate enclosed by the source.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSub.png">
+     */
+    @Test
+    void groupTransitionToSub() throws ExportException {
+        final State superstate = MockModel.state("super", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        final Region sourceRegion = MockModel.region(source);
+        target = MockModel.state("target", sourceRegion);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionToSub(superstate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionToSuper().
+     * Implemented here, as opposed to the scan mode-dependent subclasses because
+     * all scan modes will yield the same result.
+     */
+    private void generateExpectedGroupTransitionToSub(final State superstate) {
+        final Condition c = new Condition();
+        c.addEntryAction(new MRef(target));
+        c.addDoAction(new MRef(source));
+        c.addDoAction(new MRef(superstate));
+        expectedConditions.add(c);
+    }
+
+    /**
+     * Transition resulting from an event defined in a superstate, where the target
+     * is enclosed by the source and contains its own initial transition.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionToSubInitial.png">
+     */
+    @Test
+    void groupTransitionToSubInitial() throws ExportException {
+        final State superstate = MockModel.state("super", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        final Region sourceRegion = MockModel.region(source);
+        final State substate = MockModel.state("sub", sourceRegion);
+        final Region subRegion = MockModel.region(substate);
+        target = MockModel.state("target", subRegion);
+        final InitialPseudoState initial = MockModel.initialPseudoState(subRegion);
+        MockModel.transition(initial, target, "");
+        transition = MockModel.transition(superstate, substate, "");
+
+        generateResult();
+        generateExpectedGroupTransitionToSubInitial(superstate, substate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionToSubInitial().
+     */
+    abstract protected void generateExpectedGroupTransitionToSubInitial(final State superstate, final State substate);
+
+    /**
      * Confirms the transition conditions in the result match those in the expected
      * list.
      */
