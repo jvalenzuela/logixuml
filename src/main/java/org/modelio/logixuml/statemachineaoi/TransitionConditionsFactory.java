@@ -19,6 +19,7 @@
 
 package org.modelio.logixuml.statemachineaoi;
 
+import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 
 /**
@@ -45,24 +46,30 @@ public class TransitionConditionsFactory {
      * Constructs an instance of a transition condition object based on the selected
      * scan mode.
      *
-     * @param transition Source model object from which conditions will be built.
+     * @param transition   Source model object from which conditions will be built.
+     * @param activeSource See parameter of the same name in TransitionConditions
+     *                     {@link TransitionConditions#TransitionConditions(Transition, State)
+     *                     constructor}.
      * @return The transition condition generator object.
-     * @throws ExportException If the source transition was invalid.
+     * @throws ExportException           If the source transition was invalid.
+     * @throws IgnoreTransitionException If the transition should be ignored in the
+     *                                   context of the active source state.
      */
-    TransitionConditions build(final Transition transition) throws ExportException {
+    TransitionConditions build(final Transition transition, final State activeSource)
+            throws ExportException, IgnoreTransitionException {
         TransitionConditions t = null;
 
         switch (scanMode) {
         case SINGLE:
-            t = new TransitionSingle(transition);
+            t = new TransitionSingle(transition, activeSource);
             break;
 
         case DUAL:
-            t = new TransitionDual(transition);
+            t = new TransitionDual(transition, activeSource);
             break;
 
         case SEQUENTIAL:
-            t = new TransitionSequential(transition);
+            t = new TransitionSequential(transition, activeSource);
             break;
         }
 

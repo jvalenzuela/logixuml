@@ -312,7 +312,13 @@ public class StateMachineAoi {
         if (initial == null) {
             throw new ExportException("State machine must have a top-level initial transition.");
         }
-        final TransitionConditions txConditions = transitionFactory.build(initial);
+
+        final TransitionConditions txConditions;
+        try {
+            txConditions = transitionFactory.build(initial, null);
+        } catch (IgnoreTransitionException e) {
+            throw new AssertionError(); // Top-level initial transition should never be ignored.
+        }
 
         // The reset condition must lead directly to the initial transition's
         // first condition so the initial transition is executed immediately after

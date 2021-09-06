@@ -22,6 +22,7 @@ package org.modelio.logixuml.statemachineaoi;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
 import org.modelio.vcore.smkernel.mapi.MRef;
 
@@ -29,8 +30,9 @@ import org.modelio.vcore.smkernel.mapi.MRef;
  * This object generates a list of conditions for dual-scan transitions.
  */
 class TransitionDual extends TransitionConditions {
-    TransitionDual(final Transition element) throws ExportException {
-        super(element);
+    TransitionDual(final Transition transition, final State activeSource)
+            throws ExportException, IgnoreTransitionException {
+        super(transition, activeSource);
     }
 
     @Override

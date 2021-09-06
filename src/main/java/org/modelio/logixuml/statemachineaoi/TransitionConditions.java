@@ -28,8 +28,6 @@ import java.util.Set;
 
 import org.modelio.api.modelio.model.IModelingSession;
 import org.modelio.logixuml.impl.LogixUMLModule;
-import org.modelio.metamodel.uml.behavior.stateMachineModel.InitialPseudoState;
-import org.modelio.metamodel.uml.behavior.stateMachineModel.Region;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.State;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.StateVertex;
 import org.modelio.metamodel.uml.behavior.stateMachineModel.Transition;
@@ -66,20 +64,27 @@ abstract class TransitionConditions {
     /**
      * Constructor.
      *
-     * @param element Model element defining the transition.
+     * @param transition   Model element defining the transition.
+     * @param activeSource Lowest-level state model element that is currently active
+     *                     at the start of this transition. This will differ from
+     *                     the transition's source state in cases of a transition
+     *                     defined by a superstate, but starting within an enclosed
+     *                     substate.
      * @throws ExportException
+     * @throws IgnoreTransitionException If the transition should be ignored in the
+     *                                   context of the active source state.
      */
-    TransitionConditions(final Transition element) throws ExportException {
-        session = LogixUMLModule.getInstance().getModuleContext().getModelingSession();
-        final State source = getSourceState(element);
-        target = getTargetState(element, source);
-
-        if (source == target) {
-            throw new ExportException("Transition must have different source and target states.", element);
+    TransitionConditions(final Transition transition, final State activeSource)
+            throws ExportException, IgnoreTransitionException {
+        // Self-transitions are not permitted.
+        if (transition.getSource() == transition.getTarget()) {
+            throw new ExportException("Transition must have different source and target states.", transition);
         }
 
-        final List<MRef> exits = computeExitStates(source, target);
-        final List<MRef> entries = computeEntryStates(source, target);
+        session = LogixUMLModule.getInstance().getModuleContext().getModelingSession();
+        target = getTargetState(transition, activeSource);
+        final List<MRef> exits = computeExitStates(activeSource, target);
+        final List<MRef> entries = computeEntryStates(activeSource, target);
         conditions = computeConditions(exits, entries);
 
         for (final Condition c : conditions) {
@@ -106,52 +111,28 @@ abstract class TransitionConditions {
     }
 
     /**
-     * Finds the state where this transition originates.
-     *
-     * @param tx Model object defining the transition.
-     * @return The source state object. Null if this is the state machine's initial
-     *         transition.
-     */
-    private State getSourceState(final Transition tx) {
-        final State sourceState;
-        final StateVertex sourceElement = tx.getSource();
-        final String sourceType = sourceElement.getMClass().getQualifiedName();
-
-        switch (sourceType) {
-        // Transitions originating from a state.
-        case State.MQNAME:
-            sourceState = (State) tx.getSource();
-            break;
-
-        // Acquire the parent state if this transition originates from an initial
-        // transition. The parent state will be null if this is the initial transition
-        // for the entire state machine.
-        case InitialPseudoState.MQNAME:
-            final Region region = sourceElement.getParent();
-            sourceState = region.getParent();
-            break;
-
-        // No other element types should be encountered at this point; any unsupported
-        // element will already have been detected.
-        default:
-            throw new AssertionError(sourceType);
-        }
-
-        return sourceState;
-    }
-
-    /**
      * Finds the ultimate state targeted by the transition, following any initial
      * transitions within target states.
      *
      * @param tx     Model object defining the transition.
-     * @param source Transition origin model object.
+     * @param source State where the transition originates. This may not be the
+     *               actual source of the transition model object for a group
+     *               transition defined in a superstate.
      * @return The ultimate target state.
      * @throws ExportException
+     * @throws IgnoreTransitionException If the transition should be ignored in the
+     *                                   context of the active source state.
      */
-    private State getTargetState(final Transition tx, final State source) throws ExportException {
+    private State getTargetState(final Transition tx, final State source)
+            throws ExportException, IgnoreTransitionException {
         State targetState = null;
         StateVertex targetElement = tx.getTarget();
+
+        // Ignore this transition if it targets the active state, which can happen for
+        // transitions defined in a superstate(group transition).
+        if (targetElement == source) {
+            throw new IgnoreTransitionException();
+        }
 
         final List<State> sourceSupers = new ArrayList<State>();
         if (source != null) {

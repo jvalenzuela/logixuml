@@ -20,6 +20,7 @@
 package org.modelio.logixuml.statemachineaoi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -91,10 +92,22 @@ abstract class TransitionConditionTests {
     }
 
     /**
+     * Determines the model object representing the lowest-level state active at the
+     * start of the test transition. This will be the source vertex except for
+     * transitions originating from a state machine's initial transition.
+     *
+     * @return Starting source state.
+     */
+    protected State getActiveSource() {
+        final Boolean sourceIsState = source.getMClass().getQualifiedName().equals(State.MQNAME);
+        return sourceIsState ? (State) source : null;
+    }
+
+    /**
      * Generates the result transition conditions based on the scan mode being
      * tested in the concrete subclass.
      */
-    abstract protected void generateResult() throws ExportException;
+    abstract protected void generateResult() throws ExportException, IgnoreTransitionException;
 
     /**
      * Top-level initial transition for the entire state machine that targets a
@@ -103,7 +116,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.stateMachineInitialTop.png">
      */
     @Test
-    void stateMachineInitialTop() throws ExportException {
+    void stateMachineInitialTop() throws ExportException, IgnoreTransitionException {
         source = MockModel.initialPseudoState(top);
         target = MockModel.state("target", top);
         transition = MockModel.transition(source, target, "");
@@ -126,7 +139,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.stateMachineInitialSubstate.png">
      */
     @Test
-    void stateMachineInitialSubstate() throws ExportException {
+    void stateMachineInitialSubstate() throws ExportException, IgnoreTransitionException {
         source = MockModel.initialPseudoState(top);
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
@@ -152,7 +165,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.stateMachineInitialSubstateNested.png">
      */
     @Test
-    void stateMachineInitialSubstateNested() throws ExportException {
+    void stateMachineInitialSubstateNested() throws ExportException, IgnoreTransitionException {
         source = MockModel.initialPseudoState(top);
 
         final State superstate = MockModel.state("superstate", top);
@@ -184,7 +197,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.stateMachineInitialSuperstateInitial.png">
      */
     @Test
-    void stateMachineInitialSuperstateInitial() throws ExportException {
+    void stateMachineInitialSuperstateInitial() throws ExportException, IgnoreTransitionException {
         source = MockModel.initialPseudoState(top);
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
@@ -213,7 +226,7 @@ abstract class TransitionConditionTests {
      * "TransitionConditionTests.stateMachineInitialSuperstateInitialNested.png">
      */
     @Test
-    void stateMachineInitialSuperstateInitialNested() throws ExportException {
+    void stateMachineInitialSuperstateInitialNested() throws ExportException, IgnoreTransitionException {
         source = MockModel.initialPseudoState(top);
 
         final State superstate = MockModel.state("superstate", top);
@@ -248,7 +261,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.topSibling.png">
      */
     @Test
-    void topSibling() throws ExportException {
+    void topSibling() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
         target = MockModel.state("target", top);
         transition = MockModel.transition(source, target, "");
@@ -270,7 +283,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.substateSibling.png">
      */
     @Test
-    void substateSibling() throws ExportException {
+    void substateSibling() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
         source = MockModel.state("source", region);
@@ -291,7 +304,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.toSuperstate.png">
      */
     @Test
-    void toSuperstate() throws ExportException {
+    void toSuperstate() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region region = MockModel.region(target);
         source = MockModel.state("source", region);
@@ -315,7 +328,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.toSuperstateNested.png">
      */
     @Test
-    void toSuperstateNested() throws ExportException {
+    void toSuperstateNested() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region targetRegion = MockModel.region(target);
         final State mid = MockModel.state("mid", targetRegion);
@@ -340,7 +353,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.toSubstate.png">
      */
     @Test
-    void toSubstate() throws ExportException {
+    void toSubstate() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
         final Region region = MockModel.region(source);
         target = MockModel.state("target", region);
@@ -363,7 +376,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.toSubstateNested.png">
      */
     @Test
-    void toSubstateNested() throws ExportException {
+    void toSubstateNested() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
         final Region sourceRegion = MockModel.region(source);
         final State mid = MockModel.state("mid", sourceRegion);
@@ -388,7 +401,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateExit.png">
      */
     @Test
-    void superstateExit() throws ExportException {
+    void superstateExit() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
         source = MockModel.state("source", region);
@@ -412,7 +425,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateExitNested.png">
      */
     @Test
-    void superstateExitNested() throws ExportException {
+    void superstateExitNested() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region superRegion = MockModel.region(superstate);
 
@@ -443,7 +456,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateEntry.png">
      */
     @Test
-    void superstateEntry() throws ExportException {
+    void superstateEntry() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
@@ -467,7 +480,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateEntryNested.png">
      */
     @Test
-    void superstateEntryNested() throws ExportException {
+    void superstateEntryNested() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
 
         final State superstate = MockModel.state("superstate", top);
@@ -497,7 +510,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateInitial.png">
      */
     @Test
-    void superstateInitial() throws ExportException {
+    void superstateInitial() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
         final State superstate = MockModel.state("superstate", top);
         final Region region = MockModel.region(superstate);
@@ -524,7 +537,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.superstateInitialNested.png">
      */
     @Test
-    void superstateInitialNested() throws ExportException {
+    void superstateInitialNested() throws ExportException, IgnoreTransitionException {
         source = MockModel.state("source", top);
 
         final State superstate = MockModel.state("superstate", top);
@@ -558,7 +571,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.fromSubstateInitial.png">
      */
     @Test
-    void fromSubstateInitial() throws ExportException {
+    void fromSubstateInitial() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region region = MockModel.region(target);
 
@@ -589,7 +602,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.fromSubstateInitialNested.png">
      */
     @Test
-    void fromSubstateInitialNested() throws ExportException {
+    void fromSubstateInitialNested() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region targetRegion = MockModel.region(target);
 
@@ -622,7 +635,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionExternal.png">
      */
     @Test
-    void groupTransitionExternal() throws ExportException {
+    void groupTransitionExternal() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region superRegion = MockModel.region(superstate);
         source = MockModel.state("source", superRegion);
@@ -647,7 +660,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionExternalNested.png">
      */
     @Test
-    void groupTransitionExternalNested() throws ExportException {
+    void groupTransitionExternalNested() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region superRegion = MockModel.region(superstate);
         final State mid = MockModel.state("mid", superRegion);
@@ -675,7 +688,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionLocal.png">
      */
     @Test
-    void groupTransitionLocal() throws ExportException {
+    void groupTransitionLocal() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region superRegion = MockModel.region(superstate);
         source = MockModel.state("source", superRegion);
@@ -700,7 +713,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionLocalNested.png">
      */
     @Test
-    void groupTransitionLocalNested() throws ExportException {
+    void groupTransitionLocalNested() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("superstate", top);
         final Region superRegion = MockModel.region(superstate);
         final State mid = MockModel.state("mid", superRegion);
@@ -735,12 +748,7 @@ abstract class TransitionConditionTests {
         source = target;
         transition = MockModel.transition(superstate, target, null);
 
-        generateResult();
-
-        // Scan mode subclasses do not implement an expected result method because the
-        // expected result is an empty set for all scan modes.
-
-        assertCorrectResult();
+        assertThrows(IgnoreTransitionException.class, () -> generateResult());
     }
 
     /**
@@ -760,12 +768,7 @@ abstract class TransitionConditionTests {
         MockModel.transition(initial, subState, "");
         transition = MockModel.transition(superstate, source, "");
 
-        generateResult();
-
-        // Scan mode subclasses do not implement an expected result method because the
-        // expected result is an empty set for all scan modes.
-
-        assertCorrectResult();
+        assertThrows(IgnoreTransitionException.class, () -> generateResult());
     }
 
     /**
@@ -775,7 +778,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionToSuper.png">
      */
     @Test
-    void groupTransitionToSuper() throws ExportException {
+    void groupTransitionToSuper() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region targetRegion = MockModel.region(target);
         final State mid = MockModel.state("mid", targetRegion);
@@ -801,7 +804,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionToSuperInitial.png">
      */
     @Test
-    void groupTransitionToSuperInitial() throws ExportException {
+    void groupTransitionToSuperInitial() throws ExportException, IgnoreTransitionException {
         target = MockModel.state("target", top);
         final Region targetRegion = MockModel.region(target);
         final State mid = MockModel.state("mid", targetRegion);
@@ -831,7 +834,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionToSub.png">
      */
     @Test
-    void groupTransitionToSub() throws ExportException {
+    void groupTransitionToSub() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("super", top);
         final Region superRegion = MockModel.region(superstate);
         source = MockModel.state("source", superRegion);
@@ -865,7 +868,7 @@ abstract class TransitionConditionTests {
      * <img src="TransitionConditionTests.groupTransitionToSubInitial.png">
      */
     @Test
-    void groupTransitionToSubInitial() throws ExportException {
+    void groupTransitionToSubInitial() throws ExportException, IgnoreTransitionException {
         final State superstate = MockModel.state("super", top);
         final Region superRegion = MockModel.region(superstate);
         source = MockModel.state("source", superRegion);

@@ -196,7 +196,7 @@ class AoiState {
      * @return Mapping of event name to transition conditions.
      * @throws ExportException If an invalid event name or transition was found.
      */
-    private static Map<String, TransitionConditions> getSingleTransitions(final State source,
+    private Map<String, TransitionConditions> getSingleTransitions(final State source,
             final TransitionConditionsFactory txFactory) throws ExportException {
         final Map<String, TransitionConditions> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
@@ -213,7 +213,12 @@ class AoiState {
                         source);
             }
 
-            map.put(event, txFactory.build(tx));
+            try {
+                map.put(event, txFactory.build(tx, state));
+            } catch (IgnoreTransitionException e) {
+                // This transition in the context of this state yields a transition to self,
+                // i.e. ignore the transition.
+            }
         }
 
         return unmodifiableMap(map);

@@ -28,8 +28,8 @@ import org.modelio.vcore.smkernel.mapi.MRef;
  */
 class TransitionConditionSequentialTests extends TransitionConditionTests {
     @Override
-    protected void generateResult() throws ExportException {
-        result = new TransitionSequential(transition);
+    protected void generateResult() throws ExportException, IgnoreTransitionException {
+        result = new TransitionSequential(transition, getActiveSource());
     }
 
     @Override

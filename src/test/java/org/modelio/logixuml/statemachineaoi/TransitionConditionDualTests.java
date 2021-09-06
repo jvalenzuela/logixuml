@@ -28,8 +28,8 @@ import org.modelio.vcore.smkernel.mapi.MRef;
  */
 class TransitionConditionDualTests extends TransitionConditionTests {
     @Override
-    protected void generateResult() throws ExportException {
-        result = new TransitionDual(transition);
+    protected void generateResult() throws ExportException, IgnoreTransitionException {
+        result = new TransitionDual(transition, getActiveSource());
     }
 
     @Override
