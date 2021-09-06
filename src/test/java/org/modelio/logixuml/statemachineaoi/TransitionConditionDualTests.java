@@ -222,4 +222,72 @@ class TransitionConditionDualTests extends TransitionConditionTests {
         c.addExitAction(new MRef(mid));
         expectedConditions.add(c);
     }
+
+    @Override
+    protected void generateExpectedGroupTransitionExternal(final State superstate) {
+        {
+            final Condition c = new Condition();
+            c.addExitAction(new MRef(source));
+            c.addExitAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+
+        {
+            final Condition c = new Condition();
+            c.addEntryAction(new MRef(target));
+            expectedConditions.add(c);
+        }
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionExternalNested(final State superstate, final State mid) {
+        {
+            final Condition c = new Condition();
+            c.addExitAction(new MRef(source));
+            c.addExitAction(new MRef(mid));
+            c.addExitAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+
+        {
+            final Condition c = new Condition();
+            c.addEntryAction(new MRef(target));
+            expectedConditions.add(c);
+        }
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionLocal(final State superstate) {
+        {
+            final Condition c = new Condition();
+            c.addExitAction(new MRef(source));
+            c.addDoAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+
+        {
+            final Condition c = new Condition();
+            c.addEntryAction(new MRef(target));
+            c.addDoAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionLocalNested(final State superstate, final State mid) {
+        {
+            final Condition c = new Condition();
+            c.addExitAction(new MRef(source));
+            c.addExitAction(new MRef(mid));
+            c.addDoAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+
+        {
+            final Condition c = new Condition();
+            c.addEntryAction(new MRef(target));
+            c.addDoAction(new MRef(superstate));
+            expectedConditions.add(c);
+        }
+    }
 }

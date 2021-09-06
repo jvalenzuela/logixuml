@@ -615,6 +615,112 @@ abstract class TransitionConditionTests {
     abstract protected void generateExpectedFromSubstateInitialNested(final State mid);
 
     /**
+     * Transition resulting from an event defined in a superstate, containing the
+     * source but not the target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionExternal.png">
+     */
+    @Test
+    void groupTransitionExternal() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        target = MockModel.state("target", top);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionExternal(superstate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionExternal().
+     */
+    abstract protected void generateExpectedGroupTransitionExternal(final State superstate);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing the
+     * deeply-nested source but not the target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionExternalNested.png">
+     */
+    @Test
+    void groupTransitionExternalNested() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        final State mid = MockModel.state("mid", superRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        target = MockModel.state("target", top);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionExternalNested(superstate, mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionExternalNested().
+     */
+    abstract protected void generateExpectedGroupTransitionExternalNested(final State superstate, final State mid);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing both
+     * the source and target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionLocal.png">
+     */
+    @Test
+    void groupTransitionLocal() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        source = MockModel.state("source", superRegion);
+        target = MockModel.state("target", superRegion);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionLocal(superstate);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for groupTransitionLocal().
+     */
+    abstract protected void generateExpectedGroupTransitionLocal(final State superstate);
+
+    /**
+     * Transition resulting from an event defined in a superstate, containing both
+     * the source and target.
+     * <p>
+     * <img src="TransitionConditionTests.groupTransitionLocalNested.png">
+     */
+    @Test
+    void groupTransitionLocalNested() throws ExportException {
+        final State superstate = MockModel.state("superstate", top);
+        final Region superRegion = MockModel.region(superstate);
+        final State mid = MockModel.state("mid", superRegion);
+        final Region midRegion = MockModel.region(mid);
+        source = MockModel.state("source", midRegion);
+        target = MockModel.state("target", superRegion);
+        transition = MockModel.transition(superstate, target, "");
+
+        generateResult();
+        generateExpectedGroupTransitionLocalNested(superstate, mid);
+
+        assertCorrectResult();
+    }
+
+    /**
+     * Generates the expected transition conditions for
+     * groupTransitionLocalNested().
+     */
+    abstract protected void generateExpectedGroupTransitionLocalNested(final State superstate, final State mid);
+
+    /**
      * Confirms the transition conditions in the result match those in the expected
      * list.
      */

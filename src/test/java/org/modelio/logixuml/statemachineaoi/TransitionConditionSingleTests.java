@@ -197,4 +197,42 @@ class TransitionConditionSingleTests extends TransitionConditionTests {
         c.addExitAction(new MRef(mid));
         expectedConditions.add(c);
     }
+
+    @Override
+    protected void generateExpectedGroupTransitionExternal(final State superstate) {
+        final Condition c = new Condition();
+        c.addExitAction(new MRef(source));
+        c.addExitAction(new MRef(superstate));
+        c.addEntryAction(new MRef(target));
+        expectedConditions.add(c);
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionExternalNested(final State superstate, final State mid) {
+        final Condition c = new Condition();
+        c.addExitAction(new MRef(source));
+        c.addExitAction(new MRef(mid));
+        c.addExitAction(new MRef(superstate));
+        c.addEntryAction(new MRef(target));
+        expectedConditions.add(c);
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionLocal(final State superstate) {
+        final Condition c = new Condition();
+        c.addDoAction(new MRef(superstate));
+        c.addExitAction(new MRef(source));
+        c.addEntryAction(new MRef(target));
+        expectedConditions.add(c);
+    }
+
+    @Override
+    protected void generateExpectedGroupTransitionLocalNested(final State superstate, final State mid) {
+        final Condition c = new Condition();
+        c.addDoAction(new MRef(superstate));
+        c.addExitAction(new MRef(source));
+        c.addExitAction(new MRef(mid));
+        c.addEntryAction(new MRef(target));
+        expectedConditions.add(c);
+    }
 }
