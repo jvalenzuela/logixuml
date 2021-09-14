@@ -27233,7 +27233,7 @@
 </Rung>
 <Rung Number="19" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateDo_target)unitTest_assertTrue(assertions[15],2,tc);]]>
+<![CDATA[XIC(sm.stateActive_target)unitTest_assertTrue(assertions[15],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="20" Type="N">
