@@ -4140,7 +4140,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_1" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-09T03:20:56.863Z" CreatedBy="Not Available" EditedDate="2021-09-09T03:28:34.942Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_1" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-14T10:10:03.047Z" CreatedBy="Not Available" EditedDate="2021-09-14T10:24:03.001Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
 <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -4163,6 +4163,15 @@
 </DefaultData>
 </Parameter>
 <Parameter Name="event_e" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_setup" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
 <Description>
 <![CDATA[Rising edge to deliver this event to the state machine.]]>
 </Description>
@@ -4335,6 +4344,12 @@
 </DefaultData>
 </LocalTag>
 <LocalTag Name="ons_e" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_setup" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
 <DefaultData>00</DefaultData>
 <DefaultData Format="Decorated">
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
@@ -4351,7 +4366,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_2" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-09T06:21:16.485Z" CreatedBy="Not Available" EditedDate="2021-09-09T06:23:31.011Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_2" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-14T10:28:40.382Z" CreatedBy="Not Available" EditedDate="2021-09-14T10:33:57.368Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
 <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -4374,6 +4389,15 @@
 </DefaultData>
 </Parameter>
 <Parameter Name="event_e" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_setup" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
 <Description>
 <![CDATA[Rising edge to deliver this event to the state machine.]]>
 </Description>
@@ -4418,42 +4442,6 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </DefaultData>
 </Parameter>
-<Parameter Name="stateEntry_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine enters the sub state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateExit_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine exits the sub state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateDo_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine is stable in the sub state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateActive_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine is entering, exiting, or stable in the sub state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
 <Parameter Name="stateEntry_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
 <Description>
 <![CDATA[True when the state machine enters the source state.]]>
@@ -4484,6 +4472,42 @@
 <Parameter Name="stateActive_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
 <Description>
 <![CDATA[True when the state machine is entering, exiting, or stable in the source state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the sub state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the sub state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the sub state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_sub" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the sub state.]]>
 </Description>
 <DefaultData>00</DefaultData>
 <DefaultData Format="Decorated">
@@ -4546,6 +4570,12 @@
 </DefaultData>
 </LocalTag>
 <LocalTag Name="ons_e" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_setup" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
 <DefaultData>00</DefaultData>
 <DefaultData Format="Decorated">
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
@@ -4562,7 +4592,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_s" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-09T06:25:26.399Z" CreatedBy="Not Available" EditedDate="2021-09-09T06:28:22.808Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<AddOnInstructionDefinition Name="stateMachine_grpTranToSelfInitial_s" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-15T03:31:36.150Z" CreatedBy="Not Available" EditedDate="2021-09-15T03:45:30.787Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
 <Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -4593,36 +4623,9 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </DefaultData>
 </Parameter>
-<Parameter Name="stateEntry_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Parameter Name="event_setup" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
 <Description>
-<![CDATA[True when the state machine enters the superstate state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateExit_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine exits the superstate state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateDo_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine is stable in the superstate state.]]>
-</Description>
-<DefaultData>00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
-</DefaultData>
-</Parameter>
-<Parameter Name="stateActive_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
-<Description>
-<![CDATA[True when the state machine is entering, exiting, or stable in the superstate state.]]>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
 </Description>
 <DefaultData>00</DefaultData>
 <DefaultData Format="Decorated">
@@ -4701,6 +4704,42 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </DefaultData>
 </Parameter>
+<Parameter Name="stateEntry_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the superstate state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the superstate state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the superstate state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_superstate" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the superstate state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
 </Parameters>
 <LocalTags>
 <LocalTag Name="cv" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
@@ -4757,6 +4796,12 @@
 </DefaultData>
 </LocalTag>
 <LocalTag Name="ons_e" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_setup" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
 <DefaultData>00</DefaultData>
 <DefaultData Format="Decorated">
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
@@ -51137,6 +51182,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
 <DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_setup" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
@@ -51175,20 +51221,27 @@ Test begins after the initial transition completes and the event is delivered to
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
-<Comment>
-<![CDATA[Trigger the test transition after the state machine initial transition has completed.
-]]>
-</Comment>
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)OTE(sm.event_e);]]>
-</Text>
-</Rung>
-<Rung Number="2" Type="N">
 <Text>
 <![CDATA[stateMachine_grpTranToSelfInitial_1(sm);]]>
 </Text>
 </Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[Trigger the setup event immediately after the state machine is first scanned so the sub state will be exited after the initial transition completes.]]>
+</Comment>
+<Text>
+<![CDATA[OTE(sm.event_setup);]]>
+</Text>
+</Rung>
 <Rung Number="3" Type="N">
+<Comment>
+<![CDATA[Trigger the test transition after the first scan so it will be queued after the setup event.]]>
+</Comment>
+<Text>
+<![CDATA[XIO(s:fs)OTE(sm.event_e);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
 <Comment>
 <![CDATA[### Scan 2 ###
 ]]>
@@ -51197,62 +51250,62 @@ Test begins after the initial transition completes and the event is delivered to
 <![CDATA[NOP();]]>
 </Text>
 </Rung>
-<Rung Number="4" Type="N">
+<Rung Number="5" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_source)unitTest_assertTrue(assertions[0],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="5" Type="N">
+<Rung Number="6" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_source)unitTest_assertTrue(assertions[1],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="6" Type="N">
+<Rung Number="7" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateDo_source)unitTest_assertTrue(assertions[2],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="7" Type="N">
+<Rung Number="8" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_source)unitTest_assertTrue(assertions[3],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="8" Type="N">
+<Rung Number="9" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_sub)unitTest_assertTrue(assertions[4],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="9" Type="N">
+<Rung Number="10" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_sub)unitTest_assertTrue(assertions[5],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="10" Type="N">
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)unitTest_assertTrue(assertions[6],2,tc);]]>
-</Text>
-</Rung>
 <Rung Number="11" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateActive_sub)unitTest_assertTrue(assertions[7],2,tc);]]>
+<![CDATA[XIO(sm.stateDo_sub)unitTest_assertTrue(assertions[6],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="12" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],2,tc);]]>
+<![CDATA[XIO(sm.stateActive_sub)unitTest_assertTrue(assertions[7],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="13" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],2,tc);]]>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="14" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],2,tc);]]>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="15" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="16" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[11],2,tc);]]>
 </Text>
@@ -51453,18 +51506,19 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
 <DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_setup" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateEntry_superstate" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateExit_superstate" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateDo_superstate" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateActive_superstate" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateEntry_sub" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateExit_sub" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateDo_sub" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateActive_sub" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_sub" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_sub" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_sub" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_sub" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
 </Tag>
@@ -51491,20 +51545,27 @@ Test begins after the initial transition completes and the event is delivered to
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
-<Comment>
-<![CDATA[Trigger the test transition after the state machine initial transition has completed.
-]]>
-</Comment>
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)OTE(sm.event_e);]]>
-</Text>
-</Rung>
-<Rung Number="2" Type="N">
 <Text>
 <![CDATA[stateMachine_grpTranToSelfInitial_2(sm);]]>
 </Text>
 </Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[Trigger the setup event immediately after the state machine is first scanned so the sub state will be exited after the initial transition completes.]]>
+</Comment>
+<Text>
+<![CDATA[OTE(sm.event_setup);]]>
+</Text>
+</Rung>
 <Rung Number="3" Type="N">
+<Comment>
+<![CDATA[Trigger the test transition after the first scan so it will be queued after the setup event.]]>
+</Comment>
+<Text>
+<![CDATA[XIO(s:fs)OTE(sm.event_e);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
 <Comment>
 <![CDATA[### Scan 2 ###
 ]]>
@@ -51513,62 +51574,62 @@ Test begins after the initial transition completes and the event is delivered to
 <![CDATA[NOP();]]>
 </Text>
 </Rung>
-<Rung Number="4" Type="N">
+<Rung Number="5" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_source)unitTest_assertTrue(assertions[0],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="5" Type="N">
+<Rung Number="6" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_source)unitTest_assertTrue(assertions[1],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="6" Type="N">
+<Rung Number="7" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateDo_source)unitTest_assertTrue(assertions[2],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="7" Type="N">
+<Rung Number="8" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_source)unitTest_assertTrue(assertions[3],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="8" Type="N">
+<Rung Number="9" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_sub)unitTest_assertTrue(assertions[4],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="9" Type="N">
+<Rung Number="10" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_sub)unitTest_assertTrue(assertions[5],2,tc);]]>
 </Text>
 </Rung>
-<Rung Number="10" Type="N">
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)unitTest_assertTrue(assertions[6],2,tc);]]>
-</Text>
-</Rung>
 <Rung Number="11" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateActive_sub)unitTest_assertTrue(assertions[7],2,tc);]]>
+<![CDATA[XIO(sm.stateDo_sub)unitTest_assertTrue(assertions[6],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="12" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],2,tc);]]>
+<![CDATA[XIO(sm.stateActive_sub)unitTest_assertTrue(assertions[7],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="13" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],2,tc);]]>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="14" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],2,tc);]]>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],2,tc);]]>
 </Text>
 </Rung>
 <Rung Number="15" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],2,tc);]]>
+</Text>
+</Rung>
+<Rung Number="16" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[11],2,tc);]]>
 </Text>
@@ -51769,10 +51830,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
 <DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateEntry_superstate" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateExit_superstate" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateDo_superstate" DataType="BOOL" Value="0"/>
-<DataValueMember Name="stateActive_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_setup" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
@@ -51781,6 +51839,10 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="stateExit_sub" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateDo_sub" DataType="BOOL" Value="0"/>
 <DataValueMember Name="stateActive_sub" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_superstate" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_superstate" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
 </Tag>
@@ -51807,20 +51869,27 @@ Test begins after the initial transition completes and the event is delivered to
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
-<Comment>
-<![CDATA[Trigger the test transition after the state machine initial transition has completed.
-]]>
-</Comment>
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)OTE(sm.event_e);]]>
-</Text>
-</Rung>
-<Rung Number="2" Type="N">
 <Text>
 <![CDATA[stateMachine_grpTranToSelfInitial_s(sm);]]>
 </Text>
 </Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[Trigger the setup event immediately after the state machine is first scanned so the sub state will be exited after the initial transition completes.]]>
+</Comment>
+<Text>
+<![CDATA[OTE(sm.event_setup);]]>
+</Text>
+</Rung>
 <Rung Number="3" Type="N">
+<Comment>
+<![CDATA[Trigger the test transition after the first scan so it will be queued after the setup event.]]>
+</Comment>
+<Text>
+<![CDATA[XIO(s:fs)OTE(sm.event_e);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
 <Comment>
 <![CDATA[### Scan 4 ###
 ]]>
@@ -51829,62 +51898,62 @@ Test begins after the initial transition completes and the event is delivered to
 <![CDATA[NOP();]]>
 </Text>
 </Rung>
-<Rung Number="4" Type="N">
+<Rung Number="5" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_source)unitTest_assertTrue(assertions[0],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="5" Type="N">
+<Rung Number="6" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_source)unitTest_assertTrue(assertions[1],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="6" Type="N">
+<Rung Number="7" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateDo_source)unitTest_assertTrue(assertions[2],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="7" Type="N">
+<Rung Number="8" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_source)unitTest_assertTrue(assertions[3],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="8" Type="N">
+<Rung Number="9" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateEntry_sub)unitTest_assertTrue(assertions[4],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="9" Type="N">
+<Rung Number="10" Type="N">
 <Text>
 <![CDATA[XIO(sm.stateExit_sub)unitTest_assertTrue(assertions[5],4,tc);]]>
 </Text>
 </Rung>
-<Rung Number="10" Type="N">
-<Text>
-<![CDATA[XIC(sm.stateDo_sub)unitTest_assertTrue(assertions[6],4,tc);]]>
-</Text>
-</Rung>
 <Rung Number="11" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateActive_sub)unitTest_assertTrue(assertions[7],4,tc);]]>
+<![CDATA[XIO(sm.stateDo_sub)unitTest_assertTrue(assertions[6],4,tc);]]>
 </Text>
 </Rung>
 <Rung Number="12" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],4,tc);]]>
+<![CDATA[XIO(sm.stateActive_sub)unitTest_assertTrue(assertions[7],4,tc);]]>
 </Text>
 </Rung>
 <Rung Number="13" Type="N">
 <Text>
-<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],4,tc);]]>
+<![CDATA[XIO(sm.stateEntry_superstate)unitTest_assertTrue(assertions[8],4,tc);]]>
 </Text>
 </Rung>
 <Rung Number="14" Type="N">
 <Text>
-<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],4,tc);]]>
+<![CDATA[XIO(sm.stateExit_superstate)unitTest_assertTrue(assertions[9],4,tc);]]>
 </Text>
 </Rung>
 <Rung Number="15" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_superstate)unitTest_assertTrue(assertions[10],4,tc);]]>
+</Text>
+</Rung>
+<Rung Number="16" Type="N">
 <Text>
 <![CDATA[XIC(sm.stateActive_superstate)unitTest_assertTrue(assertions[11],4,tc);]]>
 </Text>
