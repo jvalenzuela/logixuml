@@ -18,6 +18,156 @@
 </Module>
 </Modules>
 <AddOnInstructionDefinitions>
+<AddOnInstructionDefinition Name="prescan_request" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-16T08:57:39.733Z" CreatedBy="G5Y9GH2\jvalenzuela" EditedDate="2021-09-16T13:22:29.550Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="lock" TagType="Base" DataType="BOOL" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Global access mutex. True when a request has acquired the mutex.]]>
+</Description>
+</Parameter>
+<Parameter Name="doJSR" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[True to execute the JSR to fault routine to switch the processor out of run mode.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="done" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[True after the processor has entered Prescan mode as a result of this request.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags/>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[// This instruction implements a method to programatically switch the processor]]>
+</Line>
+<Line Number="1">
+<![CDATA[// into Prescan mode. It includes a mutual-exclusive(mutex) locking method to]]>
+</Line>
+<Line Number="2">
+<![CDATA[// ensure Prescan is entered only for a single request at time. Prescan mode is]]>
+</Line>
+<Line Number="3">
+<![CDATA[// achieved by calling a fault routine since the PLC program can not otherwise]]>
+</Line>
+<Line Number="4">
+<![CDATA[// explicitly switch to program mode. The JSR to the fault routine is external]]>
+</Line>
+<Line Number="5">
+<![CDATA[// to this AOI using the doJSR output. The following outline describes the]]>
+</Line>
+<Line Number="6">
+<![CDATA[// logic required to use this instruction:]]>
+</Line>
+<Line Number="7">
+<![CDATA[//]]>
+</Line>
+<Line Number="8">
+<![CDATA[// 1. Execute a UID to avoid interference from requests in other tasks.]]>
+</Line>
+<Line Number="9">
+<![CDATA[// 2. Scan this AOI true when ready to request a switch to Prescan.]]>
+</Line>
+<Line Number="10">
+<![CDATA[// 3. Scan any logic to prepare for Prescan.]]>
+</Line>
+<Line Number="11">
+<![CDATA[// 4. JSR to the fault routine if the doJSR output is true.]]>
+</Line>
+<Line Number="12">
+<![CDATA[// 5. Execute a UIE.]]>
+</Line>
+<Line Number="13">
+<![CDATA[]]>
+</Line>
+<Line Number="14">
+<![CDATA[]]>
+</Line>
+<Line Number="15">
+<![CDATA[// Attempt to acquire the global lock if it is available and this request]]>
+</Line>
+<Line Number="16">
+<![CDATA[// has not yet been serviced.]]>
+</Line>
+<Line Number="17">
+<![CDATA[IF NOT lock AND NOT done THEN]]>
+</Line>
+<Line Number="18">
+<![CDATA[	lock := 1;]]>
+</Line>
+<Line Number="19">
+<![CDATA[	doJSR := 1;]]>
+</Line>
+<Line Number="20">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="21">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+<Routine Name="Prescan" Type="ST">
+<Description>
+<![CDATA[Prescan]]>
+</Description>
+<STContent>
+<Line Number="0">
+<![CDATA[// This request is complete if its JSR flag has been set by the normal]]>
+</Line>
+<Line Number="1">
+<![CDATA[// scan logic.]]>
+</Line>
+<Line Number="2">
+<![CDATA[IF doJSR THEN]]>
+</Line>
+<Line Number="3">
+<![CDATA[	done := 1;]]>
+</Line>
+<Line Number="4">
+<![CDATA[	doJSR := 0;]]>
+</Line>
+<Line Number="5">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="6">
+<![CDATA[]]>
+</Line>
+<Line Number="7">
+<![CDATA[]]>
+</Line>
+<Line Number="8">
+<![CDATA[// Clear the global mutex to allow servicing of other requests.]]>
+</Line>
+<Line Number="9">
+<![CDATA[lock := 0;]]>
+</Line>
+<Line Number="10">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
 <AddOnInstructionDefinition Name="stateMachine_fromSubstateInitialNested_1" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-30T02:32:07.625Z" CreatedBy="Not Available" EditedDate="2021-08-30T03:02:43.197Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -18942,6 +19092,24 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </Data>
 </Tag>
+<Tag Name="PRESCAN_FAULT_CODE" TagType="Base" DataType="DINT" Radix="Decimal" Constant="true" ExternalAccess="None">
+<Description>
+<![CDATA[User-defined major fault code for entering Prescan; for use as the input pararameter for fault routine JSR instructions. Ref 1756-PM014-EN-P, page 24.]]>
+</Description>
+<Data>E7 03 00 00</Data>
+<Data Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="999"/>
+</Data>
+</Tag>
+<Tag Name="prescan_pending" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Description>
+<![CDATA[True when a unit test has requested a switch to Prescan mode.]]>
+</Description>
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 </Tags>
 <Programs>
 <Program Name="externalNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
@@ -30940,21 +31108,29 @@
 <Routine Name="summary" Type="RLL">
 <RLLContent>
 <Rung Number="0" Type="N">
+<Comment>
+<![CDATA[This bit will be true when a unit test has intentionally created a major fault in order to force a Prescan. When this bit is set and the processor is faulted, clear the major fault and switch the processor to run mode, repeating as necessary until the processor remains in run mode and all tests pass.]]>
+</Comment>
 <Text>
-<![CDATA[XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
+<![CDATA[XIC(prescan_pending)NOP();]]>
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
 <Text>
-<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
+<![CDATA[XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
 </Text>
 </Rung>
 <Rung Number="2" Type="N">
 <Text>
-<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
 </Text>
 </Rung>
 <Rung Number="3" Type="N">
+<Text>
+<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
 <Text>
 <![CDATA[XIC(pass_transitionTopSibling_1)XIC(pass_transitionTopSibling_2)XIC(pass_transitionTopSibling_s)XIC(pass_transitionSubstateSibling_1)XIC(pass_transitionSubstateSibling_2)XIC(pass_transitionSubstateSibling_s)XIC(pass_transitionToSuperstate_1)XIC(pass_transitionToSuperstate_2)XIC(pass_transitionToSuperstate_s)XIC(pass_transitionToSuperNested_1)XIC(pass_transitionToSuperNested_2)XIC(pass_transitionToSuperNested_s)XIC(pass_transitionToSubstate_1)XIC(pass_transitionToSubstate_2)XIC(pass_transitionToSubstate_s)XIC(pass_transitionToSubstateNested_1)XIC(pass_transitionToSubstateNested_2)XIC(pass_transitionToSubstateNested_s)XIC(pass_transitionSuperstateExit_1)XIC(pass_transitionSuperstateExit_2)XIC(pass_transitionSuperstateExit_s)XIC(pass_transitionSuperExitNest_1)XIC(pass_transitionSuperExitNest_2)XIC(pass_transitionSuperExitNest_s)XIC(pass_transitionSuperstateEntry_1)XIC(pass_transitionSuperstateEntry_2)XIC(pass_transitionSuperstateEntry_s)XIC(pass_transitionSuperEntryNest_1)XIC(pass_transitionSuperEntryNest_2)XIC(pass_transitionSuperEntryNest_s)XIC(pass_transitionSuperInitial_1)XIC(pass_transitionSuperInitial_2)XIC(pass_transitionSuperInitial_s)XIC(pass_transitionSuperInitNest_1)XIC(pass_transitionSuperInitNest_2)XIC(pass_transitionSuperInitNest_s)XIC(pass_transitionFromSubstateInitial_1)XIC(pass_transitionFromSubstateInitial_2)XIC(pass_transitionFromSubstateInitial_s)XIC(pass_transitionFromSubstateInitNest_1)XIC(pass_transitionFromSubstateInitNest_2)XIC(pass_transitionFromSubstateInitNest_s)OTE(pass_transition);]]>
 </Text>
