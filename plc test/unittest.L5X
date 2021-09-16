@@ -18345,7 +18345,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="unitTest_case" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-02T13:30:44.005Z" CreatedBy="VM\Admin" EditedDate="2021-08-09T08:58:41.724Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<AddOnInstructionDefinition Name="unitTest_case" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-02T13:30:44.005Z" CreatedBy="VM\Admin" EditedDate="2021-09-16T14:10:08.054Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Description>
 <![CDATA[Unit Test Case]]>
 </Description>
@@ -18387,6 +18387,15 @@
 <DataValue DataType="DINT" Radix="Decimal" Value="0"/>
 </DefaultData>
 </Parameter>
+<Parameter Name="last_scan" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Highest scan defined by an associated assertion AOI.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
 <Parameter Name="assert_fail" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
 <Description>
 <![CDATA[Interface for assertion AOIs to cancel the test; true to stop the test.]]>
@@ -18397,17 +18406,7 @@
 </DefaultData>
 </Parameter>
 </Parameters>
-<LocalTags>
-<LocalTag Name="last_scan" DataType="DINT" Radix="Decimal" ExternalAccess="None">
-<Description>
-<![CDATA[Highest scan defined by an associated assertion AOI.]]>
-</Description>
-<DefaultData>00 00 00 00</DefaultData>
-<DefaultData Format="Decorated">
-<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
-</DefaultData>
-</LocalTag>
-</LocalTags>
+<LocalTags/>
 <Routines>
 <Routine Name="Logic" Type="RLL">
 <RLLContent>
@@ -18420,24 +18419,16 @@
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
-<Comment>
-<![CDATA[Capture the final scan set by the assertion AOIs and reset the scan counter to begin the test. The scan counter is reset to -1 so the first scan will be 0.]]>
-</Comment>
-<Text>
-<![CDATA[XIC(s:fs)[MOV(scan,last_scan) ,MOV(-1,scan) ];]]>
-</Text>
-</Rung>
-<Rung Number="2" Type="N">
 <Text>
 <![CDATA[[EQU(scan,last_scan) XIO(assert_fail) ,XIC(pass) ]OTE(pass);]]>
 </Text>
 </Rung>
-<Rung Number="3" Type="N">
+<Rung Number="2" Type="N">
 <Text>
 <![CDATA[XIC(assert_fail)OTE(fail);]]>
 </Text>
 </Rung>
-<Rung Number="4" Type="N">
+<Rung Number="3" Type="N">
 <Comment>
 <![CDATA[Incremenet the scan counter while the test is in progress.
 ]]>
@@ -18446,7 +18437,7 @@
 <![CDATA[XIO(pass)XIO(fail)ADD(scan,1,scan);]]>
 </Text>
 </Rung>
-<Rung Number="5" Type="N">
+<Rung Number="4" Type="N">
 <Comment>
 <![CDATA[Reset the scan counter after the test completes.
 ]]>
@@ -18461,13 +18452,21 @@
 <RLLContent>
 <Rung Number="0" Type="N">
 <Comment>
-<![CDATA[Clear the scan counter in preparation for assertion AOIs to register the last scan number during their prescan.]]>
+<![CDATA[Clear the last scan in preparation for assertion AOIs to register their target scan during prescan.]]>
 </Comment>
 <Text>
-<![CDATA[CLR(scan);]]>
+<![CDATA[CLR(last_scan);]]>
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
+<Comment>
+<![CDATA[The scan counter is reset to -1 so the first scan will be 0.]]>
+</Comment>
+<Text>
+<![CDATA[MOV(-1,scan);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
 <Text>
 <![CDATA[OTU(assert_fail);]]>
 </Text>
@@ -18476,7 +18475,7 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
-<AddOnInstructionDefinition Name="unitTest_assertTrue" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="true" CreatedDate="2021-08-02T13:33:20.895Z" CreatedBy="VM\Admin" EditedDate="2021-09-13T06:02:50.013Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<AddOnInstructionDefinition Name="unitTest_assertTrue" Revision="1.0" ExecutePrescan="true" ExecutePostscan="false" ExecuteEnableInFalse="true" CreatedDate="2021-08-02T13:33:20.895Z" CreatedBy="VM\Admin" EditedDate="2021-09-16T14:13:22.541Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
 <Description>
@@ -18556,7 +18555,7 @@
 ]]>
 </Comment>
 <Text>
-<![CDATA[GRT(scan,unit_test_case.scan)MOV(scan,unit_test_case.scan);]]>
+<![CDATA[GRT(scan,unit_test_case.last_scan)MOV(scan,unit_test_case.last_scan);]]>
 </Text>
 </Rung>
 <Rung Number="1" Type="N">
@@ -19502,6 +19501,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -20186,6 +20186,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -21214,6 +21215,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -21991,6 +21993,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -22546,6 +22549,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -23255,6 +23259,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -23949,6 +23954,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -24548,6 +24554,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -25232,6 +25239,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -25831,6 +25839,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -26301,6 +26310,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -26771,6 +26781,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -27333,6 +27344,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -28017,6 +28029,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -28960,6 +28973,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -29648,6 +29662,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -30203,6 +30218,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -30827,6 +30843,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -31436,6 +31453,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -32067,6 +32085,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -32661,6 +32680,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -33123,6 +33143,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -33679,6 +33700,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -34304,6 +34326,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -34754,6 +34777,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -35171,6 +35195,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -35552,6 +35577,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -36063,6 +36089,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -36747,6 +36774,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -37775,6 +37803,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -38641,6 +38670,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -39325,6 +39355,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -40353,6 +40384,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -41130,6 +41162,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -41685,6 +41718,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -42394,6 +42428,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -43001,6 +43036,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -43462,6 +43498,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -44093,6 +44130,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -44603,6 +44641,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -45020,6 +45059,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -45401,6 +45441,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -45823,6 +45864,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -46378,6 +46420,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -47087,6 +47130,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -47695,6 +47739,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -48250,6 +48295,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -48959,6 +49005,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -49478,6 +49525,7 @@
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -49903,6 +49951,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -50377,6 +50426,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -50676,6 +50726,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -50879,6 +50930,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -51082,6 +51134,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -51383,6 +51436,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -51707,6 +51761,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -52031,6 +52086,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -52265,6 +52321,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -52472,6 +52529,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -52679,6 +52737,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -53149,6 +53208,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -53748,6 +53808,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -54432,6 +54493,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -55028,6 +55090,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -55499,6 +55562,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -56055,6 +56119,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -56506,6 +56571,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -56847,6 +56913,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -57188,6 +57255,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -57621,6 +57689,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -58091,6 +58160,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -58561,6 +58631,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -59052,6 +59123,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -59583,6 +59655,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -60250,6 +60323,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -60935,6 +61009,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -61619,6 +61694,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -62647,6 +62723,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -63424,6 +63501,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -63894,6 +63972,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -64449,6 +64528,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -64899,6 +64979,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -65240,6 +65321,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -65581,6 +65663,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -65963,6 +66046,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -66382,6 +66466,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
@@ -66903,6 +66988,7 @@ Test begins after the initial transition completes and the event is delivered to
 <DataValueMember Name="pass" DataType="BOOL" Value="0"/>
 <DataValueMember Name="fail" DataType="BOOL" Value="0"/>
 <DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
 <DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
 </Structure>
 </Data>
