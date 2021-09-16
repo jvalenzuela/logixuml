@@ -168,6 +168,139 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="stateMachine_activeOutput" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-16T13:41:04.724Z" CreatedBy="Not Available" EditedDate="2021-09-16T14:16:42.635Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="active" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when this state machine is enabled and responding to events.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_overflow" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True if an overflow has occurred.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_watermark" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Highest number of events stored.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_State" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the State state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_State" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the State state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_State" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the State state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_State" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the State state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="cv" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="e" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pf" DataType="DINT" Dimensions="1" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="1" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pfi" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="q" DataType="DINT" Dimensions="2" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="2" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qh" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qt" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qs" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
 <AddOnInstructionDefinition Name="stateMachine_fromSubstateInitialNested_1" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-30T02:32:07.625Z" CreatedBy="Not Available" EditedDate="2021-08-30T03:02:43.197Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -18569,6 +18702,24 @@
 </AddOnInstructionDefinition>
 </AddOnInstructionDefinitions>
 <Tags>
+<Tag Name="pass_activeOutputPrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_activeOutputScanFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_activeOutputScanTrue" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_grpTranExternalNested_1" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Data>00</Data>
 <Data Format="Decorated">
@@ -31082,8 +31233,148 @@
 </Routine>
 </Routines>
 </Program>
+<Program Name="prescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
+<Description>
+<![CDATA[Validate output condition during Prescan.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="doJSR" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_activeOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_activeOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="stateEntry_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Enable the unit test and associated assertions on the first scan after the requested Prescan.]]>
+</Comment>
+<Text>
+<![CDATA[XIC(prescan_request.done)unitTest_case(tc,pass_activeOutputPrescan);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIO(sm.active)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[stateMachine_activeOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Comment>
+<![CDATA[### Prescan Request ###
+
+Issue a request for prescan after the state machine has initially been scanned true so the active output will be true going into Prescan.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Text>
+<![CDATA[UID();]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
+<![CDATA[prescan_request(prescan_request,prescan_pending);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Text>
+<![CDATA[XIC(prescan_request.doJSR)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Text>
+<![CDATA[UIE();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
 <Program Name="results" TestEdits="false" MainRoutineName="summary" Disabled="false">
 <Tags>
+<Tag Name="pass_activeOutput" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Description>
+<![CDATA[True when all active output tests have passed.]]>
+</Description>
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_all" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Description>
 <![CDATA[True when all test cases have passed.]]>
@@ -31134,22 +31425,177 @@
 </Rung>
 <Rung Number="1" Type="N">
 <Text>
-<![CDATA[XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
+<![CDATA[XIC(pass_activeOutput)XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
 </Text>
 </Rung>
 <Rung Number="2" Type="N">
 <Text>
-<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
+<![CDATA[XIC(pass_activeOutputScanFalse)XIC(pass_activeOutputScanTrue)XIC(pass_activeOutputPrescan)OTE(pass_activeOutput);]]>
 </Text>
 </Rung>
 <Rung Number="3" Type="N">
 <Text>
-<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
 </Text>
 </Rung>
 <Rung Number="4" Type="N">
 <Text>
+<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
 <![CDATA[XIC(pass_transitionTopSibling_1)XIC(pass_transitionTopSibling_2)XIC(pass_transitionTopSibling_s)XIC(pass_transitionSubstateSibling_1)XIC(pass_transitionSubstateSibling_2)XIC(pass_transitionSubstateSibling_s)XIC(pass_transitionToSuperstate_1)XIC(pass_transitionToSuperstate_2)XIC(pass_transitionToSuperstate_s)XIC(pass_transitionToSuperNested_1)XIC(pass_transitionToSuperNested_2)XIC(pass_transitionToSuperNested_s)XIC(pass_transitionToSubstate_1)XIC(pass_transitionToSubstate_2)XIC(pass_transitionToSubstate_s)XIC(pass_transitionToSubstateNested_1)XIC(pass_transitionToSubstateNested_2)XIC(pass_transitionToSubstateNested_s)XIC(pass_transitionSuperstateExit_1)XIC(pass_transitionSuperstateExit_2)XIC(pass_transitionSuperstateExit_s)XIC(pass_transitionSuperExitNest_1)XIC(pass_transitionSuperExitNest_2)XIC(pass_transitionSuperExitNest_s)XIC(pass_transitionSuperstateEntry_1)XIC(pass_transitionSuperstateEntry_2)XIC(pass_transitionSuperstateEntry_s)XIC(pass_transitionSuperEntryNest_1)XIC(pass_transitionSuperEntryNest_2)XIC(pass_transitionSuperEntryNest_s)XIC(pass_transitionSuperInitial_1)XIC(pass_transitionSuperInitial_2)XIC(pass_transitionSuperInitial_s)XIC(pass_transitionSuperInitNest_1)XIC(pass_transitionSuperInitNest_2)XIC(pass_transitionSuperInitNest_s)XIC(pass_transitionFromSubstateInitial_1)XIC(pass_transitionFromSubstateInitial_2)XIC(pass_transitionFromSubstateInitial_s)XIC(pass_transitionFromSubstateInitNest_1)XIC(pass_transitionFromSubstateInitNest_2)XIC(pass_transitionFromSubstateInitNest_s)OTE(pass_transition);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="scanFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Validate output condition when AOI is scanned false.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_activeOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_activeOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="stateEntry_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,pass_activeOutputScanFalse);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIC(s:fs)stateMachine_activeOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIO(sm.active)unitTest_assertTrue(assertions[0],1,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="scanTrue" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Validate output condition when AOI is scanned true.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_activeOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_activeOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="stateEntry_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,pass_activeOutputScanTrue);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIO(s:fs)stateMachine_activeOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIC(sm.active)unitTest_assertTrue(assertions[0],1,tc);]]>
 </Text>
 </Rung>
 </RLLContent>
@@ -67232,6 +67678,16 @@ Test begins after the initial transition completes and the event is delivered to
 <Task Name="results" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
 <ScheduledPrograms>
 <ScheduledProgram Name="results"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_activeOutput" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests to validate the behaviour of the state machine active AOI output.]]>
+</Description>
+<ScheduledPrograms>
+<ScheduledProgram Name="scanFalse"/>
+<ScheduledProgram Name="scanTrue"/>
+<ScheduledProgram Name="prescan"/>
 </ScheduledPrograms>
 </Task>
 <Task Name="_grpTran" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
