@@ -33,6 +33,7 @@ import java.util.function.IntSupplier;
 
 import org.modelio.logixuml.l5x.AddOnInstruction;
 import org.modelio.logixuml.l5x.DataType;
+import org.modelio.logixuml.l5x.ParameterUsage;
 import org.modelio.logixuml.l5x.ScanModeRoutine;
 import org.modelio.logixuml.structuredtext.CaseOf;
 import org.modelio.logixuml.structuredtext.Halt;
@@ -127,6 +128,11 @@ public class StateMachineAoi {
      */
     private class TagNames {
         /**
+         * Boolean AOI output indicating when the state machine is operating.
+         */
+        private final static String ACTIVE_OUTPUT = "active";
+
+        /**
          * ID of the condition describing the current output states.
          */
         private final static String CONDITION_VARIABLE = "cv";
@@ -197,6 +203,8 @@ public class StateMachineAoi {
         aoi.addStructuredTextLines(ScanModeRoutine.Prescan, header);
         aoi.addStructuredTextLines(ScanModeRoutine.EnableInFalse, header);
 
+        createActiveOutput(aoi);
+
         // Create the condition variable tag and ensure it is reset in prescan and
         // enable-in false.
         aoi.addLocalTag(TagNames.CONDITION_VARIABLE, DataType.DINT);
@@ -208,6 +216,28 @@ public class StateMachineAoi {
         aoi.addLocalTag(TagNames.CURRENT_EVENT, DataType.DINT);
 
         return aoi;
+    }
+
+    /**
+     * Creates the AOI's active boolean output.
+     *
+     * @param aoi Target add-on instruction.
+     */
+    private void createActiveOutput(final AddOnInstruction aoi) {
+        try {
+            aoi.addParameter(TagNames.ACTIVE_OUTPUT, ParameterUsage.Output, DataType.BOOL, true,
+                    "True when this state machine is enabled and responding to events.");
+        } catch (ExportException e) {
+            throw new AssertionError(); // Static tag name; should never be invalid.
+        }
+
+        // Energize the output when AOI is scanned true.
+        aoi.addStructuredTextLine(ScanModeRoutine.Logic, TagNames.ACTIVE_OUTPUT + " := 1;");
+
+        // De-energize the output during prescan and scan false.
+        final String reset = TagNames.ACTIVE_OUTPUT + " := 0;";
+        aoi.addStructuredTextLine(ScanModeRoutine.Prescan, reset);
+        aoi.addStructuredTextLine(ScanModeRoutine.EnableInFalse, reset);
     }
 
     /**
