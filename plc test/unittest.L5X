@@ -18720,6 +18720,48 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </Data>
 </Tag>
+<Tag Name="pass_eventQueueEmptyPrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueEmptyScanFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueFifoOrder" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueMaxCapacity" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueOverflowFault" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueOverflowOutputReset" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_eventQueueOverflowOutputSet" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_grpTranExternalNested_1" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Data>00</Data>
 <Data Format="Decorated">
@@ -19262,6 +19304,20 @@
 </Tag>
 </Tags>
 <Programs>
+<Program Name="emptyPrescan" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm the queue is emptied during prescan.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="emptyScanFalse" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm the queue is emptied when scanned false.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
 <Program Name="externalNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Description>
 <![CDATA[Validate a transition from a deeply-nested substate to a target not contained within the source's parent in single-scan transition mode.]]>
@@ -23717,6 +23773,13 @@
 </RLLContent>
 </Routine>
 </Routines>
+</Program>
+<Program Name="fifoOrder" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm events are queued and dequeued in the correct order.]]>
+</Description>
+<Tags/>
+<Routines/>
 </Program>
 <Program Name="fromSubstateInitialNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Tags>
@@ -31233,6 +31296,34 @@
 </Routine>
 </Routines>
 </Program>
+<Program Name="maxCapacity" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Validate the event queue can hold its configured number of events.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="overflowFault" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm a major fault is raised upon a queue overflow.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="overflowOutputReset" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm the overflow output is reset during Prescan.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
+<Program Name="overflowOutputSet" TestEdits="false" Disabled="false">
+<Description>
+<![CDATA[Confirm the overflow output is energized upon a queue overflow.]]>
+</Description>
+<Tags/>
+<Routines/>
+</Program>
 <Program Name="prescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
 <Description>
 <![CDATA[Validate output condition during Prescan.]]>
@@ -31384,6 +31475,15 @@ Issue a request for prescan after the state machine has initially been scanned t
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </Data>
 </Tag>
+<Tag Name="pass_eventQueue" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Description>
+<![CDATA[True when all event queue tests have passed.]]>
+</Description>
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_groupTransition" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Description>
 <![CDATA[True when all group transition tests have passed.]]>
@@ -31425,25 +31525,30 @@ Issue a request for prescan after the state machine has initially been scanned t
 </Rung>
 <Rung Number="1" Type="N">
 <Text>
-<![CDATA[XIC(pass_activeOutput)XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
+<![CDATA[XIC(pass_activeOutput)XIC(pass_eventQueue)XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
 </Text>
 </Rung>
 <Rung Number="2" Type="N">
 <Text>
-<![CDATA[XIC(pass_activeOutputScanFalse)XIC(pass_activeOutputScanTrue)XIC(pass_activeOutputPrescan)OTE(pass_activeOutput);]]>
+<![CDATA[XIC(pass_eventQueueMaxCapacity)XIC(pass_eventQueueOverflowFault)XIC(pass_eventQueueOverflowOutputSet)XIC(pass_eventQueueOverflowOutputReset)XIC(pass_eventQueueEmptyScanFalse)XIC(pass_eventQueueEmptyPrescan)XIC(pass_eventQueueFifoOrder)OTE(pass_eventQueue);]]>
 </Text>
 </Rung>
 <Rung Number="3" Type="N">
 <Text>
-<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
+<![CDATA[XIC(pass_activeOutputScanFalse)XIC(pass_activeOutputScanTrue)XIC(pass_activeOutputPrescan)OTE(pass_activeOutput);]]>
 </Text>
 </Rung>
 <Rung Number="4" Type="N">
 <Text>
-<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+<![CDATA[XIC(pass_grpTranExternal_1)XIC(pass_grpTranExternal_2)XIC(pass_grpTranExternal_s)XIC(pass_grpTranExternalNested_1)XIC(pass_grpTranExternalNested_2)XIC(pass_grpTranExternalNested_s)XIC(pass_grpTranLocal_1)XIC(pass_grpTranLocal_2)XIC(pass_grpTranLocal_s)XIC(pass_grpTranLocalNested_1)XIC(pass_grpTranLocalNested_2)XIC(pass_grpTranLocalNested_s)XIC(pass_grpTranToSelf_1)XIC(pass_grpTranToSelf_2)XIC(pass_grpTranToSelf_s)XIC(pass_grpTranToSelfInitial_1)XIC(pass_grpTranToSelfInitial_2)XIC(pass_grpTranToSelfInitial_s)XIC(pass_grpTranToSub_1)XIC(pass_grpTranToSub_2)XIC(pass_grpTranToSub_s)XIC(pass_grpTranToSubInitial_1)XIC(pass_grpTranToSubInitial_2)XIC(pass_grpTranToSubInitial_s)XIC(pass_grpTranToSuper_1)XIC(pass_grpTranToSuper_2)XIC(pass_grpTranToSuper_s)XIC(pass_grpTranToSuperInitial_1)XIC(pass_grpTranToSuperInitial_2)XIC(pass_grpTranToSuperInitial_s)OTE(pass_groupTransition);]]>
 </Text>
 </Rung>
 <Rung Number="5" Type="N">
+<Text>
+<![CDATA[XIC(pass_stateMachineInitialTop_single)XIC(pass_stateMachineInitialTop_dual)XIC(pass_stateMachineInitialTop_seq)XIC(pass_stateMachineInitialSubstate_single)XIC(pass_stateMachineInitialSubstate_dual)XIC(pass_stateMachineInitialSubstate_seq)XIC(pass_stateMachineInitSubstateNest_single)XIC(pass_stateMachineInitSubstateNest_dual)XIC(pass_stateMachineInitSubstateNest_seq)XIC(pass_stateMachineInitSuperInit_single)XIC(pass_stateMachineInitSuperInit_dual)XIC(pass_stateMachineInitSuperInit_seq)XIC(pass_stateMachineInitSuperInitNest_1)XIC(pass_stateMachineInitSuperInitNest_2)XIC(pass_stateMachineInitSuperInitNest_s)OTE(pass_stateMachineInitial);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
 <Text>
 <![CDATA[XIC(pass_transitionTopSibling_1)XIC(pass_transitionTopSibling_2)XIC(pass_transitionTopSibling_s)XIC(pass_transitionSubstateSibling_1)XIC(pass_transitionSubstateSibling_2)XIC(pass_transitionSubstateSibling_s)XIC(pass_transitionToSuperstate_1)XIC(pass_transitionToSuperstate_2)XIC(pass_transitionToSuperstate_s)XIC(pass_transitionToSuperNested_1)XIC(pass_transitionToSuperNested_2)XIC(pass_transitionToSuperNested_s)XIC(pass_transitionToSubstate_1)XIC(pass_transitionToSubstate_2)XIC(pass_transitionToSubstate_s)XIC(pass_transitionToSubstateNested_1)XIC(pass_transitionToSubstateNested_2)XIC(pass_transitionToSubstateNested_s)XIC(pass_transitionSuperstateExit_1)XIC(pass_transitionSuperstateExit_2)XIC(pass_transitionSuperstateExit_s)XIC(pass_transitionSuperExitNest_1)XIC(pass_transitionSuperExitNest_2)XIC(pass_transitionSuperExitNest_s)XIC(pass_transitionSuperstateEntry_1)XIC(pass_transitionSuperstateEntry_2)XIC(pass_transitionSuperstateEntry_s)XIC(pass_transitionSuperEntryNest_1)XIC(pass_transitionSuperEntryNest_2)XIC(pass_transitionSuperEntryNest_s)XIC(pass_transitionSuperInitial_1)XIC(pass_transitionSuperInitial_2)XIC(pass_transitionSuperInitial_s)XIC(pass_transitionSuperInitNest_1)XIC(pass_transitionSuperInitNest_2)XIC(pass_transitionSuperInitNest_s)XIC(pass_transitionFromSubstateInitial_1)XIC(pass_transitionFromSubstateInitial_2)XIC(pass_transitionFromSubstateInitial_s)XIC(pass_transitionFromSubstateInitNest_1)XIC(pass_transitionFromSubstateInitNest_2)XIC(pass_transitionFromSubstateInitNest_s)OTE(pass_transition);]]>
 </Text>
@@ -67688,6 +67793,20 @@ Test begins after the initial transition completes and the event is delivered to
 <ScheduledProgram Name="scanFalse"/>
 <ScheduledProgram Name="scanTrue"/>
 <ScheduledProgram Name="prescan"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_eventQueue" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating event queue operation.]]>
+</Description>
+<ScheduledPrograms>
+<ScheduledProgram Name="maxCapacity"/>
+<ScheduledProgram Name="overflowFault"/>
+<ScheduledProgram Name="overflowOutputSet"/>
+<ScheduledProgram Name="overflowOutputReset"/>
+<ScheduledProgram Name="emptyScanFalse"/>
+<ScheduledProgram Name="emptyPrescan"/>
+<ScheduledProgram Name="fifoOrder"/>
 </ScheduledPrograms>
 </Task>
 <Task Name="_grpTran" Type="PERIODIC" Rate="10" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
