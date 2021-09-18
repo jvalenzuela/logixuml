@@ -18,7 +18,7 @@ STEREOTYPE_NAME = 'StateMachineAoi'
 
 
 # Event queue size applied to all state machines.
-EVENT_QUEUE_SIZE = 2
+EVENT_QUEUE_SIZE = 3
 
 
 # Set of all available scan modes and the suffix applied to state machines
