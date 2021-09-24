@@ -301,6 +301,293 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="stateMachine_eventQueue_empty" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-24T03:34:00.837Z" CreatedBy="Not Available" EditedDate="2021-09-24T03:51:33.703Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="active" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when this state machine is enabled and responding to events.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_overflow" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True if an overflow has occurred.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_watermark" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Highest number of events stored.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_e1" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_e2" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_e3" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_State2" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the State2 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_State2" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the State2 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_State2" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the State2 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_State2" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the State2 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_State1" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the State1 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_State1" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the State1 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_State1" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the State1 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_State1" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the State1 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_State3" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the State3 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_State3" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the State3 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_State3" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the State3 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_State3" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the State3 state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_start" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the start state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_start" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the start state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_start" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the start state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_start" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the start state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="cv" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="e" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pf" DataType="DINT" Dimensions="1" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="1" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pfi" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="q" DataType="DINT" Dimensions="3" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="3" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qh" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qt" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qs" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_e1" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_e2" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_e3" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
 <AddOnInstructionDefinition Name="stateMachine_eventQueue_fifoOrder_s" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-23T08:20:22.711Z" CreatedBy="Not Available" EditedDate="2021-09-23T08:40:57.385Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -19921,12 +20208,112 @@
 <Tags/>
 <Routines/>
 </Program>
-<Program Name="emptyScanFalse" TestEdits="false" Disabled="false">
+<Program Name="emptyScanFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Description>
 <![CDATA[Confirm the queue is emptied when scanned false.]]>
 </Description>
-<Tags/>
-<Routines/>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_eventQueue_empty" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_eventQueue_empty">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_start" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,pass_eventQueueEmptyScanFalse);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Comment>
+<![CDATA[Evaluate the state machine false on the scan immediately after the events are queued.
+]]>
+</Comment>
+<Text>
+<![CDATA[NEQ(tc.scan,2)stateMachine_eventQueue_empty(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[Queue events the first time the state machine is scanned true.
+]]>
+</Comment>
+<Text>
+<![CDATA[XIC(s:fs)XIC(sm.active)[OTE(sm.event_e1) ,OTE(sm.event_e2) ,OTE(sm.event_e3) ];]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Comment>
+<![CDATA[Ensure the state machine does not leave the target of the initial transition after the false scan.
+]]>
+</Comment>
+<Text>
+<![CDATA[XIC(sm.stateDo_start)unitTest_assertTrue(assertions[0],4,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
 </Program>
 <Program Name="externalNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Description>
