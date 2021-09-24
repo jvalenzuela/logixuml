@@ -20201,12 +20201,156 @@
 </Tag>
 </Tags>
 <Programs>
-<Program Name="emptyPrescan" TestEdits="false" Disabled="false">
+<Program Name="emptyPrescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
 <Description>
 <![CDATA[Confirm the queue is emptied during prescan.]]>
 </Description>
-<Tags/>
-<Routines/>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="doJSR" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_eventQueue_empty" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_eventQueue_empty">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_start" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="last_scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="assert_fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[Enable the unit test and associated assertions on the first scan after the requested Prescan.]]>
+</Comment>
+<Text>
+<![CDATA[XIC(prescan_request.done)unitTest_case(tc,pass_eventQueueEmptyPrescan);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[UID();]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[Request prescan after the state machine has completed its initial transition for the first time.
+]]>
+</Comment>
+<Text>
+<![CDATA[XIC(sm.stateActive_start)prescan_request(prescan_request,prescan_pending);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Comment>
+<![CDATA[Trigger events just before entering Prescan so the event queue is not empty when the processor leaves run mode.]]>
+</Comment>
+<Text>
+<![CDATA[XIC(prescan_request.doJSR)[OTE(sm.event_e1) ,OTE(sm.event_e2) ,OTE(sm.event_e3) ];]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Text>
+<![CDATA[stateMachine_eventQueue_empty(sm);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
+<![CDATA[XIC(prescan_request.doJSR)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Text>
+<![CDATA[UIE();]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Comment>
+<![CDATA[Confirm the state machine remains at the start state after the second initial transition that occurs after coming out of Prescan.]]>
+</Comment>
+<Text>
+<![CDATA[XIC(sm.stateDo_start)unitTest_assertTrue(assertions[0],2,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
 </Program>
 <Program Name="emptyScanFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Description>
