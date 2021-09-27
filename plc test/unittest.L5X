@@ -21752,12 +21752,127 @@
 <Tags/>
 <Routines/>
 </Program>
-<Program Name="eventQ_overflowOutputSet" TestEdits="false" Disabled="false">
+<Program Name="eventQ_overflowOutputSet" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
 <Description>
 <![CDATA[Confirm the overflow output is energized upon a queue overflow.]]>
 </Description>
-<Tags/>
-<Routines/>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="fault_check" TagType="Base" DataType="event_queue_overflow_fault" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="event_queue_overflow_fault">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="fault_pending" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Description>
+<![CDATA[True if a major fault should be generated on this scan.]]>
+</Description>
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_eventQueue_overflow" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_eventQueue_overflow">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="event_e4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_State1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_start" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_start" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIC(fault_pending)event_queue_overflow_fault(fault_check);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,1,pass_eventQueueOverflowOutputSet,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIC(sm.active)[OTE(sm.event_e1) OTE(sm.event_e2) OTE(sm.event_e3) OTE(sm.event_e4) ,OTE(fault_pending) ];]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_eventQueue_overflow(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIC(sm.eventQ_overflow)unitTest_assertTrue(assertions[0],1,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
 </Program>
 <Program Name="grpTran_externalNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Description>
