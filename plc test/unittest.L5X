@@ -45620,6 +45620,48 @@
 </Routine>
 </Routines>
 </Program>
+<Program Name="task_dispatch" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Tags/>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[This program handles triggering tasks containing logic for the actual unit tests, which reside in event tasks as an organizational construct and to provide sufficient space for unit test programs as a task is limited to 32 programs. The event tasks are only triggered from this continuous task so they execute synchronously with this task, resulting in behavior similar to a JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[EVENT(_activeOutput);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[EVENT(_eventQueue);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Text>
+<![CDATA[EVENT(_groupTransition);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Text>
+<![CDATA[EVENT(_stateMachineInitial);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Text>
+<![CDATA[EVENT(_transition);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
 <Program Name="tran_fromSubstateInitialNested_1" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Tags>
 <Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="40" Constant="false" ExternalAccess="None">
@@ -70710,9 +70752,26 @@ Test begins after the initial transition completes and the event is delivered to
 <Task Name="main" Type="CONTINUOUS" Priority="10" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
 <ScheduledPrograms>
 <ScheduledProgram Name="results"/>
+<ScheduledProgram Name="task_dispatch"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_activeOutput" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating operation of the active boolean AOI output.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
 <ScheduledProgram Name="activeOutput_scanFalse"/>
 <ScheduledProgram Name="activeOutput_scanTrue"/>
 <ScheduledProgram Name="activeOutput_prescan"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_eventQueue" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests exercising event queue operation.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
 <ScheduledProgram Name="eventQ_maxCapacity"/>
 <ScheduledProgram Name="eventQ_overflowFault"/>
 <ScheduledProgram Name="eventQ_overflowOutputSet"/>
@@ -70721,6 +70780,14 @@ Test begins after the initial transition completes and the event is delivered to
 <ScheduledProgram Name="eventQ_emptyPrescan"/>
 <ScheduledProgram Name="eventQ_fifoOrder"/>
 <ScheduledProgram Name="eventQ_dequeue"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_groupTransition" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating group transitions as defined by UML v2.5.1, 14.2.3.8.2.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
 <ScheduledProgram Name="grpTran_external_1"/>
 <ScheduledProgram Name="grpTran_external_2"/>
 <ScheduledProgram Name="grpTran_external_s"/>
@@ -70751,6 +70818,14 @@ Test begins after the initial transition completes and the event is delivered to
 <ScheduledProgram Name="grpTran_toSuperInitial_1"/>
 <ScheduledProgram Name="grpTran_toSuperInitial_2"/>
 <ScheduledProgram Name="grpTran_toSuperInitial_s"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_stateMachineInitial" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating the top-level initial transition of an entire state machine.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
 <ScheduledProgram Name="smInit_top_1"/>
 <ScheduledProgram Name="smInit_top_2"/>
 <ScheduledProgram Name="smInit_top_s"/>
@@ -70766,6 +70841,14 @@ Test begins after the initial transition completes and the event is delivered to
 <ScheduledProgram Name="smInit_substateNested_1"/>
 <ScheduledProgram Name="smInit_substateNested_2"/>
 <ScheduledProgram Name="smInit_substateNested_s"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_transition" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validation transitions between states.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
 <ScheduledProgram Name="tran_topSibling_1"/>
 <ScheduledProgram Name="tran_topSibling_2"/>
 <ScheduledProgram Name="tran_topSibling_s"/>
