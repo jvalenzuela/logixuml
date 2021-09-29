@@ -12329,6 +12329,191 @@
 </Routine>
 </Routines>
 </AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="stateMachine_stateOutput" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-09-29T12:53:47.050Z" CreatedBy="Not Available" EditedDate="2021-09-30T02:57:45.253Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="active" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when this state machine is enabled and responding to events.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_overflow" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True if an overflow has occurred.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="eventQ_watermark" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Highest number of events stored.]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="event_e" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Rising edge to deliver this event to the state machine.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the source state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the source state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the source state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_source" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the source state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateEntry_target" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine enters the target state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateExit_target" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine exits the target state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateDo_target" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is stable in the target state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="stateActive_target" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[True when the state machine is entering, exiting, or stable in the target state.]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="cv" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="e" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pf" DataType="DINT" Dimensions="1" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="1" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="pfi" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="q" DataType="DINT" Dimensions="3" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Array DataType="DINT" Dimensions="3" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+</Array>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qh" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qt" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="qs" DataType="DINT" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ons_e" DataType="BOOL" Radix="Decimal" ExternalAccess="Read/Write">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
 <AddOnInstructionDefinition Name="stateMachine_transitionSubstateSibling_1" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2021-08-12T13:02:48.710Z" CreatedBy="Not Available" EditedDate="2021-08-12T13:21:24.272Z" EditedBy="G5Y9GH2\jvalenzuela" SoftwareRevision="v20.05">
 <Parameters>
 <Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only"/>
@@ -20812,6 +20997,54 @@
 </Data>
 </Tag>
 <Tag Name="pass_stateMachineInitSuperInit_single" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputActiveFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputActivePrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputDoFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputDoPrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputEntryFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputEntryPrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputExitFalse" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="pass_stateOutputExitPrescan" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Data>00</Data>
 <Data Format="Decorated">
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
@@ -39254,6 +39487,15 @@
 <DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
 </Data>
 </Tag>
+<Tag Name="pass_stateOutput" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
+<Description>
+<![CDATA[True when all state output tests have passed.]]>
+</Description>
+<Data>00</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
 <Tag Name="pass_transition" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="None">
 <Description>
 <![CDATA[True when all transition tests have passed.]]>
@@ -39277,7 +39519,7 @@
 </Rung>
 <Rung Number="1" Type="N">
 <Text>
-<![CDATA[XIC(pass_activeOutput)XIC(pass_eventQueue)XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_transition)OTE(pass_all);]]>
+<![CDATA[XIC(pass_activeOutput)XIC(pass_eventQueue)XIC(pass_groupTransition)XIC(pass_stateMachineInitial)XIC(pass_stateOutput)XIC(pass_transition)OTE(pass_all);]]>
 </Text>
 </Rung>
 <Rung Number="2" Type="N">
@@ -39302,10 +39544,15 @@
 </Rung>
 <Rung Number="6" Type="N">
 <Text>
-<![CDATA[XIC(pass_transitionTopSibling_1)XIC(pass_transitionTopSibling_2)XIC(pass_transitionTopSibling_s)XIC(pass_transitionSubstateSibling_1)XIC(pass_transitionSubstateSibling_2)XIC(pass_transitionSubstateSibling_s)XIC(pass_transitionToSuperstate_1)XIC(pass_transitionToSuperstate_2)XIC(pass_transitionToSuperstate_s)XIC(pass_transitionToSuperNested_1)XIC(pass_transitionToSuperNested_2)XIC(pass_transitionToSuperNested_s)XIC(pass_transitionToSubstate_1)XIC(pass_transitionToSubstate_2)XIC(pass_transitionToSubstate_s)XIC(pass_transitionToSubstateNested_1)XIC(pass_transitionToSubstateNested_2)XIC(pass_transitionToSubstateNested_s)XIC(pass_transitionSuperstateExit_1)XIC(pass_transitionSuperstateExit_2)XIC(pass_transitionSuperstateExit_s)XIC(pass_transitionSuperExitNest_1)XIC(pass_transitionSuperExitNest_2)XIC(pass_transitionSuperExitNest_s)XIC(pass_transitionSuperstateEntry_1)XIC(pass_transitionSuperstateEntry_2)XIC(pass_transitionSuperstateEntry_s)XIC(pass_transitionSuperEntryNest_1)XIC(pass_transitionSuperEntryNest_2)XIC(pass_transitionSuperEntryNest_s)XIC(pass_transitionSuperInitial_1)XIC(pass_transitionSuperInitial_2)XIC(pass_transitionSuperInitial_s)XIC(pass_transitionSuperInitNest_1)XIC(pass_transitionSuperInitNest_2)XIC(pass_transitionSuperInitNest_s)XIC(pass_transitionFromSubstateInitial_1)XIC(pass_transitionFromSubstateInitial_2)XIC(pass_transitionFromSubstateInitial_s)XIC(pass_transitionFromSubstateInitNest_1)XIC(pass_transitionFromSubstateInitNest_2)XIC(pass_transitionFromSubstateInitNest_s)OTE(pass_transition);]]>
+<![CDATA[XIC(pass_stateOutputEntryPrescan)XIC(pass_stateOutputEntryFalse)XIC(pass_stateOutputDoPrescan)XIC(pass_stateOutputDoFalse)XIC(pass_stateOutputExitPrescan)XIC(pass_stateOutputExitFalse)XIC(pass_stateOutputActivePrescan)XIC(pass_stateOutputActiveFalse)OTE(pass_stateOutput);]]>
 </Text>
 </Rung>
 <Rung Number="7" Type="N">
+<Text>
+<![CDATA[XIC(pass_transitionTopSibling_1)XIC(pass_transitionTopSibling_2)XIC(pass_transitionTopSibling_s)XIC(pass_transitionSubstateSibling_1)XIC(pass_transitionSubstateSibling_2)XIC(pass_transitionSubstateSibling_s)XIC(pass_transitionToSuperstate_1)XIC(pass_transitionToSuperstate_2)XIC(pass_transitionToSuperstate_s)XIC(pass_transitionToSuperNested_1)XIC(pass_transitionToSuperNested_2)XIC(pass_transitionToSuperNested_s)XIC(pass_transitionToSubstate_1)XIC(pass_transitionToSubstate_2)XIC(pass_transitionToSubstate_s)XIC(pass_transitionToSubstateNested_1)XIC(pass_transitionToSubstateNested_2)XIC(pass_transitionToSubstateNested_s)XIC(pass_transitionSuperstateExit_1)XIC(pass_transitionSuperstateExit_2)XIC(pass_transitionSuperstateExit_s)XIC(pass_transitionSuperExitNest_1)XIC(pass_transitionSuperExitNest_2)XIC(pass_transitionSuperExitNest_s)XIC(pass_transitionSuperstateEntry_1)XIC(pass_transitionSuperstateEntry_2)XIC(pass_transitionSuperstateEntry_s)XIC(pass_transitionSuperEntryNest_1)XIC(pass_transitionSuperEntryNest_2)XIC(pass_transitionSuperEntryNest_s)XIC(pass_transitionSuperInitial_1)XIC(pass_transitionSuperInitial_2)XIC(pass_transitionSuperInitial_s)XIC(pass_transitionSuperInitNest_1)XIC(pass_transitionSuperInitNest_2)XIC(pass_transitionSuperInitNest_s)XIC(pass_transitionFromSubstateInitial_1)XIC(pass_transitionFromSubstateInitial_2)XIC(pass_transitionFromSubstateInitial_s)XIC(pass_transitionFromSubstateInitNest_1)XIC(pass_transitionFromSubstateInitNest_2)XIC(pass_transitionFromSubstateInitNest_s)OTE(pass_transition);]]>
+</Text>
+</Rung>
+<Rung Number="8" Type="N">
 <Text>
 <![CDATA[unitTest_master(master);]]>
 </Text>
@@ -45620,6 +45867,788 @@
 </Routine>
 </Routines>
 </Program>
+<Program Name="stateOutput_activeFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Confirm the active output de-energizes when scanned false.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,1,pass_stateOutputActiveFalse,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[LES(tc.scan,1)stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateActive_source)unitTest_assertTrue(assertions[0],1,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_activePrescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
+<Description>
+<![CDATA[Confirm the active output de-energizes during Prescan.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,prescan_request.done,pass_stateOutputActivePrescan,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateActive_source)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[prescan_request(prescan_request,prescan_pending)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_doFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Confirm the do output de-energizes when scanned false.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,1,pass_stateOutputDoFalse,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[LES(tc.scan,2)stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_source)unitTest_assertTrue(assertions[0],2,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_doPrescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
+<Description>
+<![CDATA[Confirm the do output de-energizes during Prescan.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,prescan_request.done,pass_stateOutputDoPrescan,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateDo_source)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateDo_source)prescan_request(prescan_request,prescan_pending)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_entryFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Confirm the entry output de-energizes when scanned false.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,1,pass_stateOutputEntryFalse,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[EQU(tc.scan,0)stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_source)unitTest_assertTrue(assertions[0],1,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_entryPrescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
+<Description>
+<![CDATA[Confirm the entry output de-energizes during Prescan.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,prescan_request.done,pass_stateOutputEntryPrescan,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateEntry_source)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[prescan_request(prescan_request,prescan_pending)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_exitFalse" TestEdits="false" MainRoutineName="main" Disabled="false">
+<Description>
+<![CDATA[Confirm the exit output de-energizes when scanned false.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,1,pass_stateOutputExitFalse,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[LES(tc.scan,2)stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[XIC(sm.active)OTE(sm.event_e);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_source)unitTest_assertTrue(assertions[0],2,tc);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+<Program Name="stateOutput_exitPrescan" TestEdits="false" MainRoutineName="main" FaultRoutineName="fault" Disabled="false">
+<Description>
+<![CDATA[Confirm the exit output de-energizes during Prescan.]]>
+</Description>
+<Tags>
+<Tag Name="assertions" TagType="Base" DataType="unitTest_assertTrue" Dimensions="1" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Array DataType="unitTest_assertTrue" Dimensions="1">
+<Element Index="[0]">
+<Structure DataType="unitTest_assertTrue">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="prescan_request" TagType="Base" DataType="prescan_request" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="prescan_request">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="done" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="sm" TagType="Base" DataType="stateMachine_stateOutput" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="stateMachine_stateOutput">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="active" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_overflow" DataType="BOOL" Value="0"/>
+<DataValueMember Name="eventQ_watermark" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="event_e" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_source" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateEntry_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateExit_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateDo_target" DataType="BOOL" Value="0"/>
+<DataValueMember Name="stateActive_target" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="tc" TagType="Base" DataType="unitTest_case" Constant="false" ExternalAccess="None">
+<Data>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+<Data Format="Decorated">
+<Structure DataType="unitTest_case">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="setup_done" DataType="BOOL" Value="0"/>
+<DataValueMember Name="fail" DataType="BOOL" Value="0"/>
+<DataValueMember Name="pass" DataType="BOOL" Value="0"/>
+<DataValueMember Name="scan" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+</Tags>
+<Routines>
+<Routine Name="fault" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[No logic is required in this routine; it only exists as a target for the Prescan request JSR.]]>
+</Comment>
+<Text>
+<![CDATA[NOP();]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="main" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[unitTest_case(tc,prescan_request.done,pass_stateOutputExitPrescan,master)JSR(test,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Name="test" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIO(sm.stateExit_source)unitTest_assertTrue(assertions[0],0,tc);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Text>
+<![CDATA[stateMachine_stateOutput(sm);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Text>
+<![CDATA[XIC(sm.active)OTE(sm.event_e);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Text>
+<![CDATA[XIC(sm.stateExit_source)prescan_request(prescan_request,prescan_pending)JSR(fault,1,PRESCAN_FAULT_CODE);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
 <Program Name="task_dispatch" TestEdits="false" MainRoutineName="main" Disabled="false">
 <Tags/>
 <Routines>
@@ -45654,6 +46683,11 @@
 </Text>
 </Rung>
 <Rung Number="5" Type="N">
+<Text>
+<![CDATA[EVENT(_stateOutput);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
 <Text>
 <![CDATA[EVENT(_transition);]]>
 </Text>
@@ -70841,6 +71875,22 @@ Test begins after the initial transition completes and the event is delivered to
 <ScheduledProgram Name="smInit_substateNested_1"/>
 <ScheduledProgram Name="smInit_substateNested_2"/>
 <ScheduledProgram Name="smInit_substateNested_s"/>
+</ScheduledPrograms>
+</Task>
+<Task Name="_stateOutput" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
+<Description>
+<![CDATA[Tests validating behavior of the entry, exit, do, and active AOI outputs associated with each defined state.]]>
+</Description>
+<EventInfo EventTrigger="EVENT Instruction Only" EnableTimeout="false"/>
+<ScheduledPrograms>
+<ScheduledProgram Name="stateOutput_entryPrescan"/>
+<ScheduledProgram Name="stateOutput_entryFalse"/>
+<ScheduledProgram Name="stateOutput_doPrescan"/>
+<ScheduledProgram Name="stateOutput_doFalse"/>
+<ScheduledProgram Name="stateOutput_exitPrescan"/>
+<ScheduledProgram Name="stateOutput_exitFalse"/>
+<ScheduledProgram Name="stateOutput_activePrescan"/>
+<ScheduledProgram Name="stateOutput_activeFalse"/>
 </ScheduledPrograms>
 </Task>
 <Task Name="_transition" Type="EVENT" Rate="10" Priority="1" Watchdog="500" DisableUpdateOutputs="true" InhibitTask="false">
