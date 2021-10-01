@@ -53,10 +53,9 @@ sub convert_plantuml {
     if (!$do_plantuml or ($? == 0)) {
         my @inkscape_args = ("inkscape",
                              "--export-area-drawing",
-                             "--without-gui",
-                             "--file=$_[0].svg",
-                             "--export-pdf=$_[0].pdf",
-                             "--export-latex");
+                             "--export-filename=$_[0].pdf",
+                             "--export-latex",
+                             "$_[0].svg");
         system(@inkscape_args);
     }
 
